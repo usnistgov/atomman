@@ -1,5 +1,4 @@
 import atomman as am
-from collections import OrderedSet
 
 try:
     import ase
