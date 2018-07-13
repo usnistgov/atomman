@@ -31,3 +31,4 @@ testing/
 # Upload bash script
 upload_package.bash
 update_cython.bash
+node_modules/*
