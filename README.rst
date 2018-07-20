@@ -51,6 +51,12 @@ Tutorial Jupyter Notebooks can be found in the doc/tutorial directory.  The tuto
     
 Documentation for the code itself can be found in the doc/html directory.
 
+To view the code documentation, use `browser-sync <https://browsersync.io/>`_ which needs `yarn <https://yarnpkg.com/lang/en/docs/install/>`_::
+
+    yarn
+    yarn browser-sync doc/html -w
+
+
 Required packages
 -----------------
 
