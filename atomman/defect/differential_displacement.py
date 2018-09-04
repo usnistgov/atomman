@@ -33,6 +33,7 @@ def differential_displacement(base_system, disl_system, burgers_vector, plot_ran
                   displacement arrows.
     save_file -- if given then the plot will be saved to a file with this name.
     show -- Boolean flag for showing the figure. Default is True.
+    plot_axes -- existing matplotlib.axes.Axes object to plot on
     """
     #Burgers vector setup
     if axes is not None:
