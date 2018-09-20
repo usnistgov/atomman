@@ -11,10 +11,11 @@ from .poscar import load as load_poscar
 from .atom_data import load as load_atom_data
 from .atom_dump import load as load_atom_dump
 from .spglib_cell import load as load_spglib_cell
+from .phonopy_Atoms import load as load_phonopy_Atoms
 
 __all__ = ['load', 'load_ase_Atoms', 'load_pymatgen_Structure', 'load_table',
            'load_system_model', 'load_poscar', 'load_atom_data',
-           'load_atom_dump', 'load_cif', 'load_spglib_cell']
+           'load_atom_dump', 'load_cif', 'load_spglib_cell', 'load_phonopy_Atoms']
 
 def load(style, input, **kwargs):
     """
@@ -52,6 +53,9 @@ def load(style, input, **kwargs):
     
     elif style == 'ase_Atoms':
         return load_ase_Atoms(input, **kwargs)
+    
+    elif style == 'phonopy_Atoms':
+        return load_phonopy_Atoms(input, **kwargs)
     
     elif style == 'pymatgen_Structure':
         return load_pymatgen_Structure(input, **kwargs)

@@ -175,7 +175,7 @@ class GammaSurface(object):
         """
         # Set values if model given
         if model is not None:
-            model = model.find('stacking-fault-map')
+            model = DM(model).find('stacking-fault-map')
             
             # Read in box, a1vect and a2vect
             self.box = Box(avect = model['box']['avect'],

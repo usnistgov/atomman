@@ -1,6 +1,7 @@
 # Standard Python libraries
 from __future__ import (absolute_import, print_function,
                         division, unicode_literals)
+import os
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
@@ -52,7 +53,7 @@ def dump(system, **kwargs):
     
     # Set default values
     box_unit = kwargs.get('box_unit', 'angstrom')
-    
+    indent = kwargs.get('indent', None)
     symbols = kwargs.get('symbols', system.symbols)
     if isinstance(symbols, stringtype):
         symbols = [symbols]
@@ -197,9 +198,9 @@ def dump(system, **kwargs):
     if 'f' not in kwargs:
         if 'format' not in kwargs:
             return model
-        elif format.lower() == 'xml':
+        elif kwargs['format'].lower() == 'xml':
             return model.xml(indent=indent)
-        elif format.lower() == 'json':
+        elif kwargs['format'].lower() == 'json':
             return model.json(indent=indent)
     
     # Write to file

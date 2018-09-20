@@ -379,7 +379,7 @@ class ElasticConstants(object):
                     elif 'K' in kwargs: 
                         K = kwargs.pop('K')
                         c12 = 3 * K * (3 * K - E) / (9 * K - E)
-                        C44 = 3 * K * E / (9 * K - E)
+                        c44 = 3 * K * E / (9 * K - E)
                 
                 elif 'nu' in kwargs:
                     nu = kwargs.pop('nu')

@@ -6,7 +6,7 @@ from collections import OrderedDict
 # atomman imports
 import atomman.unitconvert as uc
 from ... import Atoms, Box, System
-from .process_prop_info import *
+from .process_prop_info import process_prop_info, standard_conversions
 from ...lammps import style
 from .. import load_table
 from ...tools import uber_open_rmode
@@ -66,7 +66,6 @@ def load(data, symbols=None, lammps_units='metal', prop_name=None,
     """
     
     lammps_unit = style.unit(lammps_units)
-    length_unit = lammps_unit['length']
     
     # Initialize parameter values
     pbc = None
@@ -98,7 +97,7 @@ def load(data, symbols=None, lammps_units='metal', prop_name=None,
                 
                 # Read timestep if time to do so
                 elif readtimestep:
-                    timestep = int(terms[0])
+                    #timestep = int(terms[0])
                     readtimestep = False
                 
                 # Read x boundary condition values if time to do so

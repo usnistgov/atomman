@@ -5,16 +5,17 @@ from __future__ import (absolute_import, print_function,
 # http://www.numpy.org/
 import numpy as np
 
-# https://wiki.fysik.dtu.dk/ase/
+# https://atztogo.github.io/phonopy/
 try:
-    import ase
-    has_ase = True
+    import phonpy
+    from phonopy.structure.atoms import PhonopyAtoms
+    has_phonpy = True
 except:
-    has_ase = False
+    has_phonpy = False
 
 def dump(system, symbols=None, return_prop=False):
     """
-    Convert an atomman.System into an ase.Atoms.
+    Convert an atomman.System into a phonopy.structure.atoms.PhonopyAtoms.
     
     Parameters
     ----------
@@ -29,14 +30,14 @@ def dump(system, symbols=None, return_prop=False):
         dictionary.  Default value is False.
     Returns
     -------
-    aseatoms : ase.Atoms
-        An ase representation of a collection of atoms.
+    phonopyatoms : phonopy.structure.atoms.PhonopyAtoms
+        A phonopy representation of a collection of atoms, based on ase.Atoms.
     prop : dict
         Dictionary containing any extra per-atom properties to include.
         Returned if return_prop is True.
     """
     
-    assert has_ase, 'ase not imported'
+    assert has_phonpy, 'phonopy not imported'
     
     # Get box/cell information
     cell = system.box.vects
@@ -61,9 +62,9 @@ def dump(system, symbols=None, return_prop=False):
             prop[p] = system.atoms_prop(key=p)
     
     # Build Atoms
-    aseatoms = ase.Atoms(symbols=allsymbols, positions=positions, pbc=pbc, cell=cell)
+    phonopyatoms = PhonopyAtoms(symbols=allsymbols, positions=positions, pbc=pbc, cell=cell)
     
     if return_prop is True:
-        return aseatoms, prop
+        return phonopyatoms, prop
     else:
-        return aseatoms
+        return phonopyatoms

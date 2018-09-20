@@ -17,19 +17,23 @@ except:
 from ... import Atoms, Box, System
 from ...tools import uber_open_rmode
 
-def load(cif):
+def load(cif, symbols=None):
     """
     Reads in a CIF crystal file.  Requires diffpy.Structure.
     
+    Parameters
+    ----------
     cif : str or file-like object
         The cif content to read.
+    symbols : tuple, optional
+        Allows the list of element symbols to be assigned during loading.
+        Useful if the symbols for the model differ from the standard element
+        tags.
     
     Returns
     -------
     system : atomman.System
         An atomman representation of a system.
-    elements : list
-        The list of elemental symbols corresponding to the system's atom types.
     """
     
     assert has_diffpy, 'diffpy.Structure not imported'

@@ -698,8 +698,10 @@ class SDVPN(object):
         """
         
         # Identify model element
-        sdpn = DM(model).find('semi-discrete-Peierls-Nabarro')
-        
+        try:
+            sdpn = DM(model).find('semidiscrete-variational-Peierls-Nabarro')
+        except:
+            sdpn = DM(model).find('semi-discrete-Peierls-Nabarro')
         # Load calculation parameters
         params = sdpn['parameter']
         self.__axes = uc.value_unit(params['axes'])

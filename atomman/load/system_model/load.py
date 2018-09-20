@@ -102,9 +102,9 @@ def load(model, symbols=None, key='atomic-system', index=0):
     
     if len(all_atypes) == 0:
         if len(all_symbols) != 0:
-            lsymbols, atypes = np.unique(all_symbols, return_inverse)
+            lsymbols, atypes = np.unique(all_symbols, return_inverse=True)
         elif len(all_elements) != 0:
-            lsymbols, atypes = np.unique(all_elements, return_inverse)
+            lsymbols, atypes = np.unique(all_elements, return_inverse=True)
         else:
             raise ValueError('No atom components, symbols or elements listed')
     

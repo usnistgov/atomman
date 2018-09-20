@@ -10,10 +10,11 @@ from .poscar import dump as dump_poscar
 from .atom_data import dump as dump_atom_data
 from .atom_dump import dump as dump_atom_dump
 from .spglib_cell import dump as dump_spglib_cell
+from .phonopy_Atoms import dump as dump_phonopy_Atoms
 
 __all__ = ['dump', 'dump_ase_Atoms', 'dump_pymatgen_Structure', 'dump_table',
            'dump_system_model', 'dump_poscar', 'dump_atom_data',
-           'dump_atom_dump', 'dump_spglib_cell']
+           'dump_atom_dump', 'dump_spglib_cell', 'dump_phonopy_Atoms']
 
 def dump(style, system, **kwargs):
     """
@@ -48,6 +49,9 @@ def dump(style, system, **kwargs):
     
     elif style == 'ase_Atoms':
         return dump_ase_Atoms(system, **kwargs)
+
+    elif style == 'phonopy_Atoms':
+        return dump_phonopy_Atoms(system, **kwargs)
     
     elif style == 'pymatgen_Structure':
         return dump_pymatgen_Structure(system, **kwargs)

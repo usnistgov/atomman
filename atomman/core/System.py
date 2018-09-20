@@ -26,7 +26,7 @@ class System(object):
     def __init__(self, atoms=Atoms(), box=Box(), pbc=(True, True, True),
                  scale=False, symbols=()):
         """
-        Initilize a System by joining an am.Atoms and am.Box instance.
+        Initialize a System by joining an am.Atoms and am.Box instance.
         
         Parameters
         ----------
@@ -65,7 +65,7 @@ class System(object):
         assert len(symbols) <= self.natypes
         self.__symbols = tuple(symbols)
         
-        # Rescale pos if needed
+        # Scale pos if needed
         if scale is True:
             self.atoms_prop('pos', value=atoms.pos, scale=True)
     
@@ -354,8 +354,8 @@ class System(object):
             else:
                 min = spos[:, i].min()
                 max = spos[:, i].max()
-                if min < mins[i]: mins[i] = min - 0.001
-                if max > maxs[i]: maxs[i] = max + 0.001
+                if min <= mins[i]: mins[i] = min - 0.001
+                if max >= maxs[i]: maxs[i] = max + 0.001
         
         # Unscale spos and save to pos
         self.atoms_prop('pos', value=spos, scale=True)
@@ -440,7 +440,7 @@ class System(object):
             The compiled list of neighbors.
         """
         if 'system' in kwargs:
-            raise KeywordError("Parameter 'system' not allowed")
+            raise KeyError("Parameter 'system' not allowed")
         else:
             kwargs['system'] = self
         return NeighborList(**kwargs)
@@ -450,7 +450,7 @@ class System(object):
         Creates a larger system from a given system by replicating it along the
         system's box vectors.
         
-        The multiplier values \*_size are taken to be integer tuples (m, n) where
+        The multiplier values \\*_size are taken to be integer tuples (m, n) where
         m <= 0 and n >= 0.  The system multiplication works such that if n = -m,
         then the seed system's origin will be at the center of the new system.
         If only one integer is given, then it is assigned to m or n depending on
@@ -472,7 +472,7 @@ class System(object):
         -------
         atomman.System
             A new system created by replicating the given seed system according to
-            the \*_size parameters.
+            the \\*_size parameters.
           
         """
         # Extract parameters

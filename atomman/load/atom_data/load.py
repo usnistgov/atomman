@@ -65,7 +65,8 @@ def load(data, pbc=(True, True, True), symbols=None, atom_style='atomic', units=
                 
                 # Read number of atom types
                 elif len(terms) == 3 and terms[1] == 'atom' and terms[2] == 'types': 
-                    natypes = int(terms[0])
+                    #natypes = int(terms[0])
+                    pass
                 
                 # Read boundary info
                 elif len(terms) == 4 and terms[2] == 'xlo' and terms[3] == 'xhi':

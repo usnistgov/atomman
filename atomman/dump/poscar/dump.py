@@ -22,7 +22,7 @@ def dump(system, f=None, header='', symbols=None, style='direct',
         then the content is returned as a str.
     header : str, optional
         The comment line to place at the top of the file. Default value is ''.
-    symbols : list of str, optional
+    symbols : tuple, optional
         List of the element symbols that correspond to the atom types.  If not
         given, will use system.symbols if set, otherwise no element content
         will be included.

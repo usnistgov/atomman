@@ -20,8 +20,10 @@ def dump(system, symbols=None):
     ----------
     system : atomman.System
         A atomman representation of a system.
-    symbols : list
-        A list of element symbols to pair with system's atypes.
+    symbols : tuple, optional
+        List of the element symbols that correspond to the atom types.  If not
+        given, will use system.symbols if set, otherwise no element content
+        will be included.
     
     Returns
     -------

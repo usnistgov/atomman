@@ -113,7 +113,7 @@ class Atoms(object):
         
         # Check atype parameter values
         if atype is not None:
-            atype = np.asarray(atype, dtype=np.uint64)
+            atype = np.asarray(atype, dtype='uint64')
             
             # Handle single atype
             if atype.ndim == 0:
@@ -125,12 +125,12 @@ class Atoms(object):
             else:
                 raise ValueError('Only one atype per atom allowed')
         else:
-            atype = np.array([1], dtype=np.uint64)
+            atype = np.array([1], dtype='uint64')
             natoms_atype = 1
         
         # Check pos parameter values
         if pos is not None:
-            pos = np.asarray(pos, dtype=np.float64)
+            pos = np.asarray(pos, dtype='float64')
             
             # Handle single pos
             if pos.ndim == 1:
@@ -148,7 +148,7 @@ class Atoms(object):
             else:
                 raise ValueError('too many dimensions for pos')
         else:
-            pos = np.zeros((1, 3), dtype=np.float64)
+            pos = np.zeros((1, 3), dtype='float64')
             natoms_pos = 1
         
         # Check natoms parameter values

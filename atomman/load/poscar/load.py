@@ -10,7 +10,7 @@ from ... import Atoms, Box, System
 from ...compatibility import range
 from ...tools import uber_open_rmode
 
-def load(poscar, prop={}):
+def load(poscar, symbols=None, prop={}):
     """
     Reads a poscar-style coordination file for a system.
     
@@ -18,6 +18,10 @@ def load(poscar, prop={}):
     ----------
     poscar : str or file-like object
         The POSCAR content to read
+    symbols : tuple, optional
+        Allows the list of element symbols to be assigned during loading.
+        Useful if the symbols for the model differ from the standard element
+        tags or if the poscar file has no elemental information.
     prop : dict, optional
         Dictionary containing any extra per-atom properties to include.
     
@@ -25,9 +29,6 @@ def load(poscar, prop={}):
     -------
     system : atomman.System
         The system object associated with the poscar file.
-    elements : list
-        The list of elemental symbols corresponding to the system's atom types.
-        Will be a list of None if symbol information is not in poscar.
     """
     
     # Read in all lines of the file
@@ -53,11 +54,16 @@ def load(poscar, prop={}):
         style = lines[7]
         start_i = 8
     
+    # Decode elements if needed
     for i in range(len(elements)):
         try:
             elements[i] = elements[i].decode('UTF-8')
         except:
             pass
+    
+    # Handle elements and symbols
+    if symbols is None:
+        symbols = elements
     
     # Build atype list
     atype = np.array([], dtype='int64')
@@ -89,6 +95,6 @@ def load(poscar, prop={}):
     prop['pos'] = pos
     
     atoms = Atoms(prop=prop)
-    system = System(atoms=atoms, box=box, scale=scale, symbols=elements)
+    system = System(atoms=atoms, box=box, scale=scale, symbols=symbols)
     
     return system

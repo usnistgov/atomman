@@ -8,50 +8,52 @@ import numpy as np
 # atomman imports
 from ... import Atoms, Box, System
 
-#http://pymatgen.org
+# https://atztogo.github.io/phonopy/
 try:
-    import pymatgen as pmg
-    has_pmg = True
+    import phonopy
+    has_phonopy = True
 except:
-    has_pmg = False
+    has_phonopy = False
 
-def load(structure, symbols=None):
+def load(phonopyatoms, symbols=None, prop={}):
     """
-    Convert a pymatgen.Structure into an atomman.System.
+    Convert a phonopy.structure.atoms.PhonopyAtoms into an atomman.System.
     
     Parameters
     ----------
-    structure : pymatgen.Structure
-        A pymatgen representation of a structure.
+    phonopyatoms : phonopy.structure.atoms.PhonopyAtoms
+        A phonopy representation of a collection of atoms, based on ase.Atoms.
     symbols : tuple, optional
         Allows the list of element symbols to be assigned during loading.
         Useful if the symbols for the model differ from the standard element
         tags.
-    
+    prop : dict, optional
+        Dictionary containing any extra per-atom properties to include.
+        
     Returns
     -------
     system : atomman.System
         A atomman representation of a system.
     """
     
-    assert has_pmg, 'pymatgen not imported'
+    assert has_phonopy, 'phonopy not imported'
     
-    # Get box/lattice information
-    box = Box(vects = structure.lattice.matrix)
+    # Get box/cell information
+    box = Box(vects = phonopyatoms.get_cell())
+    pbc = phonopyatoms.get_pbc()
     
     # Get element information
-    all_elements =  np.array([str(symbol) for symbol in structure.species])
+    all_elements = np.array(phonopyatoms.get_chemical_symbols())
     elements, atype = np.unique(all_elements, return_inverse = True)
     if symbols is None:
         symbols = elements
 
     # Get atomic information
-    prop = structure.site_properties
     prop['atype'] = atype + 1
-    prop['pos'] = structure.cart_coords
+    prop['pos'] = phonopyatoms.get_positions()
     atoms = Atoms(prop=prop)
     
     # Build system
-    system = System(atoms=atoms, box=box, symbols=symbols)
+    system = System(atoms=atoms, box=box, pbc=pbc, symbols=symbols)
     
     return system
