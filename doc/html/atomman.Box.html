@@ -1,0 +1,373 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Box &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="System" href="atomman.System.html" />
+    <link rel="prev" title="Atoms" href="atomman.Atoms.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.System.html" title="System"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.Atoms.html" title="Atoms"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="box">
+<h1>Box<a class="headerlink" href="#box" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.Box">
+<em class="property">class </em><code class="descclassname">atomman.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A representation of a triclinic (parallelepiped) box.</p>
+<dl class="attribute">
+<dt id="atomman.Box.a">
+<code class="descname">a</code><a class="headerlink" href="#atomman.Box.a" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The a lattice parameter (magnitude of avect).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.alpha">
+<code class="descname">alpha</code><a class="headerlink" href="#atomman.Box.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The alpha lattice angle in degrees (angle between bvect and cvect).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.avect">
+<code class="descname">avect</code><a class="headerlink" href="#atomman.Box.avect" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Vector associated with the a box dimension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.b">
+<code class="descname">b</code><a class="headerlink" href="#atomman.Box.b" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The b lattice parameter (magnitude of avect).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.beta">
+<code class="descname">beta</code><a class="headerlink" href="#atomman.Box.beta" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The beta lattice angle in degrees (angle between avect and cvect).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.bvect">
+<code class="descname">bvect</code><a class="headerlink" href="#atomman.Box.bvect" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Vector associated with the b box dimension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.c">
+<code class="descname">c</code><a class="headerlink" href="#atomman.Box.c" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The c lattice parameter (magnitude of avect).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.cvect">
+<code class="descname">cvect</code><a class="headerlink" href="#atomman.Box.cvect" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Vector associated with the c box dimension.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.gamma">
+<code class="descname">gamma</code><a class="headerlink" href="#atomman.Box.gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The gamma lattice angle in degrees (angle between avect and bvect).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.is_lammps_norm">
+<code class="descname">is_lammps_norm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.is_lammps_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tests if box is compatible with LAMMPS.
+Note: large box tilt factors not checked.  The LAMMPS command
+‘box tilt large’ may be needed to run LAMMPS.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.lx">
+<code class="descname">lx</code><a class="headerlink" href="#atomman.Box.lx" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS lx box length (avect[0] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.ly">
+<code class="descname">ly</code><a class="headerlink" href="#atomman.Box.ly" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS ly box length (bvect[1] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.lz">
+<code class="descname">lz</code><a class="headerlink" href="#atomman.Box.lz" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS lz box length (cvect[2] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.origin">
+<code class="descname">origin</code><a class="headerlink" href="#atomman.Box.origin" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Box origin position where vects are added to define the box.  Can be set directly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets a Box’s dimensions.  If parameters besides origin are given they
+must completely define the box.  Allowed parameter sets are:</p>
+<ul class="simple">
+<li>no parameters -&gt; box is set to square unit box with origin = [0,0,0].</li>
+<li>origin. -&gt; Only origin is changed (same as setting origin directly).</li>
+<li>vects, (and origin).</li>
+<li>avect, bvect, cvect, (and origin).</li>
+<li>a, b, c, (alpha, beta, gamma, and origin).</li>
+<li>lx, ly, lz, (xy, xz, yz, and origin).</li>
+<li>xlo, xhi, ylo, yhi, zlo, zhi, (xy, xz, and yz).</li>
+</ul>
+<p>See the description of class methods and attributes for more details
+on the allowed parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.set_abc">
+<code class="descname">set_abc</code><span class="sig-paren">(</span><em>a, b, c, alpha=90.0, beta=90.0, gamma=90.0, origin=[0.0, 0.0, 0.0]</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.set_abc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the box using crystal cell lattice parameters and angles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>a</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The a lattice parameter.</li>
+<li><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The b lattice parameter.</li>
+<li><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The c lattice parameter.</li>
+<li><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The alpha lattice angle in degrees (angle between b and c vectors).
+Default value is 90.0.</li>
+<li><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The beta lattice angle in degrees (angle between a and c vectors).
+Default value is 90.0.</li>
+<li><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The gamma lattice angle in degrees (angle between a and b vectors).
+Default value is 90.0.</li>
+<li><strong>origin</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The 3D vector for the box origin position.  Default value is
+(0,0,0).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.set_hi_los">
+<code class="descname">set_hi_los</code><span class="sig-paren">(</span><em>xlo</em>, <em>xhi</em>, <em>ylo</em>, <em>yhi</em>, <em>zlo</em>, <em>zhi</em>, <em>xy=0.0</em>, <em>xz=0.0</em>, <em>yz=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.set_hi_los" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the box using LAMMPS box hi’s, lo’s and tilt factors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>xlo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS xlo box lo term.</li>
+<li><strong>xhi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS xhi box hi term.</li>
+<li><strong>ylo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS ylo box lo term.</li>
+<li><strong>yhi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS yhi box hi term.</li>
+<li><strong>zlo</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS zlo box lo term.</li>
+<li><strong>zhi</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS zhi box hi term.</li>
+<li><strong>xy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the xy direction.  Default value is
+0.0.</li>
+<li><strong>xz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the xz direction.  Default value is
+0.0.</li>
+<li><strong>yz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the yz direction.  Default value is
+0.0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.set_lengths">
+<code class="descname">set_lengths</code><span class="sig-paren">(</span><em>lx, ly, lz, xy=0.0, xz=0.0, yz=0.0, origin=[0.0, 0.0, 0.0]</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.set_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the box using LAMMPS box lengths and tilt factors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS box length in the x direction.</li>
+<li><strong>ly</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS box length in the y direction.</li>
+<li><strong>lz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – The LAMMPS box length in the z direction.</li>
+<li><strong>xy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the xy direction.  Default value is
+0.0.</li>
+<li><strong>xz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the xz direction.  Default value is
+0.0.</li>
+<li><strong>yz</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The LAMMPS box tilt factor in the yz direction.  Default value is
+0.0.</li>
+<li><strong>origin</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The 3D vector for the box origin position.  Default value is
+(0,0,0).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Box.set_vectors">
+<code class="descname">set_vectors</code><span class="sig-paren">(</span><em>avect, bvect, cvect, origin=[0.0, 0.0, 0.0]</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Box.set_vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the box using the three box vectors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>avect</strong> (<em>numpy.ndarray</em>) – The 3D vector for the a box dimension.</li>
+<li><strong>bvect</strong> (<em>numpy.ndarray</em>) – The 3D vector for the b box dimension.</li>
+<li><strong>cvect</strong> (<em>numpy.ndarray</em>) – The 3D vector for the c box dimension.</li>
+<li><strong>origin</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The 3D vector for the box origin position.  Default value is
+(0,0,0).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.vects">
+<code class="descname">vects</code><a class="headerlink" href="#atomman.Box.vects" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Array containing all three box vectors.  Can be set directly.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.xhi">
+<code class="descname">xhi</code><a class="headerlink" href="#atomman.Box.xhi" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS xhi box hi term (origin[0] + lx for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.xlo">
+<code class="descname">xlo</code><a class="headerlink" href="#atomman.Box.xlo" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS xlo box lo term (origin[0] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.xy">
+<code class="descname">xy</code><a class="headerlink" href="#atomman.Box.xy" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS xy box tilt factor (bvect[0] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.xz">
+<code class="descname">xz</code><a class="headerlink" href="#atomman.Box.xz" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS xz box tilt factor (cvect[0] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.yhi">
+<code class="descname">yhi</code><a class="headerlink" href="#atomman.Box.yhi" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS yhi box hi term (origin[1] + ly for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.ylo">
+<code class="descname">ylo</code><a class="headerlink" href="#atomman.Box.ylo" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS ylo box lo term (origin[1] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.yz">
+<code class="descname">yz</code><a class="headerlink" href="#atomman.Box.yz" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS yz box tilt factor (cvect[1] for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.zhi">
+<code class="descname">zhi</code><a class="headerlink" href="#atomman.Box.zhi" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS zhi box hi term (origin[2] + lz for normalized boxes).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Box.zlo">
+<code class="descname">zlo</code><a class="headerlink" href="#atomman.Box.zlo" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – LAMMPS zlo box lo term (origin[2] for normalized boxes).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.Atoms.html"
+                        title="previous chapter">Atoms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.System.html"
+                        title="next chapter">System</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.System.html" title="System"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.Atoms.html" title="Atoms"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

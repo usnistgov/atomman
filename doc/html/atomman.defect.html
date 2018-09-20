@@ -1,0 +1,560 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>defect &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GammaSurface" href="atomman.defect.GammaSurface.html" />
+    <link rel="prev" title="Log" href="atomman.lammps.Log.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.GammaSurface.html" title="GammaSurface"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Log.html" title="Log"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="defect">
+<h1>defect<a class="headerlink" href="#defect" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomman.defect.GammaSurface.html">GammaSurface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.defect.SDVPN.html">SDVPN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.defect.Stroh.html">Stroh</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-atomman.defect">
+<span id="functions-and-attributes"></span><h2>Functions and attributes<a class="headerlink" href="#module-atomman.defect" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="atomman.defect.differential_displacement">
+<code class="descclassname">atomman.defect.</code><code class="descname">differential_displacement</code><span class="sig-paren">(</span><em>system_0</em>, <em>system_1</em>, <em>burgers</em>, <em>plotxaxis='x'</em>, <em>plotyaxis='y'</em>, <em>xlim=None</em>, <em>ylim=None</em>, <em>zlim=None</em>, <em>neighbors=None</em>, <em>cutoff=None</em>, <em>component='standard'</em>, <em>axes=None</em>, <em>plot_scale=1</em>, <em>save_file=None</em>, <em>show=True</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.differential_displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a differential displacement plot for characterizing dislocations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>system_0</strong> (<em>atomman.system</em>) – The base/reference system to use.</li>
+<li><strong>system_1</strong> (<em>atomman.system</em>) – The defect/current system to use.</li>
+<li><strong>burgers</strong> (<em>array-like object</em>) – The dislocation’s Burgers vector.</li>
+<li><strong>plotxaxis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>array-like object</em><em>, </em><em>optional</em>) – Indicates the Cartesian direction associated with the system’s atomic
+coordinates to align with the plotting x-axis.  Values are either 3D
+unit vectors, or strings ‘x’, ‘y’, or ‘z’ for the Cartesian axes
+directions.  plotxaxis and plotyaxis must be orthogonal.  Default value
+is ‘x’ = [1, 0, 0].</li>
+<li><strong>plotyaxis</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>array-like object</em><em>, </em><em>optional</em>) – Indicates the Cartesian direction associated with the system’s atomic
+coordinates to align with the plotting y-axis.  Values are either 3D
+unit vectors, or strings ‘x’, ‘y’, or ‘z’ for the Cartesian axes
+directions.  plotxaxis and plotyaxis must be orthogonal.  Default value
+is ‘y’ = [0, 1, 0].</li>
+<li><strong>xlim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – The minimum and maximum coordinates along the plotting x-axis to
+include in the fit.  Values are taken in the specified length_unit.
+If not given, then the limits are set based on min and max atomic
+coordinates along the plotting axis.</li>
+<li><strong>ylim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – The minimum and maximum coordinates along the plotting y-axis to
+include in the fit.  Values are taken in the specified length_unit.
+If not given, then the limits are set based on min and max atomic
+coordinates along the plotting axis.</li>
+<li><strong>zlim</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – The minimum and maximum coordinates normal to the plotting axes
+(i.e. plotxaxis X plotyaxis) to include in the fit.  Values are taken
+in the specified length_unit.  The optimum zlim should encompass only
+a single periodic slice.  If not given, then the limits are set
+based on min and max atomic coordinates along the axis.</li>
+<li><strong>neighbors</strong> (<a class="reference internal" href="atomman.NeighborList.html#atomman.NeighborList" title="atomman.NeighborList"><em>atomman.NeighborList</em></a><em>, </em><em>optional</em>) – The neighbor list associated with system_0 to use.  Either neighbors
+or cutoff must be given, or system_0 must have a neighbors attribute.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Cutoff distance for computing a neighbor list for system_0.  Either
+neighbors or cutoff must be given, or system_0 have a neighbors
+attribute.</li>
+<li><strong>component</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Indicates the style of the calculation to use.  ‘standard’ (default)
+plots the differential displacements between atoms in the Burgers
+direction.  ‘xy’ plots the differential displacements within the xy
+plotting plane.  This is useful for screw dislocations with localized
+non-screw components.</li>
+<li><strong>axes</strong> (<em>arraly-like object</em><em>, </em><em>optional</em>) – 3x3 transformation array to apply to the Burgers vector to make it
+correspond to the system’s orientation.</li>
+<li><strong>plot_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Scalar for multiplying the magnitude of the differential displacement
+arrows.  Default value is 1 (no scaling).</li>
+<li><strong>save_file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – If given then the plot will be saved to a file with this name.</li>
+<li><strong>show</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag for showing the figure. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.disregistry">
+<code class="descclassname">atomman.defect.</code><code class="descname">disregistry</code><span class="sig-paren">(</span><em>basesystem, dislsystem, spreadvector=[1.0, 0.0, 0.0], planenormal=[0.0, 1.0, 0.0], planepos=[0.0, 0.0, 0.0]</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.disregistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the disregistry profile for a dislocation system.  Assumes that
+the dislocation line is along the z-axis and the slip plane is the y=0
+plane.  These assumptions match how atomman.defect.Stroh generates
+dislocations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>basesystem</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – A perfect reference system with atoms directly corresponding to atoms
+in dislsystem.</li>
+<li><strong>dislsystem</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – A dislocation-containing system.</li>
+<li><strong>spreadvector</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Unit vector defining the direction associated with the coord-coordinate
+spreading along the slip plane.  Default value is [1, 0, 0]
+(Cartesian coord-coordinates).</li>
+<li><strong>planenormal</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Unit vector defining the normal to the slip plane.  Must be
+perpendicular to spreadvector.  Default value is [0, 1, 0] (Cartesian
+y-axis).</li>
+<li><strong>planepos</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – A position on the slip plane so that the plane can be fully defined.
+The slip plane position should fall between two planes of atoms.
+Default value is [0,0,0].</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>coord</strong> (<em>numpy.ndarray</em>) – The (N,) array of unique coord-coordinates (atomic columns) neighboring
+the slip plane.</li>
+<li><strong>disregistry</strong> (<em>numpy.ndarray</em>) – A (N, 3) array of the dislocation’s disregistry at each coord.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.dumbbell">
+<code class="descclassname">atomman.defect.</code><code class="descname">dumbbell</code><span class="sig-paren">(</span><em>system</em>, <em>pos=None</em>, <em>ptd_id=None</em>, <em>db_vect=None</em>, <em>scale=False</em>, <em>atol=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.dumbbell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new system by adding a dumbbell interstitial point defect.</p>
+<p>1. Copies the indicated atom and moves both the original and copy to the
+end of the Atoms list.
+2. Displaces the dumbbell atoms position’s by +-db_vect.
+3. Adds per-atom property old_id if it doesn’t exist corresponding to the
+atom ids in the original system.
+4. Sets any of the new atom’s per-atom properties to values given as</p>
+<blockquote>
+<div>kwargs.  Any undefined properties are left unchanged.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Position of the atom being modified.  Either pos or ptd_id must be
+given.</li>
+<li><strong>ptd_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Id of the atom to be modified.  Either pos or ptd_id must be given.</li>
+<li><strong>db_vect</strong> (<em>array-like object</em>) – Vector shift to apply to the atoms in the dumbbell.</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if pos and db_vect are Cartesian (False) or box-relative
+(True).  Default value is False.</li>
+<li><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Absolute tolerance for position-based searching. Default value is 0.01
+angstroms.</li>
+<li><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Keyword arguments corresponding to per-atom property values for the
+new atom in the dumbbell.  By default, all properties are left
+unchanged (i.e. same as atom that was copied).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system with the dumbbell added.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.interstitial">
+<code class="descclassname">atomman.defect.</code><code class="descname">interstitial</code><span class="sig-paren">(</span><em>system</em>, <em>pos</em>, <em>scale=False</em>, <em>atol=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.interstitial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new system by adding an interstitial point defect.
+1. Adds a new atom to the end of the Atoms list.
+2. Adds per-atom property old_id if it doesn’t exist corresponding to the
+atom ids in the original system.
+3. Sets any of the new atom’s per-atom properties to values given as
+kwargs.  Any undefined properties are given zero values except atype,
+which is set to 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object</em>) – Position of the atom being added.</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if pos is Cartesian (False) or box-relative (True).  Default
+value is False.</li>
+<li><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Absolute tolerance for position-based searching. Default value is 0.01
+angstroms.</li>
+<li><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Keyword arguments corresponding to per-atom property values for the
+new atom.  By default, atype==1 and all other properties are set to
+be all zeros for the property’s shape.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system with the interstitial added.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.nye_tensor">
+<code class="descclassname">atomman.defect.</code><code class="descname">nye_tensor</code><span class="sig-paren">(</span><em>system</em>, <em>p_vectors</em>, <em>theta_max=27</em>, <em>axes=None</em>, <em>neighbors=None</em>, <em>cutoff=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.nye_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes strain properties and Nye tensor for a defect containing system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The atomic system to compute the per-atom strain properties and Nye
+tensor for.</li>
+<li><strong>p_vectors</strong> (<em>array-like object</em>) – List(s) of radial distance vectors between each atom and its nearest
+neighbors in a perfect crystal setting.  If one list of p_vectors is
+given, then it is applied to all atoms.</li>
+<li><strong>theta_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The maximum theta angle in degrees to use when searching for matches
+between p vectors and q vectors.  Optimum values are dependent on the
+crystal structure. Default value is 27, which is the original value
+used for fcc crystals.</li>
+<li><strong>axes</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – 3x3 array of right-handed orthogonal axes.  If given, will be used to
+transform the p_vectors before computing the Nye tensor.</li>
+<li><strong>neighbors</strong> (<a class="reference internal" href="atomman.NeighborList.html#atomman.NeighborList" title="atomman.NeighborList"><em>atomman.NeighborList</em></a><em>, </em><em>optional</em>) – The neighbor list associated with system to use.  Either neighbors
+or cutoff must be given, or system must have a neighbors attribute.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Cutoff distance for computing a neighbor list for system.  Either
+neighbors or cutoff must be given, or system have a neighbors
+attribute.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Contains the per-atom properties ‘strain’, ‘strain_invariant_1’,
+‘strain_invariant_2’, ‘angular_velocity’, and ‘Nye_tensor’.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)">dict</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.nye_tensor_p">
+<code class="descclassname">atomman.defect.</code><code class="descname">nye_tensor_p</code><span class="sig-paren">(</span><em>system</em>, <em>neighbors=None</em>, <em>cutoff=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.nye_tensor_p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a list of p vectors for each atom to be used by the nye_tensor()
+function.  The p vectors correspond to the radial distance vectors between
+an atom and each of its neighbors within a cutoff distance in a “perfect
+crystal” reference state.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<em>atomman.system</em>) – The base/reference system to use.  This should be a defect-free
+perfect crystal system with atom ids directly corresponding to atoms
+in any system that you want to analyze with the Nye tensor.</li>
+<li><strong>neighbors</strong> (<a class="reference internal" href="atomman.NeighborList.html#atomman.NeighborList" title="atomman.NeighborList"><em>atomman.NeighborList</em></a><em>, </em><em>optional</em>) – The neighbor list associated with system to use.  Either neighbors
+or cutoff must be given, or system must have a neighbors attribute.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Cutoff distance for computing a neighbor list for system.  Either
+neighbors or cutoff must be given, or system have a neighbors
+attribute.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The list of p distance vectors for each atom in system.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.pn_arctan_disregistry">
+<code class="descclassname">atomman.defect.</code><code class="descname">pn_arctan_disregistry</code><span class="sig-paren">(</span><em>xmax=None</em>, <em>xstep=None</em>, <em>xnum=None</em>, <em>burgers=array([ 1.</em>, <em>0.</em>, <em>0.])</em>, <em>halfwidth=1</em>, <em>normalize=True</em>, <em>shift=True</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.pn_arctan_disregistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the classic Peierls-Nabarro arctan disregistry for an array of
+points x.</p>
+<blockquote>
+<div>δ(x) = b / π * arctan(x / ξ) + b / 2</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>xmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a><em>, </em><em>optional</em>) – Maximum value of x to use.  Minimum value is taken as -xmax.  At least
+2 of xmax, xstep, and xnum must be not None.  Default value is None.</li>
+<li><strong>xstep</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a><em>, </em><em>optional</em>) – Step size to use between each x value.  At least 2 of xmax, xstep, and
+xnum must be not None.  Default value is None.</li>
+<li><strong>xnum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a><em>, </em><em>optional</em>) – Number of x values to use.  At least 2 of xmax, xstep, and xnum must
+be not None.  Default value is None.</li>
+<li><strong>burgers</strong> (<em>numpy.ndarray</em><em>, </em><em>optional</em>) – The Burgers vector for the dislocation. Default value is [1, 0, 0].</li>
+<li><strong>halfwidth</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – The dislocation halfwidth to use. Default value is 1.</li>
+<li><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the disregistry values will be scaled such that the
+two endpoints differ by exactly one Burgers vector.</li>
+<li><strong>shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – If True (default), the disregistry will range [0, 0, 0] to burgers.
+If False, the disregistry will range from -burgers to burgers.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>x</strong> (<em>numpy.ndarray</em>) – The x-coordinates for the disregistry values.</li>
+<li><strong>disregistry</strong> (<em>numpy.ndarray</em>) – The disregistry vector at each x-coordinate.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.point">
+<code class="descclassname">atomman.defect.</code><code class="descname">point</code><span class="sig-paren">(</span><em>system</em>, <em>ptd_type='v'</em>, <em>pos=None</em>, <em>ptd_id=None</em>, <em>db_vect=None</em>, <em>scale=False</em>, <em>atol=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new System where a point defect has been inserted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The base System to add the defect to.</li>
+<li><strong>ptd_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Key indicating which type of defect to add. Default value is ‘v’:
+- ‘v’ : vacancy.
+- ‘i’ : positional interstitial.
+- ‘s’ : substitutional.
+- ‘db’ : dumbbell interstitial.</li>
+<li><strong>pos</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Position for adding the defect atom (all styles).</li>
+<li><strong>ptd_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Atom id where defect is added.  Alternative to using pos
+(‘v’, ‘s’, ‘db’ styles).</li>
+<li><strong>db_vect</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Vector associated with the dumbbell interstitial (‘db’ style).</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if pos and db_vect are Cartesian (False) or box-relative
+(True). Default value is False.</li>
+<li><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Absolute tolerance for position-based searching. Default value is 0.01
+angstroms.</li>
+<li><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Keyword arguments corresponding to per-atom property values for the
+new atom (‘i’, ‘s’, ‘db’ styles).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#AssertionError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">AssertionError</span></code></a> – If parameters are given for styles that don’t allow them.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> – If an invalid ptd_type is given.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system containing the defect.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.slip_vector">
+<code class="descclassname">atomman.defect.</code><code class="descname">slip_vector</code><span class="sig-paren">(</span><em>system_0</em>, <em>system_1</em>, <em>neighbors=None</em>, <em>cutoff=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.slip_vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the slip vectors for all atoms.  Note that this differs from the
+original formulation in that it is not normalized by number of slipped
+neighbors.</p>
+<blockquote>
+<div>s_i = -Σ_j d_ij(t) - d_ij(0)</div></blockquote>
+<p>where j is neighbor atoms of atom i, and d_ij() is vector distance between
+atoms i and j at time t.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system_0</strong> (<em>atomman.system</em>) – The base/reference system to use.</li>
+<li><strong>system_1</strong> (<em>atomman.system</em>) – The defect/current system to use.</li>
+<li><strong>neighbors</strong> (<a class="reference internal" href="atomman.NeighborList.html#atomman.NeighborList" title="atomman.NeighborList"><em>atomman.NeighborList</em></a><em>, </em><em>optional</em>) – The neighbor list associated with system_0 to use.  Either neighbors
+or cutoff must be given, or system_0 must have a neighbors attribute.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Cutoff distance for computing a neighbor list for system_0.  Either
+neighbors or cutoff must be given, or system_0 have a neighbors
+attribute.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The computed slip vectors.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.substitutional">
+<code class="descclassname">atomman.defect.</code><code class="descname">substitutional</code><span class="sig-paren">(</span><em>system</em>, <em>pos=None</em>, <em>ptd_id=None</em>, <em>atype=1</em>, <em>scale=False</em>, <em>atol=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.substitutional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new system by adding a substitutional point defect.
+1. Moves the indicated atom to the end of the list and changes its atype
+to the value given.
+2. Adds per-atom property old_id if it doesn’t exist corresponding to the
+atom ids in the original system.
+3. Sets any of the moved atom’s per-atom properties to values given as
+kwargs.  Any undefined properties are left unchanged.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Position of the atom being modified.  Either pos or ptd_id must be
+given.</li>
+<li><strong>ptd_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Id of the atom to be modified.  Either pos or ptd_id must be given.</li>
+<li><strong>atype</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Integer atomic type to change the identified atom to.  Must be
+different than the atom’s current id.  Default value is 1.</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if pos is Cartesian (False) or box-relative (True).  Default
+value is False.</li>
+<li><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Absolute tolerance for position-based searching. Default value is 0.01
+angstroms.</li>
+<li><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Keyword arguments corresponding to per-atom property values for the
+modified atom.  By default, all properties (except atype) are left
+unchanged.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system with the substitutional added.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.defect.vacancy">
+<code class="descclassname">atomman.defect.</code><code class="descname">vacancy</code><span class="sig-paren">(</span><em>system</em>, <em>pos=None</em>, <em>ptd_id=None</em>, <em>scale=False</em>, <em>atol=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.vacancy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a new system by adding a vacancy point defect.
+1. Removes the indicated atom from the system
+2. Adds per-atom property old_id if it doesn’t exist corresponding to the
+atom ids in the original system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – Position of the atom to be removed.  Either pos or ptd_id must be
+given.</li>
+<li><strong>ptd_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Id of the atom to be removed.  Either pos or ptd_id must be given.</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if pos is Cartesian (False) or box-relative (True). Default
+value is False.</li>
+<li><strong>atol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Absolute tolerance for position-based searching. Default value is 0.01
+angstroms.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system with the vacancy added.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">defect</a><ul>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#module-atomman.defect">Functions and attributes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.lammps.Log.html"
+                        title="previous chapter">Log</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.defect.GammaSurface.html"
+                        title="next chapter">GammaSurface</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.GammaSurface.html" title="GammaSurface"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Log.html" title="Log"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

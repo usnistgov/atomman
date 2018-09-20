@@ -1,0 +1,1787 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to atomman: Point defect generation &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to atomman: Stroh class" href="04.2._Stroh_class.html" />
+    <link rel="prev" title="Introduction to atomman: Defect Creation and Analysis" href="04._Defect_Creation_and_Analysis.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="04.2._Stroh_class.html" title="Introduction to atomman: Stroh class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="04._Defect_Creation_and_Analysis.html" title="Introduction to atomman: Defect Creation and Analysis"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tutorials</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-atomman:-Point-defect-generation">
+<h1>Introduction to atomman: Point defect generation<a class="headerlink" href="#Introduction-to-atomman:-Point-defect-generation" title="Permalink to this headline">¶</a></h1>
+<p><strong>Lucas M. Hale</strong>,
+<a class="reference external" href="mailto:lucas&#46;hale&#37;&#52;&#48;nist&#46;gov?Subject=ipr-demo">lucas<span>&#46;</span>hale<span>&#64;</span>nist<span>&#46;</span>gov</a>,
+<em>Materials Science and Engineering Division, NIST</em>.</p>
+<p>Notebook last updated: 2018-04-05</p>
+<p><a class="reference external" href="http://www.nist.gov/public_affairs/disclaimer.cfm">Disclaimers</a></p>
+<div class="section" id="1.-Introduction">
+<h2>1. Introduction<a class="headerlink" href="#1.-Introduction" title="Permalink to this headline">¶</a></h2>
+<p>This Notebook provides an introduction to tools in atomman for
+generating point defects.</p>
+<p><strong>Library Imports</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Standard libraries</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="c1"># http://www.numpy.org/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># https://github.com/usnistgov/atomman</span>
+<span class="kn">import</span> <span class="nn">atomman</span> <span class="k">as</span> <span class="nn">am</span>
+<span class="kn">import</span> <span class="nn">atomman.unitconvert</span> <span class="k">as</span> <span class="nn">uc</span>
+
+<span class="c1"># Show atomman version</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atomman version =&#39;</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+atomman version = 1.2.0
+</pre></div></div>
+</div>
+<p>Define 2x2x2 CsCl supercell for testing</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">atoms</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">Atoms</span><span class="p">(</span><span class="n">atype</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">pos</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]],</span> <span class="n">charge</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">alat</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">4.11</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">alat</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">alat</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">alat</span><span class="p">)</span>
+<span class="n">ucell</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">System</span><span class="p">(</span><span class="n">atoms</span><span class="o">=</span><span class="n">atoms</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">ucell</span><span class="o">.</span><span class="n">supersize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 16
+natypes = 2
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="2.-atomman.defect.vacancy()">
+<h2>2. atomman.defect.vacancy()<a class="headerlink" href="#2.-atomman.defect.vacancy()" title="Permalink to this headline">¶</a></h2>
+<p>Generates a new system by adding a vacancy point defect.</p>
+<ol class="arabic simple">
+<li>Removes the indicated atom from the system</li>
+<li>Adds per-atom property old_id if it doesn’t exist corresponding to
+the atom ids in the original system.</li>
+</ol>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object, optional</em>) Position of the atom to be
+removed. Either pos or ptd_id must be given.</li>
+<li><strong>ptd_id</strong> (<em>int, optional</em>) Id of the atom to be removed. Either
+pos or ptd_id must be given.</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) Indicates if pos is Cartesian (False) or
+box-relative (True). Default value is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) Absolute tolerance for position-based
+searching. Default value is 1e-3 angstroms.</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>atomman.System</em>) A new system with the vacancy added.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Add a vacancy by deleting atom 5</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">vacancy</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># Add a second vacancy by deleting atom at position [0.00, 4.110, 4.110]</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">vacancy</span><span class="p">(</span><span class="n">d_system</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">4.11</span><span class="p">,</span> <span class="mf">4.11</span><span class="p">])</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">d_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 14
+natypes = 2
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+      <th>old_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>15</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="3.-atomman.defect.interstitial()">
+<h2>3. atomman.defect.interstitial()<a class="headerlink" href="#3.-atomman.defect.interstitial()" title="Permalink to this headline">¶</a></h2>
+<p>Generates a new system by adding a vacancy point defect.</p>
+<ol class="arabic simple">
+<li>Adds a new atom to the end of the Atoms list.</li>
+<li>Adds per-atom property old_id if it doesn’t exist corresponding to
+the atom ids in the original system.</li>
+<li>Sets any of the new atom’s per-atom properties to values given as
+kwargs. Any undefined properties are given zero values except atype,
+which is set to 1.</li>
+</ol>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object</em>) Position of the atom being added.</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) Indicates if pos is Cartesian (False) or
+box-relative (True). Default value is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) Absolute tolerance for position-based
+searching. Default value is 1e-3 angstroms.</li>
+<li><strong>**kwargs</strong> (<em>any, optional</em>) Keyword arguments corresponding to
+per-atom property values for the new atom. By default, atype==1 and
+all other properties are set to be all zeros for the property’s
+shape.</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>atomman.System</em>) A new system with the interstitial added.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Add interstitial at pos = [1.515, 1.515, 0.000] without defining atype, charge</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">interstitial</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">1.515</span><span class="p">,</span> <span class="mf">1.515</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c1"># Add second interstitial at pos = [1.515, 4.545, 0.000] with defining atype, charge</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">interstitial</span><span class="p">(</span><span class="n">d_system</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">1.515</span><span class="p">,</span> <span class="mf">4.545</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">atype</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">d_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 18
+natypes = 2
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+      <th>old_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1</td>
+      <td>1.515</td>
+      <td>1.515</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2</td>
+      <td>1.515</td>
+      <td>4.545</td>
+      <td>0.000</td>
+      <td>1.0</td>
+      <td>17</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="4.-atomman.defect.substitutional()">
+<h2>4. atomman.defect.substitutional()<a class="headerlink" href="#4.-atomman.defect.substitutional()" title="Permalink to this headline">¶</a></h2>
+<p>Generates a new system by adding a substitutional point defect.</p>
+<ol class="arabic simple">
+<li>Moves the indicated atom to the end of the list and changes its atype
+to the value given.</li>
+<li>Adds per-atom property old_id if it doesn’t exist corresponding to
+the atom ids in the original system.</li>
+<li>Sets any of the moved atom’s per-atom properties to values given as
+kwargs. Any undefined properties are left unchanged.</li>
+</ol>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object, optional</em>) Position of the atom being
+modified. Either pos or ptd_id must be given.</li>
+<li><strong>ptd_id</strong> (<em>int, optional</em>) Id of the atom to be modified. Either
+pos or ptd_id must be given.</li>
+<li><strong>atype</strong> (<em>int, optional</em>) Integer atomic type to change the
+identified atom to. Must be different than the atom’s current id.
+Default value is 1.</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) Indicates if pos is Cartesian (False) or
+box-relative (True). Default value is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) Absolute tolerance for position-based
+searching. Default value is 1e-3 angstroms.</li>
+<li><strong>**kwargs</strong> (<em>any, optional</em>) Keyword arguments corresponding to
+per-atom property values for the modified atom. By default, all
+properties (except atype) are left unchanged.</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>atomman.System</em>) A new system with the substitutional added.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Make atom 1 a substitutional without changing charge</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">substitutional</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">atype</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Add second substitutional at pos = [0.00, 4.11, 4.11] and change charge</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">substitutional</span><span class="p">(</span><span class="n">d_system</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">4.11</span><span class="p">,</span> <span class="mf">4.11</span><span class="p">],</span> <span class="n">atype</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">d_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 16
+natypes = 3
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+      <th>old_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>3</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>1.0</td>
+      <td>12</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+<div class="section" id="5.-atomman.defect.dumbbell()">
+<h2>5. atomman.defect.dumbbell()<a class="headerlink" href="#5.-atomman.defect.dumbbell()" title="Permalink to this headline">¶</a></h2>
+<p>Generates a new system by adding a dumbbell interstitial point defect.</p>
+<ol class="arabic simple">
+<li>Copies the indicated atom and moves both the original and copy to the
+end of the Atoms list.</li>
+<li>Displaces the dumbbell atoms position’s by +-db_vect.</li>
+<li>Adds per-atom property old_id if it doesn’t exist corresponding to
+the atom ids in the original system.</li>
+<li>Sets any of the new atom’s per-atom properties to values given as
+kwargs. Any undefined properties are left unchanged.</li>
+</ol>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) The base System to add the defect to.</li>
+<li><strong>pos</strong> (<em>array-like object, optional</em>) Position of the atom being
+modified. Either pos or ptd_id must be given.</li>
+<li><strong>ptd_id</strong> (<em>int, optional</em>) Id of the atom to be modified. Either
+pos or ptd_id must be given.</li>
+<li><strong>db_vect</strong> (<em>array-like object</em>) Vector shift to apply to the atoms
+in the dumbbell.</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) Indicates if pos and db_vect are
+Cartesian (False) or box-relative (True). Default value is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) Absolute tolerance for position-based
+searching. Default value is 1e-3 angstroms.</li>
+<li><strong>**kwargs</strong> (<em>any, optional</em>) Keyword arguments corresponding to
+per-atom property values for the new atom in the dumbbell. By
+default, all properties are left unchanged (i.e. same as atom that
+was copied).</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>atomman.System</em>) A new system with the dumbbell added.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Turn atom 5 into a dumbbell</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">dumbbell</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">db_vect</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">d_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 17
+natypes = 2
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+      <th>old_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>1.555</td>
+      <td>5.665</td>
+      <td>1.555</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2</td>
+      <td>2.555</td>
+      <td>6.665</td>
+      <td>2.555</td>
+      <td>1.0</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show that dumbbell atoms are separated by 2 * db_vect</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(d_system.atoms.pos[-1] - d_system.atoms.pos[-2]) / 2 -&gt;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">d_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(d_system.atoms.pos[-1] - d_system.atoms.pos[-2]) / 2 -&gt; [ 0.5  0.5  0.5]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="6.-atomman.defect.point()">
+<h2>6. atomman.defect.point()<a class="headerlink" href="#6.-atomman.defect.point()" title="Permalink to this headline">¶</a></h2>
+<p>Generates a new System where a point defect has been inserted. Provides
+a common interface for the vacancy(), interstitial(), substitutional()
+and dumbbell() functions.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) The base System to add the defect to.</li>
+<li><strong>ptd_type</strong> (<em>str, optional</em>) Key indicating which type of defect
+to add. Default value is ‘v’:<ul>
+<li>‘v’ : vacancy.</li>
+<li>‘i’ : positional interstitial.</li>
+<li>‘s’ : substitutional.</li>
+<li>‘db’ : dumbbell interstitial.</li>
+</ul>
+</li>
+<li><strong>pos</strong> (<em>array-like object, optional</em>) Position for adding the
+defect atom (all styles).</li>
+<li><strong>ptd_id</strong> (<em>int, optional</em>) Atom id where defect is added.
+Alternative to using pos (‘v’, ‘s’, ‘db’ styles).</li>
+<li><strong>db_vect</strong> (<em>array-like object, optional</em>) Vector associated with
+the dumbbell interstitial (‘db’ style).</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) Indicates if pos and db_vect are
+Cartesian (False) or box-relative (True). Default value is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) Absolute tolerance for position-based
+searching. Default value is 1e-3 angstroms.</li>
+<li><strong>**kwargs</strong> (<em>any, optional</em>) Keyword arguments corresponding to
+per-atom property values for the new/modified atom (‘i’, ‘s’, ‘db’
+styles).</li>
+</ul>
+<p>Raises</p>
+<ul class="simple">
+<li>(<em>AssertionError</em>) If parameters are given for styles that don’t
+allow them.</li>
+<li>(<em>ValueError</em>) If an invalid ptd_type is given.</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>atomman.System</em>) A new system containing the defect.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Use point() to make atom 7 a dumbbell of two atoms of atype 3</span>
+
+<span class="c1"># ptd_type &#39;s&#39; changes atom 7 and moves to last atom</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">point</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">atype</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">charge</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># ptd_type &#39;db&#39; turns last atom into dumbbell, copying per-atom properties</span>
+<span class="n">d_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">point</span><span class="p">(</span><span class="n">d_system</span><span class="p">,</span> <span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">db_vect</span><span class="o">=</span><span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
+
+<span class="c1"># Print system information</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d_system</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natoms =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natoms</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;natypes =&#39;</span><span class="p">,</span> <span class="n">d_system</span><span class="o">.</span><span class="n">natypes</span><span class="p">)</span>
+<span class="n">d_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+avect =  [ 8.220,  0.000,  0.000]
+bvect =  [ 0.000,  8.220,  0.000]
+cvect =  [ 0.000,  0.000,  8.220]
+origin = [ 0.000,  0.000,  0.000]
+natoms = 17
+natypes = 3
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>atype</th>
+      <th>pos[0]</th>
+      <th>pos[1]</th>
+      <th>pos[2]</th>
+      <th>charge</th>
+      <th>old_id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>1.0</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>-1.0</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>2.055</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>1</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>4.110</td>
+      <td>-1.0</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>6.165</td>
+      <td>1.0</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>3</td>
+      <td>5.565</td>
+      <td>6.165</td>
+      <td>1.455</td>
+      <td>-0.5</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>3</td>
+      <td>6.765</td>
+      <td>6.165</td>
+      <td>2.655</td>
+      <td>-0.5</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to atomman: Point defect generation</a><ul>
+<li><a class="reference internal" href="#1.-Introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#2.-atomman.defect.vacancy()">2. atomman.defect.vacancy()</a></li>
+<li><a class="reference internal" href="#3.-atomman.defect.interstitial()">3. atomman.defect.interstitial()</a></li>
+<li><a class="reference internal" href="#4.-atomman.defect.substitutional()">4. atomman.defect.substitutional()</a></li>
+<li><a class="reference internal" href="#5.-atomman.defect.dumbbell()">5. atomman.defect.dumbbell()</a></li>
+<li><a class="reference internal" href="#6.-atomman.defect.point()">6. atomman.defect.point()</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="04._Defect_Creation_and_Analysis.html"
+                        title="previous chapter">Introduction to atomman: Defect Creation and Analysis</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="04.2._Stroh_class.html"
+                        title="next chapter">Introduction to atomman: Stroh class</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="04.2._Stroh_class.html" title="Introduction to atomman: Stroh class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="04._Defect_Creation_and_Analysis.html" title="Introduction to atomman: Defect Creation and Analysis"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tutorials</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

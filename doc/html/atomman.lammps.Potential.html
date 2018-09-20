@@ -1,0 +1,241 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Potential &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Log" href="atomman.lammps.Log.html" />
+    <link rel="prev" title="lammps" href="atomman.lammps.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Log.html" title="Log"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.html" title="lammps"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.lammps.html" accesskey="U">lammps</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="potential">
+<h1>Potential<a class="headerlink" href="#potential" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.lammps.Potential">
+<em class="property">class </em><code class="descclassname">atomman.lammps.</code><code class="descname">Potential</code><span class="sig-paren">(</span><em>model</em>, <em>pot_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Potential" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for building LAMMPS input lines from a potential-LAMMPS data model.</p>
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.atom_style">
+<code class="descname">atom_style</code><a class="headerlink" href="#atomman.lammps.Potential.atom_style" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – LAMMPS atom_style option.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Potential.elements">
+<code class="descname">elements</code><span class="sig-paren">(</span><em>symbols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Potential.elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of element names associated with atom-model symbols.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symbols</strong> (<em>list of str</em><em>, </em><em>optional</em>) – A list of atom-model symbols.  If None (default), will use all of
+the potential’s symbols.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The str element symbols corresponding to the atom-model symbols.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.id">
+<code class="descname">id</code><a class="headerlink" href="#atomman.lammps.Potential.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Human-readable identifier for the LAMMPS implementation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.key">
+<code class="descname">key</code><a class="headerlink" href="#atomman.lammps.Potential.key" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – uuid hash-key for the LAMMPS implementation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Potential.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>model</em>, <em>pot_dir=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Potential.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads potential-LAMMPS data model info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – A JSON/XML data model containing a potential-LAMMPS branch.</li>
+<li><strong>pot_dir</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The path to a directory containing any artifacts associated with
+the potential.  Default value is None, which assumes any required
+files will be in the working directory when LAMMPS is executed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Potential.masses">
+<code class="descname">masses</code><span class="sig-paren">(</span><em>symbols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Potential.masses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of atomic/ionic masses associated with atom-model
+symbols.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symbols</strong> (<em>list of str</em><em>, </em><em>optional</em>) – A list of atom-model symbols.  If None (default), will use all of
+the potential’s symbols.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The atomic/ionic masses corresponding to the atom-model symbols.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list of float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Potential.pair_info">
+<code class="descname">pair_info</code><span class="sig-paren">(</span><em>symbols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Potential.pair_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the LAMMPS input command lines associated with the Potential
+and a list of atom-model symbols.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>symbols</strong> (<em>list of str</em><em>, </em><em>optional</em>) – List of atom-model symbols corresponding to the unique atom types
+in a system.  If None (default), then all atom-model symbols will
+be included in the order that they are listed in the data model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The LAMMPS input command lines that specifies the potential.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.pair_style">
+<code class="descname">pair_style</code><a class="headerlink" href="#atomman.lammps.Potential.pair_style" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.pot_dir">
+<code class="descname">pot_dir</code><a class="headerlink" href="#atomman.lammps.Potential.pot_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The directory containing files associated with a given potential.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.potid">
+<code class="descname">potid</code><a class="headerlink" href="#atomman.lammps.Potential.potid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – Human-readable identifier for the potential model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.potkey">
+<code class="descname">potkey</code><a class="headerlink" href="#atomman.lammps.Potential.potkey" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – uuid hash-key for the potential model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.symbols">
+<code class="descname">symbols</code><a class="headerlink" href="#atomman.lammps.Potential.symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em> – All atom-model symbols.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Potential.units">
+<code class="descname">units</code><a class="headerlink" href="#atomman.lammps.Potential.units" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – LAMMPS units option.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.lammps.html"
+                        title="previous chapter">lammps</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.lammps.Log.html"
+                        title="next chapter">Log</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Log.html" title="Log"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.html" title="lammps"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.lammps.html" >lammps</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

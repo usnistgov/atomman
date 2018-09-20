@@ -1,0 +1,440 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>System &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ElasticConstants" href="atomman.ElasticConstants.html" />
+    <link rel="prev" title="Box" href="atomman.Box.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.ElasticConstants.html" title="ElasticConstants"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.Box.html" title="Box"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="system">
+<h1>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.System">
+<em class="property">class </em><code class="descclassname">atomman.</code><code class="descname">System</code><span class="sig-paren">(</span><em>atoms=&lt;atomman.core.Atoms.Atoms object&gt;</em>, <em>box=&lt;atomman.core.Box.Box object&gt;</em>, <em>pbc=(True</em>, <em>True</em>, <em>True)</em>, <em>scale=False</em>, <em>symbols=()</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>A representation of an atomic system.  This combines Atoms with Box and
+adds methods and attributes involving both.</p>
+<dl class="attribute">
+<dt id="atomman.System.atoms">
+<code class="descname">atoms</code><a class="headerlink" href="#atomman.System.atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>atomman.Atoms</em> – underlying Atoms object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.atoms_df">
+<code class="descname">atoms_df</code><span class="sig-paren">(</span><em>scale=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.atoms_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends Atoms.df() by adding a scale argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Indicates if/which per-atom properties are to be scaled to box
+relative values.  If False (default), no properties will be scaled.
+If True, pos will be scaled.  Multiple properties can be scaled by
+providing a list of the property names to scale.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Tabulated DataFrame version of the atomic data.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.atoms_prop">
+<code class="descname">atoms_prop</code><span class="sig-paren">(</span><em>key=None</em>, <em>index=None</em>, <em>value=None</em>, <em>a_id=None</em>, <em>scale=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.atoms_prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends Atoms.prop() by adding a scale argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Per-atom property name.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.6)"><em>slice</em></a><em>, </em><em>optional</em>) – Index of atoms.</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Property values to assign.</li>
+<li><strong>a_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Integer atom index.  Left in for backwards compatibility.</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if values should be scaled/unscaled. If True:
+- Values being retrieved are scaled from absolute Cartesian to box relative vectors.
+- Values being set are unscaled from box relative to absolute Cartesian vectors.
+Default value is False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.atypes">
+<code class="descname">atypes</code><a class="headerlink" href="#atomman.System.atypes" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple</em> – List of unique int atom types.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.box">
+<code class="descname">box</code><a class="headerlink" href="#atomman.System.box" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>atommman.Box</em> – underlying Box object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.box_set">
+<code class="descname">box_set</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.box_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends box.set() with a scale argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True, the scaled (box-relative) positions remain unchanged.
+Default value is False (absolute positions unchanged).</li>
+<li><strong>kwargs</strong> (<em>other</em>) – Any other kwargs allowed by box.set().</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.dump">
+<code class="descname">dump</code><span class="sig-paren">(</span><em>style</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a System to another format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Indicates the format of the content to dump the atomman.System as.</li>
+<li><strong>kwargs</strong> – Any extra keyword arguments to pass to the underlying dump methods.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Any content returned by the underlying dump methods.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.dvect">
+<code class="descname">dvect</code><span class="sig-paren">(</span><em>pos_0</em>, <em>pos_1</em>, <em>code=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.dvect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the shortest distance between pos_0 and pos_1 using box
+dimensions and accounting for periodic boundaries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pos_0</strong> (<em>numpy.ndarray</em><em> or </em><em>index</em>) – Absolute Cartesian vector position(s) to use as reference point(s).
+If the value can be used as an index, then self.atoms.pos[pos_0]
+is taken.</li>
+<li><strong>pos_1</strong> (<em>numpy.ndarray</em><em> or </em><em>index</em>) – Absolute Cartesian vector position(s) to find relative to pos_0.
+If the value can be used as an index, then self.atoms.pos[pos_1]
+is taken.</li>
+<li><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Option for specifying which underlying code function to use:
+- ‘cython’ uses the version of the function built in cython (faster).
+- ‘python’ uses the purely python version.
+Default is ‘cython’ if the code can be imported, otherwise ‘python’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.natoms">
+<code class="descname">natoms</code><a class="headerlink" href="#atomman.System.natoms" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of atoms in the Atoms class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.natypes">
+<code class="descname">natypes</code><a class="headerlink" href="#atomman.System.natypes" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of atom types in the Atoms class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.neighborlist">
+<code class="descname">neighborlist</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.neighborlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a neighbor list for the system.  The resulting NeighborList
+object is saved to the object as attribute ‘neighbors’.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Radial cutoff distance for identifying neighbors.  Must be given if
+model is not given.</li>
+<li><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – Gives the file path or content to load.  If given, no other
+parameters are allowed.</li>
+<li><strong>cmult</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Parameter associated with the binning routine.  Default value is most
+likely the fastest.</li>
+<li><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Option for specifying which underlying code function of nlist to use:
+- ‘cython’ uses the version of the function built in cython (faster).
+- ‘python’ uses the purely python version.
+Default is ‘cython’ if the code can be imported, otherwise ‘python’.</li>
+<li><strong>initialsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – The number of neighbor positions to initially assign to each atom.
+Default value is 20.</li>
+<li><strong>deltasize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the number of extra neighbor positions to allow each atom
+when the number of neighbors exceeds the underlying array size.
+Default value is 10.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The compiled list of neighbors.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.NeighborList.html#atomman.NeighborList" title="atomman.NeighborList">atomman.NeighborList</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.normalize">
+<code class="descname">normalize</code><span class="sig-paren">(</span><em>style='lammps'</em>, <em>return_transform=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalizes a system’s box vectors and atom positions to be compatible
+with simulation codes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Indicates the normalization style to use.  Default (and only
+current option) is ‘lammps’.</li>
+<li><strong>return_transform</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if the transformation matrix associated with the
+normalization is returned.  Default value is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>newsystem</strong> (<em>atomman.System</em>) – A new system that has been normalized.</li>
+<li><strong>transform</strong> (<em>np.ndarray</em>) – The transformation matrix associated with the normalization.
+Returned if return_transform is True.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.pbc">
+<code class="descname">pbc</code><a class="headerlink" href="#atomman.System.pbc" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of bool</em> – The periodic boundary condition settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.rotate">
+<code class="descname">rotate</code><span class="sig-paren">(</span><em>uvws</em>, <em>tol=1e-05</em>, <em>return_transform=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a System representing a periodic crystal cell from a standard
+orientation to a specified orientation. Note: if hexagonal indices are
+given, the vectors will be reduced to the smallest uvw integer
+representation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>uvws</strong> (<em>numpy.ndarray of int</em>) – A (3, 3) array of the Miller crystal vectors or a (3, 4) array of
+Miller-Bravais hexagonal crystal vectors to use in transforming the
+system.</li>
+<li><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Tolerance parameter used in rounding atomic positions near the
+boundaries to the boundary values.  In box-relative coordinates, any
+atomic positions within tol of 0 or 1 will be rounded to 0 or 1,
+respectively.  Default value is 1e-5.</li>
+<li><strong>return_transform</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if the transformation matrix associated with the
+rotation is returned.  Default value is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><em>atomman.System</em> – A new fully periodic system rotated and transformed according to the
+uvws crystal vectors.</li>
+<li><strong>transform</strong> (<em>np.ndarray</em>) – The transformation matrix associated with the rotation.
+Returned if return_transform is True.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.scale">
+<code class="descname">scale</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scales 3D vectors from absolute Cartesian coordinates to relative box
+coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>numpy.ndarray</em>) – Values to scale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.supersize">
+<code class="descname">supersize</code><span class="sig-paren">(</span><em>a_size</em>, <em>b_size</em>, <em>c_size</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.supersize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a larger system from a given system by replicating it along the
+system’s box vectors.</p>
+<p>The multiplier values *_size are taken to be integer tuples (m, n) where
+m &lt;= 0 and n &gt;= 0.  The system multiplication works such that if n = -m,
+then the seed system’s origin will be at the center of the new system.
+If only one integer is given, then it is assigned to m or n depending on
+its sign, and the other value is taken to be 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>a_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em> or </em><em>tuple of int</em>) – Single int or two integers specifying replication along the avect
+direction.</li>
+<li><strong>-- int</strong><strong> or </strong><strong>tuple of int</strong> (<em>c_size</em>) – Single int or two integers specifying replication along the bvect
+direction.</li>
+<li><strong>-- int</strong><strong> or </strong><strong>tuple of int</strong> – Single int or two integers specifying replication along the cvect
+direction.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new system created by replicating the given seed system according to
+the *_size parameters.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.System.symbols">
+<code class="descname">symbols</code><a class="headerlink" href="#atomman.System.symbols" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple</em> – The element model symbols associated with each atype.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.unscale">
+<code class="descname">unscale</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.unscale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unscales 3D vectors from relative box coordinates to absolute
+Cartesian coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>numpy.ndarray</em>) – Values to unscale.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.System.wrap">
+<code class="descname">wrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#atomman.System.wrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrap atoms around periodic boundaries and extend non-periodic
+boundaries such that all atoms are within the box.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.Box.html"
+                        title="previous chapter">Box</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.ElasticConstants.html"
+                        title="next chapter">ElasticConstants</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.ElasticConstants.html" title="ElasticConstants"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.Box.html" title="Box"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

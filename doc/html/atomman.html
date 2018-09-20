@@ -1,0 +1,806 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>atomman package &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="unitconvert" href="atomman.unitconvert.html" />
+    <link rel="prev" title="Introduction to atomman: Semidiscrete Variational Peierls-Nabarro" href="tutorial/04.4._Semidiscrete_Variational_Peierls-Nabarro.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.unitconvert.html" title="unitconvert"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorial/04.4._Semidiscrete_Variational_Peierls-Nabarro.html" title="Introduction to atomman: Semidiscrete Variational Peierls-Nabarro"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="atomman-package">
+<h1>atomman package<a class="headerlink" href="#atomman-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomman.unitconvert.html">unitconvert</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.tools.html">tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.lammps.html">lammps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.defect.html">defect</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="atomman.Atoms.html">Atoms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.Box.html">Box</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.System.html">System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.ElasticConstants.html">ElasticConstants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="atomman.NeighborList.html">NeighborList</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="module-atomman">
+<span id="functions-and-attributes"></span><h2>Functions and attributes<a class="headerlink" href="#module-atomman" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="atomman.rootdir">
+<code class="descclassname">atomman.</code><code class="descname">rootdir</code><a class="headerlink" href="#atomman.rootdir" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The absolute path to the iprPy package’s root directory used to locate
+contained data files.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.displacement">
+<code class="descclassname">atomman.</code><code class="descname">displacement</code><span class="sig-paren">(</span><em>system_0</em>, <em>system_1</em>, <em>box_reference='final'</em>, <em>code=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the displacement vectors between all matching atoms for two systems.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system_0</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The initial system to calculate displacements from.</li>
+<li><strong>system_1</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The final system to calculate displacements to.</li>
+<li><strong>box_reference</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – Specifies which system’s boundary conditions to use.  ‘initial’ uses
+system_0’s box and pbc.  ‘final’ uses system_1’s box and pbc (Default)
+None computes the straight difference between the positions without
+accounting for periodic boundaries.</li>
+<li><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Option for specifying which code version of dvect to use (see dvect’s
+documentation for values).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The displacement vectors for all atoms.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">numpy.ndarray</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> – If the systems have different numbers of atoms or for invalid
+box_reference values.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump">
+<code class="descclassname">atomman.</code><code class="descname">dump</code><span class="sig-paren">(</span><em>style</em>, <em>system</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a System to another format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Indicates the format of the content to dump the atomman.System as.</li>
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system to convert.</li>
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Any extra keyword arguments to pass to the underlying dump methods.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Any content returned by the underlying dump methods.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)">object</a> or <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_ase_Atoms">
+<code class="descclassname">atomman.</code><code class="descname">dump_ase_Atoms</code><span class="sig-paren">(</span><em>system</em>, <em>symbols=None</em>, <em>return_prop=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_ase_Atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an atomman.System and list of elements into an ase.Atoms.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – A atomman representation of a system.</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – A list of element symbols to pair with system’s atypes.
+Must be given if system.symbols are not all set.</li>
+<li><strong>return_prop</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if the extra per-atom properties are to be returned in a
+dictionary.  Default value is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>aseatoms</strong> (<em>ase.Atoms</em>) – An ase representation of a collection of atoms.</li>
+<li><strong>prop</strong> (<em>dict</em>) – Dictionary containing any extra per-atom properties to include.
+Returned if return_prop is True.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_atom_data">
+<code class="descclassname">atomman.</code><code class="descname">dump_atom_data</code><span class="sig-paren">(</span><em>system</em>, <em>f=None</em>, <em>atom_style='atomic'</em>, <em>units='metal'</em>, <em>float_format='%.13f'</em>, <em>return_info=True</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_atom_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a LAMMPS-style atom data file from a System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system to write to the atom data file.</li>
+<li><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – File path or file-like object to write the content to.  If not given,
+then the content is returned as a str.</li>
+<li><strong>atom_style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The LAMMPS atom_style option associated with the data file.  Default
+value is ‘atomic’.</li>
+<li><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The LAMMPS units option associated with the data file. Default value
+is ‘metal’.</li>
+<li><strong>float_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – c-style formatting string for floating point values.  Default value is
+‘%.13f’.</li>
+<li><strong>return_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Indicates if the LAMMPS command lines associated with reading in the
+file are to be returned as a str.  Default value is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The LAMMPS input command lines to read the created data file in.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_atom_dump">
+<code class="descclassname">atomman.</code><code class="descname">dump_atom_dump</code><span class="sig-paren">(</span><em>system</em>, <em>f=None</em>, <em>lammps_units='metal'</em>, <em>scale=False</em>, <em>prop_name=None</em>, <em>table_name=None</em>, <em>shape=None</em>, <em>unit=None</em>, <em>dtype=None</em>, <em>prop_info=None</em>, <em>float_format='%.13f'</em>, <em>return_prop_info=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_atom_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a LAMMPS-style atom data file from a System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system to write to the atom data file.</li>
+<li><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – File path or file-like object to write the content to.  If not given,
+then the content is returned as a str.</li>
+<li><strong>lammps_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The LAMMPS units option associated with the table values.  This is used
+for the box dimensions and default units for standard dump properties
+(not compute/fix definitions).</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if atom positions are to be scaled relative to the box
+(True) or given in absolute Cartesian values (False, default).</li>
+<li><strong>prop_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The Atoms properties to include.  If neither prop_name or prop_info are
+given, all system properties will be included.</li>
+<li><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The dump table column name(s) that correspond to each prop_name.  If not
+given, the table_name values will be based on the prop_name and shape
+values.</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The shape of each per-atom property.  If not given, will be inferred
+from the length of each table_name value.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Lists the units for each prop_name as stored in the table.  For a
+value of None, no conversion will be performed for that property.  For
+a value of ‘scaled’, the corresponding table values will be taken in
+box-scaled units.  If not given, unit values will be taken based on
+lammps_units if prop_name corresponds to a standard LAMMPS property,
+otherwise will be set to None (no conversion).</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Allows for the data type of each property to be explicitly given.
+Values of None will infer the data type from the corresponding
+property values.  If not given, all values will be None.</li>
+<li><strong>prop_info</strong> (<em>list of dict</em><em>, </em><em>optional</em>) – Structured form of property conversion parameters, in which each
+dictionary in the list corresponds to a single atoms property.  Each
+dictionary must have a ‘prop_name’ field, and can optionally have
+‘table_name’, ‘shape’, ‘unit’, and ‘dtype’ fields.</li>
+<li><strong>float_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – c-style formatting string for floating point values.  Default value is
+‘%.13f’.</li>
+<li><strong>return_prop_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the filled-in prop_info is to be returned.  Having
+this allows for 1:1 load/dump conversions.  Default value is False
+(prop_info is not returned).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>prop_info</strong> – The filled-in prop_info structure (if return_prop_info is True).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list of dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_poscar">
+<code class="descclassname">atomman.</code><code class="descname">dump_poscar</code><span class="sig-paren">(</span><em>system</em>, <em>f=None</em>, <em>header=''</em>, <em>symbols=None</em>, <em>style='direct'</em>, <em>box_scale=1.0</em>, <em>float_format='%.13e'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_poscar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a poscar-style coordination file for the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system whose coordinates you are saving</li>
+<li><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – File path or file-like object to write the content to.  If not given,
+then the content is returned as a str.</li>
+<li><strong>header</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The comment line to place at the top of the file. Default value is ‘’.</li>
+<li><strong>symbols</strong> (<em>list of str</em><em>, </em><em>optional</em>) – List of the element symbols that correspond to the atom types.  If not
+given, will use system.symbols if set, otherwise no element content
+will be included.</li>
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The poscar coordinate style.  Default value is ‘direct’.</li>
+<li><strong>box_scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – <dl class="docutils">
+<dt>A universal scaling constant applied to the box vectors. Default value</dt>
+<dd>is 1.0.</dd>
+<dt>float_format <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>c-style format for printing the floating point numbers. Default value
+is ‘%.13e’.</dd>
+</dl>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>poscar_str</strong> – String of the poscar object (only returned if fname is not given).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_pymatgen_Structure">
+<code class="descclassname">atomman.</code><code class="descname">dump_pymatgen_Structure</code><span class="sig-paren">(</span><em>system</em>, <em>symbols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_pymatgen_Structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an atomman.System into a pymatgen.Structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – A atomman representation of a system.</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – A list of element symbols to pair with system’s atypes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>structure</strong> – A pymatgen representation of a structure.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pymatgen.Structure</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_system_model">
+<code class="descclassname">atomman.</code><code class="descname">dump_system_model</code><span class="sig-paren">(</span><em>system</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_system_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a DataModelDict ‘cell’ representation of the system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system to generate the data model for.</li>
+<li><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – File path or file-like object to write the content to.  If not given,
+then the content is returned as a DataModelDict.</li>
+<li><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – File format ‘xml’ or ‘json’ to save if f is given.  If not given, will
+be inferred from f if f is a filename, or taken as ‘json’.</li>
+<li><strong>indent</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Indentation option to use for XML/JSON content if f is given.</li>
+<li><strong>box_unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Length unit to use for the box. Default value is ‘angstrom’.</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – list of atom-model symbols corresponding to the atom types.  If not
+given, will use system.symbols.</li>
+<li><strong>elements</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – list of element tags corresponding to the atom types.</li>
+<li><strong>prop_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a><em>, </em><em>optional</em>) – dictionary where the keys are the property keys to include, and
+the values are units to use. If not given, only the positions in
+scaled units are included.</li>
+<li><strong>a_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Standard deviation of a lattice constant to include if available.</li>
+<li><strong>b_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Standard deviation of b lattice constant to include if available.</li>
+<li><strong>c_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Standard deviation of c lattice constant to include if available.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A ‘cell’ data model of the system.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataModelDict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dump_table">
+<code class="descclassname">atomman.</code><code class="descname">dump_table</code><span class="sig-paren">(</span><em>system</em>, <em>f=None</em>, <em>prop_name=None</em>, <em>table_name=None</em>, <em>shape=None</em>, <em>unit=None</em>, <em>dtype=None</em>, <em>prop_info=None</em>, <em>header=False</em>, <em>float_format='%.13f'</em>, <em>return_prop_info=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dump_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a system’s atoms’ values to a string table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – An atomman representation of a system.</li>
+<li><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em><em>, </em><em>optional</em>) – File path or file-like object to write the content to.  If not given,
+then the content is returned as a str.</li>
+<li><strong>prop_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The Atoms properties to include.  Must be given if prop_info is not.</li>
+<li><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The table column name(s) that correspond to each prop_name.  If not
+given, the table_name values will be based on the prop_name values.</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The shape of each per-atom property.  If not given, will be inferred
+from the length of each table_name value.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Lists the units for each prop_name as stored in the table.  For a
+value of None, no conversion will be performed for that property.  For
+a value of ‘scaled’, the corresponding table values will be taken in
+box-scaled units.  If not given, all unit values will be set to None
+(i.e. no conversions).</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Allows for the data type of each property to be explicitly given.
+Values of None will infer the data type from the corresponding
+property values.  If not given, all values will be None.</li>
+<li><strong>prop_info</strong> (<em>list of dict</em><em>, </em><em>optional</em>) – Structured form of property conversion parameters, in which each
+dictionary in the list corresponds to a single atoms property.  Each
+dictionary must have a ‘prop_name’ field, and can optionally have
+‘table_name’, ‘shape’, ‘unit’, and ‘dtype’ fields.</li>
+<li><strong>header</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating whether to include the column names in the outputted
+table.  Default value is False (no column names).</li>
+<li><strong>float_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – c-style formatting string for floating point values.  Default value is
+‘%.13f’.</li>
+<li><strong>return_prop_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the filled-in prop_info is to be returned.  Having
+this allows for 1:1 load/dump conversions.  Default value is False
+(prop_info is not returned).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The generated data table.  Only returned if fp is None.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)">str</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.dvect">
+<code class="descclassname">atomman.</code><code class="descname">dvect</code><span class="sig-paren">(</span><em>pos_0</em>, <em>pos_1</em>, <em>box</em>, <em>pbc</em>, <em>code=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.dvect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the shortest distance between pos_0 and pos_1 using box
+dimensions and accounting for periodic boundaries.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pos_0</strong> (<em>numpy.ndarray</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – Absolute Cartesian vector position(s) to use as reference point(s).</li>
+<li><strong>pos_1</strong> (<em>numpy.ndarray</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – Absolute Cartesian vector position(s) to find relative to pos_0.</li>
+<li><strong>box</strong> (<a class="reference internal" href="atomman.Box.html#atomman.Box" title="atomman.Box"><em>atomman.Box</em></a>) – Defines the system/box dimensions</li>
+<li><strong>pbc</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, or </em><em>numpy.ndarray of bool.</em>) – Three Boolean values indicating which of the three box vectors are
+periodic (True means periodic).</li>
+<li><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Option for specifying which underlying code function to use:
+- ‘cython’ uses the version of the function built in cython (faster).
+- ‘python’ uses the purely python version.
+Default is ‘cython’ if the code can be imported, otherwise ‘python’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load">
+<code class="descclassname">atomman.</code><code class="descname">load</code><span class="sig-paren">(</span><em>style</em>, <em>input</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Indicates the format of the content to load as an atomman.System</li>
+<li><strong>input</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>file-like object</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><em>object</em></a>) – The content to load.</li>
+<li><strong>kwargs</strong> – Any extra keyword arguments to pass to the underlying load methods.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>system</strong> – The system object associated with the data model.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_ase_Atoms">
+<code class="descclassname">atomman.</code><code class="descname">load_ase_Atoms</code><span class="sig-paren">(</span><em>aseatoms</em>, <em>prop={}</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_ase_Atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an ase.Atoms into an atomman.System and list of elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>aseatoms</strong> (<em>ase.Atoms</em>) – An ase representation of a collection of atoms.</li>
+<li><strong>prop</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary containing any extra per-atom properties to include.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – A atomman representation of a system.</li>
+<li><strong>elements</strong> (<em>list</em>) – A list of unique elemental symbols to pair with system’s atypes.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_atom_data">
+<code class="descclassname">atomman.</code><code class="descname">load_atom_data</code><span class="sig-paren">(</span><em>data</em>, <em>pbc=(True</em>, <em>True</em>, <em>True)</em>, <em>symbols=None</em>, <em>atom_style='atomic'</em>, <em>units='metal'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_atom_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a LAMMPS-style atom data file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – The atom data content to read.  Can be str content, path name, or open
+file-like object.</li>
+<li><strong>pbc</strong> (<em>list of bool</em>) – Three boolean values indicating which System directions are periodic.
+Default value is (True, True, True).</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – Allows the list of element symbols to be assigned during loading.</li>
+<li><strong>atom_style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The LAMMPS atom_style option associated with the data file.  Default
+value is ‘atomic’.</li>
+<li><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The LAMMPS units option associated with the data file. Default value
+is ‘metal’.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The corresponding system.  Note all property values will be
+automatically converted to atomman.unitconvert’s set working units.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_atom_dump">
+<code class="descclassname">atomman.</code><code class="descname">load_atom_dump</code><span class="sig-paren">(</span><em>data</em>, <em>symbols=None</em>, <em>lammps_units='metal'</em>, <em>prop_name=None</em>, <em>table_name=None</em>, <em>shape=None</em>, <em>unit=None</em>, <em>dtype=None</em>, <em>prop_info=None</em>, <em>return_prop_info=False</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_atom_dump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in a LAMMPS atomic dump file into a System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – The content, file path or file-like object containing the content to
+read.</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – Allows the list of element symbols to be assigned during loading.</li>
+<li><strong>lammps_units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The LAMMPS units option associated with the parameters.  Default value
+is ‘metal’.</li>
+<li><strong>prop_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The Atoms properties to generate.</li>
+<li><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The table column name(s) that correspond to each prop_name.  If
+prop_name, table_name and prop_info are not given, prop_name and
+table_name will be read in from data.</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The shape of each per-atom property.  If not given, will be taken from
+standard LAMMPS parameter names, or left at () for direct
+property-table conversion.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Lists the units for each prop_name as stored in the table.  For a
+value of None, no conversion will be performed for that property.  For
+a value of ‘scaled’, the corresponding table values will be taken in
+box-scaled units.  If not given, all unit values will be set to None
+(i.e. no conversions).</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Allows for the data type of each property to be explicitly given.
+Values of None will infer the data type from the corresponding
+property values.  If not given, all values will be None.</li>
+<li><strong>prop_info</strong> (<em>list of dict</em><em>, </em><em>optional</em>) – Structured form of property conversion parameters, in which each
+dictionary in the list corresponds to a single atoms property.  Each
+dictionary must have a ‘prop_name’ field, and can optionally have
+‘table_name’, ‘shape’, ‘unit’, and ‘dtype’ fields.</li>
+<li><strong>return_prop_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the full prop_info is to be returned.  Default value
+is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – The generated system.</li>
+<li><strong>prop_info</strong> (<em>list of dict</em>) – The full prop_info detailing the property-table conversion. Returned
+if return_prop_info is True.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_cif">
+<code class="descclassname">atomman.</code><code class="descname">load_cif</code><span class="sig-paren">(</span><em>cif</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_cif" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in a CIF crystal file.  Requires diffpy.Structure.</p>
+<dl class="docutils">
+<dt>cif <span class="classifier-delimiter">:</span> <span class="classifier">str or file-like object</span></dt>
+<dd>The cif content to read.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – An atomman representation of a system.</li>
+<li><strong>elements</strong> (<em>list</em>) – The list of elemental symbols corresponding to the system’s atom types.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_poscar">
+<code class="descclassname">atomman.</code><code class="descname">load_poscar</code><span class="sig-paren">(</span><em>poscar</em>, <em>prop={}</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_poscar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a poscar-style coordination file for a system.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>poscar</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – The POSCAR content to read</li>
+<li><strong>prop</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary containing any extra per-atom properties to include.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – The system object associated with the poscar file.</li>
+<li><strong>elements</strong> (<em>list</em>) – The list of elemental symbols corresponding to the system’s atom types.
+Will be a list of None if symbol information is not in poscar.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_pymatgen_Structure">
+<code class="descclassname">atomman.</code><code class="descname">load_pymatgen_Structure</code><span class="sig-paren">(</span><em>structure</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_pymatgen_Structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a pymatgen.Structure into an atomman.System.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>structure</strong> (<em>pymatgen.Structure</em>) – A pymatgen representation of a structure.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – A atomman representation of a system.</li>
+<li><strong>elements</strong> (<em>list</em>) – A list of unique elemental symbols to pair with system’s atypes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_system_model">
+<code class="descclassname">atomman.</code><code class="descname">load_system_model</code><span class="sig-paren">(</span><em>model</em>, <em>key='atomic-system'</em>, <em>index=0</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_system_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read in a data model containing a crystal structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>file-like object</em><em> or </em><em>DataModelDict</em>) – The data model to read.</li>
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – The key identifying the root element for the system definition.
+Default value is ‘atomic-system’.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional.</em>) – If the full model has multiple key entries, the index specifies which
+to access.  Default value is 0 (first, or only entry).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) – The system object associated with the data model.</li>
+<li><strong>symbols</strong> (<em>list</em>) – The list of atomic symbols corresponding to the system’s atom types.
+Will be a list of None if symbol information is not in the data model.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.load_table">
+<code class="descclassname">atomman.</code><code class="descname">load_table</code><span class="sig-paren">(</span><em>table</em>, <em>box</em>, <em>symbols=None</em>, <em>system=None</em>, <em>prop_name=None</em>, <em>table_name=None</em>, <em>shape=None</em>, <em>unit=None</em>, <em>dtype=None</em>, <em>prop_info=None</em>, <em>skiprows=None</em>, <em>nrows=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.load_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in tabular data into atomic properties.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>table</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – The table content, file path or file-like object containing the
+content to read.</li>
+<li><strong>box</strong> (<a class="reference internal" href="atomman.Box.html#atomman.Box" title="atomman.Box"><em>atomman.Box</em></a>) – The atomic box to use when generating a System around the data.</li>
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a><em>, </em><em>optional</em>) – Allows the list of element symbols to be assigned during loading.</li>
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a><em>, </em><em>optional</em>) – The atomic system to load the values to.  If not given, a new system
+will be constructed.</li>
+<li><strong>prop_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The Atoms properties to generate.  Must be given if prop_info is not.</li>
+<li><strong>table_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The table column name(s) that correspond to each prop_name.  If not
+given, the table_name values will be based on the prop_name values.</li>
+<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – The shape of each per-atom property.  If not given, will be inferred
+from the length of each table_name value.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Lists the units for each prop_name as stored in the table.  For a
+value of None, no conversion will be performed for that property.  For
+a value of ‘scaled’, the corresponding table values will be taken in
+box-scaled units.  If not given, all unit values will be set to None
+(i.e. no conversions).</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><em>optional</em>) – Allows for the data type of each property to be explicitly given.
+Values of None will infer the data type from the corresponding
+property values.  If not given, all values will be None.</li>
+<li><strong>prop_info</strong> (<em>list of dict</em><em>, </em><em>optional</em>) – Structured form of property conversion parameters, in which each
+dictionary in the list corresponds to a single atoms property.  Each
+dictionary must have a ‘prop_name’ field, and can optionally have
+‘table_name’, ‘shape’, ‘unit’, and ‘dtype’ fields.</li>
+<li><strong>skiprows</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of rows to skip before reading the data.</li>
+<li><strong>nrows</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of rows of data to read.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The generated system.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System">atomman.System</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.nlist">
+<code class="descclassname">atomman.</code><code class="descname">nlist</code><span class="sig-paren">(</span><em>system</em>, <em>cutoff</em>, <em>cmult=1</em>, <em>code=None</em>, <em>initialsize=20</em>, <em>deltasize=10</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.nlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates a neighbor list for all atoms in a System taking periodic
+boundaries into account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>system</strong> (<a class="reference internal" href="atomman.System.html#atomman.System" title="atomman.System"><em>atomman.System</em></a>) – The system to calculate the neighbor list for.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Radial cutoff distance for identifying neighbors.</li>
+<li><strong>cmult</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Parameter associated with the binning routine. Default value is most
+likely the fastest.</li>
+<li><strong>code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Option for specifying which underlying code function to use:
+- ‘cython’ uses the version of the function built in cython (faster).
+- ‘python’ uses the purely python version.
+Default is ‘cython’ if the code can be imported, otherwise ‘python’.</li>
+<li><strong>initialsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – The number of neighbor positions to initially assign to each atom.
+Default value is 20.</li>
+<li><strong>deltasize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Specifies the number of extra neighbor positions to allow each atom
+when the number of neighbors exceeds the underlying array size.
+Default value is 10.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Two dimensional array where the first dimension corresponds to each
+atom.  In each row (second dimension), the first term is the atom’s
+coordination number, and the following terms from 1 to coordination+1
+are the list of neighboring atoms (by index).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">atomman package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+<li><a class="reference internal" href="#module-atomman">Functions and attributes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorial/04.4._Semidiscrete_Variational_Peierls-Nabarro.html"
+                        title="previous chapter">Introduction to atomman: Semidiscrete Variational Peierls-Nabarro</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.unitconvert.html"
+                        title="next chapter">unitconvert</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.unitconvert.html" title="unitconvert"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorial/04.4._Semidiscrete_Variational_Peierls-Nabarro.html" title="Introduction to atomman: Semidiscrete Variational Peierls-Nabarro"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

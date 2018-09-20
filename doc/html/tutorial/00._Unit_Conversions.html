@@ -1,0 +1,1100 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to atomman: Unit Conversions &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to atomman: Defining Atomic Systems" href="01._Defining_Atomic_Systems.html" />
+    <link rel="prev" title="Tutorials" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="01._Defining_Atomic_Systems.html" title="Introduction to atomman: Defining Atomic Systems"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tutorials</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-atomman:-Unit-Conversions">
+<h1>Introduction to atomman: Unit Conversions<a class="headerlink" href="#Introduction-to-atomman:-Unit-Conversions" title="Permalink to this headline">¶</a></h1>
+<p><strong>Lucas M. Hale</strong>,
+<a class="reference external" href="mailto:lucas&#46;hale&#37;&#52;&#48;nist&#46;gov?Subject=ipr-demo">lucas<span>&#46;</span>hale<span>&#64;</span>nist<span>&#46;</span>gov</a>,
+<em>Materials Science and Engineering Division, NIST</em>.</p>
+<p>Notebook last updated: 2018-04-05</p>
+<p><a class="reference external" href="http://www.nist.gov/public_affairs/disclaimer.cfm">Disclaimers</a></p>
+<div class="section" id="1.-Introduction">
+<h2>1. Introduction<a class="headerlink" href="#1.-Introduction" title="Permalink to this headline">¶</a></h2>
+<p>The atomman.unitconvert submodule includes tools for handling unit
+conversions within calculations. The unitconvert module is built around
+the <a class="reference external" href="https://pypi.python.org/pypi/numericalunits">numericalunits</a>
+package, extending it with useful functions and tools.</p>
+<p>Units are handled in the following manner:</p>
+<ol class="arabic simple">
+<li>Parameters are ‘set’ using functions that take value(s) and unit
+fields. The functions convert the values to common working units.</li>
+<li>All calculations are performed in the compatible working units.</li>
+<li>When finished, ‘get’ functions convert values from the working units
+to whatever units you want.</li>
+</ol>
+<p>Note that units are <em>not</em> tracked throughout the calculation, only
+conversions are performed at the beginning and end. This is advantageous
+as calculations and functions can be implemented without caring about
+the units, and there is no extra overhead. The disadvantage is that
+there is no explicit checking of compatible conversions, although
+implicit checking is possible (see <a class="reference external" href="#section4">Section #4</a>, or the
+<a class="reference external" href="https://pypi.python.org/pypi/numericalunits">numericalunits</a>
+documentation.)</p>
+<p><strong>Library Imports</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Standard Python libraries</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="c1"># http://www.numpy.org/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># https://github.com/usnistgov/atomman</span>
+<span class="kn">import</span> <span class="nn">atomman</span> <span class="k">as</span> <span class="nn">am</span>
+<span class="kn">import</span> <span class="nn">atomman.unitconvert</span> <span class="k">as</span> <span class="nn">uc</span>
+
+<span class="c1"># Show atomman version</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atomman version =&#39;</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+atomman version = 1.2.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.-Basics">
+<h2>2. Basics<a class="headerlink" href="#2.-Basics" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="2.1-unit-dictionary">
+<h3>2.1 unit dictionary<a class="headerlink" href="#2.1-unit-dictionary" title="Permalink to this headline">¶</a></h3>
+<p>The unit dictionary stores all units defined by
+<a class="reference external" href="https://pypi.python.org/pypi/numericalunits">numericalunits</a>. This
+keeps the namespace clean and allows for units to be accessed by string.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&#39;pi&#39;, &#39;m&#39;, &#39;kg&#39;, &#39;s&#39;, &#39;C&#39;, &#39;K&#39;, &#39;cm&#39;, &#39;mm&#39;, &#39;um&#39;, &#39;nm&#39;, &#39;pm&#39;, &#39;fm&#39;, &#39;km&#39;, &#39;angstrom&#39;, &#39;lightyear&#39;, &#39;astro_unit&#39;, &#39;pc&#39;, &#39;kpc&#39;, &#39;Mpc&#39;, &#39;Gpc&#39;, &#39;inch&#39;, &#39;foot&#39;, &#39;mile&#39;, &#39;thou&#39;, &#39;L&#39;, &#39;mL&#39;, &#39;uL&#39;, &#39;nL&#39;, &#39;pL&#39;, &#39;fL&#39;, &#39;aL&#39;, &#39;kL&#39;, &#39;ML&#39;, &#39;GL&#39;, &#39;ms&#39;, &#39;us&#39;, &#39;ns&#39;, &#39;ps&#39;, &#39;fs&#39;, &#39;minute&#39;, &#39;hour&#39;, &#39;day&#39;, &#39;week&#39;, &#39;year&#39;, &#39;Hz&#39;, &#39;mHz&#39;, &#39;kHz&#39;, &#39;MHz&#39;, &#39;GHz&#39;, &#39;THz&#39;, &#39;PHz&#39;, &#39;rtHz&#39;, &#39;rpm&#39;, &#39;g&#39;, &#39;mg&#39;, &#39;ug&#39;, &#39;ng&#39;, &#39;pg&#39;, &#39;fg&#39;, &#39;tonne&#39;, &#39;amu&#39;, &#39;Da&#39;, &#39;kDa&#39;, &#39;lbm&#39;, &#39;J&#39;, &#39;mJ&#39;, &#39;uJ&#39;, &#39;nJ&#39;, &#39;pJ&#39;, &#39;fJ&#39;, &#39;kJ&#39;, &#39;MJ&#39;, &#39;GJ&#39;, &#39;erg&#39;, &#39;eV&#39;, &#39;meV&#39;, &#39;keV&#39;, &#39;MeV&#39;, &#39;GeV&#39;, &#39;TeV&#39;, &#39;btu&#39;, &#39;smallcal&#39;, &#39;kcal&#39;, &#39;Wh&#39;, &#39;kWh&#39;, &#39;NA&#39;, &#39;mol&#39;, &#39;mmol&#39;, &#39;umol&#39;, &#39;nmol&#39;, &#39;pmol&#39;, &#39;fmol&#39;, &#39;M&#39;, &#39;mM&#39;, &#39;uM&#39;, &#39;nM&#39;, &#39;pM&#39;, &#39;fM&#39;, &#39;N&#39;, &#39;mN&#39;, &#39;uN&#39;, &#39;nN&#39;, &#39;pN&#39;, &#39;fN&#39;, &#39;kN&#39;, &#39;MN&#39;, &#39;GN&#39;, &#39;dyn&#39;, &#39;lbf&#39;, &#39;Pa&#39;, &#39;hPa&#39;, &#39;kPa&#39;, &#39;MPa&#39;, &#39;GPa&#39;, &#39;bar&#39;, &#39;mbar&#39;, &#39;cbar&#39;, &#39;dbar&#39;, &#39;kbar&#39;, &#39;Mbar&#39;, &#39;atm&#39;, &#39;torr&#39;, &#39;mtorr&#39;, &#39;psi&#39;, &#39;W&#39;, &#39;mW&#39;, &#39;uW&#39;, &#39;nW&#39;, &#39;pW&#39;, &#39;kW&#39;, &#39;MW&#39;, &#39;GW&#39;, &#39;TW&#39;, &#39;degFinterval&#39;, &#39;degCinterval&#39;, &#39;mK&#39;, &#39;uK&#39;, &#39;nK&#39;, &#39;pK&#39;, &#39;mC&#39;, &#39;uC&#39;, &#39;nC&#39;, &#39;Ah&#39;, &#39;mAh&#39;, &#39;A&#39;, &#39;mA&#39;, &#39;uA&#39;, &#39;nA&#39;, &#39;pA&#39;, &#39;fA&#39;, &#39;V&#39;, &#39;mV&#39;, &#39;uV&#39;, &#39;nV&#39;, &#39;kV&#39;, &#39;MV&#39;, &#39;GV&#39;, &#39;TV&#39;, &#39;ohm&#39;, &#39;mohm&#39;, &#39;kohm&#39;, &#39;Mohm&#39;, &#39;Gohm&#39;, &#39;S&#39;, &#39;mS&#39;, &#39;uS&#39;, &#39;nS&#39;, &#39;T&#39;, &#39;mT&#39;, &#39;uT&#39;, &#39;nT&#39;, &#39;G&#39;, &#39;mG&#39;, &#39;uG&#39;, &#39;kG&#39;, &#39;Oe&#39;, &#39;Wb&#39;, &#39;F&#39;, &#39;uF&#39;, &#39;nF&#39;, &#39;pF&#39;, &#39;fF&#39;, &#39;aF&#39;, &#39;H&#39;, &#39;mH&#39;, &#39;uH&#39;, &#39;nH&#39;, &#39;c0&#39;, &#39;mu0&#39;, &#39;eps0&#39;, &#39;Z0&#39;, &#39;hPlanck&#39;, &#39;hbar&#39;, &#39;kB&#39;, &#39;GNewton&#39;, &#39;sigmaSB&#39;, &#39;alphaFS&#39;, &#39;Rgas&#39;, &#39;e&#39;, &#39;uBohr&#39;, &#39;uNuc&#39;, &#39;aBohr&#39;, &#39;me&#39;, &#39;mp&#39;, &#39;mn&#39;, &#39;Rinf&#39;, &#39;Ry&#39;, &#39;Hartree&#39;, &#39;ARichardson&#39;, &#39;Phi0&#39;, &#39;KJos&#39;, &#39;RKlitz&#39;, &#39;REarth&#39;, &#39;g0&#39;, &#39;Msolar&#39;, &#39;MEarth&#39;, &#39;Å&#39;, &#39;Hz·2π&#39;, &#39;mHz·2π&#39;, &#39;kHz·2π&#39;, &#39;MHz·2π&#39;, &#39;GHz·2π&#39;, &#39;THz·2π&#39;, &#39;PHz·2π&#39;, &#39;rpm·2π&#39;, &#39;Ω&#39;, &#39;mΩ&#39;, &#39;kΩ&#39;, &#39;MΩ&#39;, &#39;GΩ&#39;, &#39;μ0&#39;, &#39;ε0&#39;, &#39;ħ&#39;, &#39;σSB&#39;, &#39;αFS&#39;]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.2-Working-units">
+<h3>2.2 Working units<a class="headerlink" href="#2.2-Working-units" title="Permalink to this headline">¶</a></h3>
+<p>By default, atomman defines working units in:</p>
+<ul class="simple">
+<li>length = ‘angstrom’ = ‘Å’</li>
+<li>mass = ‘amu’</li>
+<li>energy = ‘eV’</li>
+<li>charge = ‘e’</li>
+<li>temperature = ‘K’</li>
+</ul>
+<p>All other units are derived relative to these.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;angstrom =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;angstrom&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;amu =     &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;amu&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eV =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;eV&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;e =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;K =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nm =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;g =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;J =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;J&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ps =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;ps&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+angstrom = 1.0
+amu =      1.0
+eV =       1.0
+e =        1.0
+K =        1.0
+nm =       10.0
+g =        6.022141290116741e+23
+J =        6.241509343260179e+18
+ps =       98.22694969377756
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.3-reset_units()">
+<h3>2.3 reset_units()<a class="headerlink" href="#2.3-reset_units()" title="Permalink to this headline">¶</a></h3>
+<p>The working units can be altered using reset_units(). You can specify
+up to four out of five of length, mass, time, energy, and charge. If
+less than four values are given, SI units are used. Temperature is
+always ‘K’ when values are specified.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Reset working units such that length is in &#39;nm&#39;, mass is in &#39;g&#39; and time is in &#39;ps&#39;</span>
+<span class="n">uc</span><span class="o">.</span><span class="n">reset_units</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="s1">&#39;nm&#39;</span><span class="p">,</span> <span class="n">mass</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">time</span><span class="o">=</span><span class="s1">&#39;ps&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;angstrom =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;angstrom&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;amu =     &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;amu&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eV =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;eV&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;e =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;K =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nm =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;g =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;J =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;J&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ps =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;ps&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+angstrom = 0.09999999999999999
+amu =      1.660538921e-24
+eV =       1.6021765649999997e-22
+e =        1.602176565e-19
+K =        1.0
+nm =       0.9999999999999999
+g =        1.0
+J =        0.0009999999999999998
+ps =       1.0
+</pre></div></div>
+</div>
+<p>Alternatively, if you call reset_units without arguments it will use
+the default numericalunits option and generate random working units.
+This can be useful for debugging code (see <a class="reference external" href="#section4">Section #4</a>,
+or the <a class="reference external" href="https://pypi.python.org/pypi/numericalunits">numericalunits</a>
+documentation).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Reset working units to random values</span>
+<span class="n">uc</span><span class="o">.</span><span class="n">reset_units</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;angstrom =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;angstrom&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;amu =     &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;amu&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eV =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;eV&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;e =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;K =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;nm =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;g =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;J =       &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;J&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ps =      &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;ps&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+angstrom = 2.539964587775829e-10
+amu =      2.5952013225175658e-27
+eV =       1.1176519881738393e-19
+e =        4.476401647866274e-19
+K =        0.24006227873054145
+nm =       2.5399645877758288e-09
+g =        0.0015628669040498606
+J =        0.6975835326700333
+ps =       3.801811227981329e-12
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Return working units to atomman&#39;s default</span>
+<span class="n">uc</span><span class="o">.</span><span class="n">reset_units</span><span class="p">(</span><span class="n">length</span> <span class="o">=</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">,</span> <span class="n">mass</span> <span class="o">=</span> <span class="s1">&#39;amu&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="s1">&#39;eV&#39;</span><span class="p">,</span> <span class="n">charge</span><span class="o">=</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.4-Setting-and-getting-static-values">
+<h3>2.4 Setting and getting static values<a class="headerlink" href="#2.4-Setting-and-getting-static-values" title="Permalink to this headline">¶</a></h3>
+<p>Static numerical values can be set and get in one of two ways:</p>
+<ul class="simple">
+<li>set by multiplying value by units, and get by dividing by units.</li>
+<li>use the set_in_units() and get_in_units() functions.</li>
+</ul>
+<div class="section" id="2.4.1-Direct-setting-and-getting">
+<h4>2.4.1 Direct setting and getting<a class="headerlink" href="#2.4.1-Direct-setting-and-getting" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Convert volume from angstrom^3 to nm^3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;10 angstrom^3 =&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;angstrom&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">volume</span> <span class="o">/</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;nm&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 angstrom^3 =
+0.01 nm^3
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show Pa = kg/(m*s^2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5.5 kg/(m*s^2) =&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="mf">5.5</span> <span class="o">*</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;kg&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span><span class="o">*</span><span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;s&#39;</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pressure</span> <span class="o">/</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;Pa&#39;</span><span class="p">],</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5.5 kg/(m*s^2) =
+5.5 Pa
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show that conversions work with arrays</span>
+<span class="n">stress</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">],</span>
+                   <span class="p">[</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">]])</span> <span class="o">*</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;GPa&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">stress</span> <span class="o">/</span> <span class="n">uc</span><span class="o">.</span><span class="n">unit</span><span class="p">[</span><span class="s1">&#39;MPa&#39;</span><span class="p">],</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1100.  1200.  1300.]
+ [ 1200.  2200.  2300.]
+ [ 1300.  2300.  3300.]] MPa
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.4.2-parse()">
+<h4>2.4.2 parse()<a class="headerlink" href="#2.4.2-parse()" title="Permalink to this headline">¶</a></h4>
+<p>As the above example shows, expressing complex units can get messy and
+unclear. The parse() function makes this easier by allowing complex
+units to be parsed from strings.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Convert volume from angstrom^3 to nm^3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;10 angstrom^3 =&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">uc</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;angstrom^3&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">volume</span> <span class="o">/</span> <span class="n">uc</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;nm^3&#39;</span><span class="p">),</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 angstrom^3 =
+0.01 nm^3
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show Pa = kg/(m*s^2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5.5 kg/(m*s^2) =&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="mf">5.5</span> <span class="o">*</span> <span class="n">uc</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;kg/(m*s^2)&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">pressure</span> <span class="o">/</span> <span class="n">uc</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;Pa&#39;</span><span class="p">),</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5.5 kg/(m*s^2) =
+5.499999999999999 Pa
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.4.3-set_in_units()-and-get_in_units()">
+<h4>2.4.3 set_in_units() and get_in_units()<a class="headerlink" href="#2.4.3-set_in_units()-and-get_in_units()" title="Permalink to this headline">¶</a></h4>
+<p>Both functions take a value and a unit string, call parse on the unit
+string and perform the correct * or /.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Convert volume from angstrom^3 to nm^3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;10 angstrom^3 =&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;angstrom^3&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">),</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 angstrom^3 =
+0.01 nm^3
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show Pa = kg/(m*s^2)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;5.5 kg/(m*s^2) =&#39;</span><span class="p">)</span>
+<span class="n">pressure</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="s1">&#39;kg/(m*s^2)&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">pressure</span><span class="p">,</span> <span class="s1">&#39;Pa&#39;</span><span class="p">),</span> <span class="s1">&#39;Pa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5.5 kg/(m*s^2) =
+5.5 Pa
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show that conversions work with arrays</span>
+<span class="n">stress</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mf">1.3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">]]),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">stress</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">),</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1100.  1200.  1300.]
+ [ 1200.  2200.  2300.]
+ [ 1300.  2300.  3300.]] MPa
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.5-set_literal()">
+<h3>2.5 set_literal()<a class="headerlink" href="#2.5-set_literal()" title="Permalink to this headline">¶</a></h3>
+<p>Values can also be read in from strings with set_literal().</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Convert volume from angstrom^3 to nm^3</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;10 angstrom^3 =&#39;</span><span class="p">)</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_literal</span><span class="p">(</span><span class="s1">&#39;10 angstrom^3&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">volume</span><span class="p">,</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">),</span> <span class="s1">&#39;nm^3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+10 angstrom^3 =
+0.01 nm^3
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Show that conversions work with arrays</span>
+<span class="n">stress</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_literal</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;[[1.1, 1.2, 1.3],</span>
+<span class="s2">                            [1.2, 2.2, 2.3],</span>
+<span class="s2">                            [1.3, 2.3, 3.3]] GPa&quot;&quot;&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">stress</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">),</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1100.  1200.  1300.]
+ [ 1200.  2200.  2300.]
+ [ 1300.  2300.  3300.]] MPa
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.-Data-model-representations">
+<h2>3. Data model representations<a class="headerlink" href="#3.-Data-model-representations" title="Permalink to this headline">¶</a></h2>
+<p>In addition to the basic conversions, unitconvert also allows for the
+values to be returned as and extracted from a DataModelDict. This
+provides a means of representing the data equivalently in either JSON or
+XML.</p>
+<div class="section" id="3.1-model()">
+<h3>3.1 model()<a class="headerlink" href="#3.1-model()" title="Permalink to this headline">¶</a></h3>
+<p>Values can be converted into a structured data model using model().</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Set length as 4 nm</span>
+<span class="n">length</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;nm&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transform length into a model with units in angstrom</span>
+<span class="n">lmodel</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print lmodel as XML</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lmodel</span><span class="o">.</span><span class="n">xml</span><span class="p">(</span><span class="n">full_document</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;value&gt;40.0&lt;/value&gt;&lt;unit&gt;angstrom&lt;/unit&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Set list of temperatures in K</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">],</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transform temperatures into a model with units in K</span>
+<span class="n">tmodel</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print tmodel as JSON</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tmodel</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+  &#34;value&#34;: [
+    10.0,
+    20.0,
+    30.0,
+    40.0,
+    50.0
+  ],
+  &#34;unit&#34;: &#34;K&#34;
+}
+</pre></div></div>
+</div>
+<p>For equivalent JSON/XML representation, values with 2 or more dimensions
+are flattened and the shape is included in the model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Set stress tensor in &#39;MPa&#39;</span>
+<span class="n">stress</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4</span><span class="p">]]),</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+
+<span class="c1"># Transform stress into a model with units in kPa</span>
+<span class="n">smodel</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">stress</span><span class="p">,</span> <span class="s1">&#39;kPa&#39;</span><span class="p">)</span>
+
+<span class="c1"># Print smodel as JSON</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">smodel</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Print smodel as XML</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">smodel</span><span class="o">.</span><span class="n">xml</span><span class="p">(</span><span class="n">full_document</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;value&#34;: [1100.0, 0.0, 0.0, 0.0, 2000.0, 500.0, 0.0, 500.0, -1399.9999999999998], &#34;shape&#34;: [3, 3], &#34;unit&#34;: &#34;kPa&#34;}
+
+&lt;value&gt;1100.0&lt;/value&gt;&lt;value&gt;0.0&lt;/value&gt;&lt;value&gt;0.0&lt;/value&gt;&lt;value&gt;0.0&lt;/value&gt;&lt;value&gt;2000.0&lt;/value&gt;&lt;value&gt;500.0&lt;/value&gt;&lt;value&gt;0.0&lt;/value&gt;&lt;value&gt;500.0&lt;/value&gt;&lt;value&gt;-1399.9999999999998&lt;/value&gt;&lt;shape&gt;3&lt;/shape&gt;&lt;shape&gt;3&lt;/shape&gt;&lt;unit&gt;kPa&lt;/unit&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.2-value_unit()">
+<h3>3.2 value_unit()<a class="headerlink" href="#3.2-value_unit()" title="Permalink to this headline">¶</a></h3>
+<p>Values can then be read back in from a model, XML or JSON using
+value_unit().</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Read lmode to set length</span>
+<span class="n">length</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">value_unit</span><span class="p">(</span><span class="n">lmodel</span><span class="p">)</span>
+
+<span class="c1"># Print length in nm</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="s1">&#39;nm&#39;</span><span class="p">),</span> <span class="s1">&#39;nm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4.0 nm
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Read tmodel to set temperatures</span>
+<span class="n">temperatures</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">value_unit</span><span class="p">(</span><span class="n">tmodel</span><span class="p">)</span>
+
+<span class="c1"># Print temperatures in K</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">temperatures</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">),</span> <span class="s1">&#39;K&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 10.  20.  30.  40.  50.] K
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Read smodel to set stress</span>
+<span class="n">stress</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">value_unit</span><span class="p">(</span><span class="n">smodel</span><span class="p">)</span>
+
+<span class="c1"># Print stress in &#39;MPa&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">stress</span><span class="p">,</span> <span class="s1">&#39;MPa&#39;</span><span class="p">),</span> <span class="s1">&#39;MPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 1.1  0.   0. ]
+ [ 0.   2.   0.5]
+ [ 0.   0.5 -1.4]] MPa
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.3-error_unit()">
+<h3>3.3 error_unit()<a class="headerlink" href="#3.3-error_unit()" title="Permalink to this headline">¶</a></h3>
+<p>Standard errors associated with each given value can also be included in
+the model, which can then be retrieved using error_unit().</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Generate realistic-looking nonsense</span>
+<span class="n">xcoordinate</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.1</span>
+<span class="n">xcoorderror</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.01</span>
+
+<span class="c1"># Assign units to nonsense</span>
+<span class="n">xcoordinate</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="n">xcoordinate</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">)</span>
+<span class="n">xcoorderror</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="n">xcoorderror</span><span class="p">,</span> <span class="s1">&#39;cm&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate model of nonsense with error</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">xcoordinate</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="n">xcoorderror</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+  &#34;value&#34;: [
+    0.010816345907130692,
+    0.01925068691733486,
+    0.02956854323553098,
+    0.040164826400553244,
+    0.04908840853125055
+  ],
+  &#34;error&#34;: [
+    0.0020967716606839237,
+    0.0020479435999082455,
+    0.0020629600974857044,
+    0.0019287120904610045,
+    0.002030534063900262
+  ],
+  &#34;unit&#34;: &#34;m&#34;
+}
+</pre></div></div>
+</div>
+<p>Errors can then be similarly extracted from the model using
+error_unit()</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Read realistic-looking nonsense back in</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;value =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">value_unit</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="s1">&#39;mm&#39;</span><span class="p">),</span> <span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">error_unit</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="s1">&#39;mm&#39;</span><span class="p">),</span> <span class="s1">&#39;mm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+value = [ 10.81634591  19.25068692  29.56854324  40.1648264   49.08840853] mm
+error = [ 2.09677166  2.0479436   2.0629601   1.92871209  2.03053406] mm
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="4.-Unit-debugging">
+<h2>4. Unit debugging<a class="headerlink" href="#4.-Unit-debugging" title="Permalink to this headline">¶</a></h2>
+<p>There is no explicit unit control with unitconvert, but correct unit
+conversions can still be debugged and tested by seeing if changing the
+working units changes values.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Print valid conversion</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;57 atm =&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reset working units to random values</span>
+<span class="n">uc</span><span class="o">.</span><span class="n">reset_units</span><span class="p">()</span>
+
+<span class="c1"># Print valid conversion again showing same results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;57 atm =&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="s1">&#39;atm&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+57 atm = 0.005775525 GPa
+57 atm = 0.005775525 GPa
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Print invalid conversion</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;57 s =&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+
+<span class="c1"># Reset working units to random values</span>
+<span class="n">uc</span><span class="o">.</span><span class="n">reset_units</span><span class="p">()</span>
+
+<span class="c1"># Print invalid conversion again showing different results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;57 s =&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+<span class="n">time</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">57</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+57 s = 1.111138828e-07 GPa
+57 s = 7.96357781638e-10 GPa
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to atomman: Unit Conversions</a><ul>
+<li><a class="reference internal" href="#1.-Introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#2.-Basics">2. Basics</a><ul>
+<li><a class="reference internal" href="#2.1-unit-dictionary">2.1 unit dictionary</a></li>
+<li><a class="reference internal" href="#2.2-Working-units">2.2 Working units</a></li>
+<li><a class="reference internal" href="#2.3-reset_units()">2.3 reset_units()</a></li>
+<li><a class="reference internal" href="#2.4-Setting-and-getting-static-values">2.4 Setting and getting static values</a><ul>
+<li><a class="reference internal" href="#2.4.1-Direct-setting-and-getting">2.4.1 Direct setting and getting</a></li>
+<li><a class="reference internal" href="#2.4.2-parse()">2.4.2 parse()</a></li>
+<li><a class="reference internal" href="#2.4.3-set_in_units()-and-get_in_units()">2.4.3 set_in_units() and get_in_units()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#2.5-set_literal()">2.5 set_literal()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Data-model-representations">3. Data model representations</a><ul>
+<li><a class="reference internal" href="#3.1-model()">3.1 model()</a></li>
+<li><a class="reference internal" href="#3.2-value_unit()">3.2 value_unit()</a></li>
+<li><a class="reference internal" href="#3.3-error_unit()">3.3 error_unit()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#4.-Unit-debugging">4. Unit debugging</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Tutorials</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="01._Defining_Atomic_Systems.html"
+                        title="next chapter">Introduction to atomman: Defining Atomic Systems</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="01._Defining_Atomic_Systems.html" title="Introduction to atomman: Defining Atomic Systems"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Tutorials"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tutorials</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

@@ -1,36 +1,63 @@
-import atomman as am
+# coding: utf-8
+# Standard Python libraries
+from __future__ import (absolute_import, print_function,
+                        division, unicode_literals)
 
+# http://www.numpy.org/
 import numpy as np
 
-def slip_vector(system_0, system_1, neighbor_list=None, neighbor_list_cutoff=None):
-    """Compute the slip vectors for all atoms in system_1 relative to system_0."""
+# atomman imports
+from .. import NeighborList
+from ..compatibility import range
 
-    assert system_0.natoms == system_1.natoms,  'systems have different number of atoms'
-
-    #neighbor list setup
-    if neighbor_list is not None:
-        assert neighbor_list_cutoff is None, 'neighbor_list and neighbor_list_cutoff cannot both be given'
-    elif neighbor_list_cutoff is not None:
-        neighbor_list = am.nlist(system_0, neighbor_list_cutoff)
-    elif 'neighbors' in system_0.prop:
-        neighbor_list = system_0.prop['neighbors']
-    elif 'nlist' in system_0.prop:
-        neighbor_list = system_0.prop['nlist']
+def slip_vector(system_0, system_1, neighbors=None, cutoff=None):
+    """
+    Compute the slip vectors for all atoms.  Note that this differs from the
+    original formulation in that it is not normalized by number of slipped
+    neighbors.
     
-    if isinstance(neighbor_list, am.NeighborList):
-        objectnlist = True
+        s_i = -Σ_j d_ij(t) - d_ij(0)
+    
+    where j is neighbor atoms of atom i, and d_ij() is vector distance between
+    atoms i and j at time t.
+    
+    Parameters
+    ----------
+    system_0 : atomman.system
+        The base/reference system to use.
+    system_1 : atomman.system
+        The defect/current system to use.
+    neighbors : atomman.NeighborList, optional
+        The neighbor list associated with system_0 to use.  Either neighbors
+        or cutoff must be given, or system_0 must have a neighbors attribute.
+    cutoff : float, optional
+        Cutoff distance for computing a neighbor list for system_0.  Either
+        neighbors or cutoff must be given, or system_0 have a neighbors
+        attribute.
+    
+    Returns
+    -------
+    numpy.ndarray
+        The computed slip vectors.
+    """
+    # Check that the two systems have the same number of atoms
+    if system_0.natoms != system_1.natoms:
+        raise ValueError('systems have different number of atoms')
+    
+    # Neighbor list setup
+    if neighbors is not None:
+        assert cutoff is None, 'neighbors and cutoff cannot both be given'
+    elif cutoff is not None:
+        neighbors = NeighborList(system=system_0, cutoff=cutoff)
+    elif hasattr(system_0, 'neighbors'):
+        neighbors = system_0.neighbors
     else:
-        objectnlist = False
+        raise ValueError('neighbors or cutoff is required')
     
-    #Calculate the slip vector
+    # Calculate the slip vector
     slip = np.zeros((system_0.natoms, 3))
+    for i in range(system_0.natoms):
+        slip[i] = -np.sum(system_1.dvect(i, neighbors[i])
+                        - system_0.dvect(i, neighbors[i]), axis=0)
     
-    for i in xrange(system_0.natoms):
-        if objectnlist:
-            js = neighbor_list[i]
-        else:
-            js = neighbor_list[i, 1:neighbor_list[i, 0]+1]
-        slip[i] = -np.sum(system_1.dvect(i, js) - system_0.dvect(i, js), axis=0)
-            
     return slip
-    

@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Atoms &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Box" href="atomman.Box.html" />
+    <link rel="prev" title="Stroh" href="atomman.defect.Stroh.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.Box.html" title="Box"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.Stroh.html" title="Stroh"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="atoms">
+<h1>Atoms<a class="headerlink" href="#atoms" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.Atoms">
+<em class="property">class </em><code class="descclassname">atomman.</code><code class="descname">Atoms</code><span class="sig-paren">(</span><em>natoms=None</em>, <em>atype=None</em>, <em>pos=None</em>, <em>prop=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for representing a collection of atoms.</p>
+<dl class="class">
+<dt id="atomman.Atoms.PropertyDict">
+<em class="property">class </em><code class="descname">PropertyDict</code><span class="sig-paren">(</span><em>host</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Atoms.PropertyDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">collections.OrderedDict</span></code></a></p>
+<p>Extends OrderedDict to work with Atoms</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Atoms.atypes">
+<code class="descname">atypes</code><a class="headerlink" href="#atomman.Atoms.atypes" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>tuple</em> – List of unique int atom types.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Atoms.df">
+<code class="descname">df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Atoms.df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a pandas.DataFrame of all atomic properties.  Multi-dimensional
+per-atom data will be converted into multiple table columns.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Atoms.natoms">
+<code class="descname">natoms</code><a class="headerlink" href="#atomman.Atoms.natoms" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of atoms in the Atoms class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Atoms.natypes">
+<code class="descname">natypes</code><a class="headerlink" href="#atomman.Atoms.natypes" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em> – The number of atom types in the Atoms class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.Atoms.prop">
+<code class="descname">prop</code><span class="sig-paren">(</span><em>key=None</em>, <em>index=None</em>, <em>value=None</em>, <em>a_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.Atoms.prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accesses the per-atom properties for controlled getting and setting.
+For getting values, prop() always returns a copy of the underlying
+data as opposed to the data itself.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Per-atom property name.</li>
+<li><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.6)"><em>slice</em></a><em>, </em><em>optional</em>) – Index of atoms.</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#any" title="(in Python v3.6)"><em>any</em></a><em>, </em><em>optional</em>) – Property values to assign.</li>
+<li><strong>a_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – Integer atom index.  Left in for backwards compatibility.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><ul class="simple">
+<li><em>list</em> – If no parameters given, returns a list of all assigned property
+keys.</li>
+<li><em>atomman.Atoms</em> – If index or a_id is given without value or key, returns a new
+Atoms instance for the specified atom indices.</li>
+<li><em>numpy.ndarray</em> – If key (and index/a_id) is given without value, returns a copy of
+the data associated with that property key.</li>
+</ul>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> – If a_id and index are both given, or only value is given.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.Atoms.view">
+<code class="descname">view</code><a class="headerlink" href="#atomman.Atoms.view" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>PropertyDict</em> – All assigned per-atom properties.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.defect.Stroh.html"
+                        title="previous chapter">Stroh</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.Box.html"
+                        title="next chapter">Box</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.Box.html" title="Box"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.Stroh.html" title="Stroh"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

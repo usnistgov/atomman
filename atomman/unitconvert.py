@@ -1,260 +1,394 @@
-#External library imports
-import numericalunits as nu
-import numpy as np
+# Standard Python libraries
+from __future__ import (absolute_import, print_function,
+                        division, unicode_literals)
 import ast
 
+# https://pypi.python.org/pypi/numericalunits
+import numericalunits as nu
+
+# https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
+# http://www.numpy.org/
+import numpy as np
+
+# atomman imports
+from .compatibility import iteritems, range, stringtype
+
 def build_unit():
-    """Builds the unit dictionary based on current working units"""
+    """
+    Saves numericalunits attributes to global dictionary unit so the values
+    can be retrieved by their string names.
+    """
     
+    # Define global dictionary
     global unit
-    unit = {
-        "m": nu.m, "cm": nu.cm, "mm": nu.mm, "um": nu.um, "nm": nu.nm, "pm": nu.pm, "fm": nu.fm, 
-        "km": nu.km, "angstrom": nu.angstrom, "Angstrom": nu.angstrom, "lightyear": nu.lightyear, "astro_unit": nu.astro_unit,
-        "pc": nu.pc, "kpc": nu.kpc, "Mpc": nu.Mpc, "Gpc": nu.Gpc, 
-        "inch": nu.inch, "foot": nu.foot, "mile": nu.mile, "thou": nu.thou,
-        
-        "L": nu.L, "mL": nu.mL, "uL": nu.uL, "nL": nu.nL, "pL": nu.pL, "fL": nu.fL,
-        "aL": nu.aL, "kL": nu.kL, "ML": nu.ML, "GL": nu.GL,
-
-        "s": nu.s, "ms": nu.ms, "us": nu.us, "ns": nu.ns, "ps": nu.ps, "fs": nu.fs,
-        "minute": nu.minute, "hour": nu.hour, "day": nu.day, "week": nu.week, "year": nu.year,
-        
-        "Hz": nu.Hz, "mHz": nu.mHz, "kHz": nu.kHz, "MHz": nu.MHz, "GHz": nu.GHz,
-        "THz": nu.THz, "PHz": nu.PHz,
-        
-        "kg": nu.kg, "g": nu.g, "mg": nu.mg, "ug": nu.ug, "ng": nu.ng, "pg": nu.pg, "fg": nu.fg,
-        "tonne": nu.tonne, "amu": nu.amu,
-        "Da": nu.Da, "kDa": nu.kDa, "lbm": nu.lbm, 
-        
-        "J": nu.J, "mJ": nu.mJ, "uJ": nu.uJ, "nJ": nu.nJ, "pJ": nu.pJ, "fJ": nu.fJ, 
-        "kJ": nu.kJ, "MJ": nu.MJ, "GJ": nu.GJ, "erg": nu.erg,
-        "eV": nu.eV, "meV": nu.meV, "keV": nu.keV, "MeV": nu.MeV, "GeV": nu.GeV,
-        "TeV": nu.TeV, "btu": nu.btu, "smallcal": nu.smallcal, "kcal": nu.kcal,
-        "Wh": nu.Wh, "kWh": nu.kWh,
-        
-        "NA": nu.NA, "mol": nu.mol, "mmol": nu.mmol, "umol": nu.umol, "nmol": nu.nmol,
-        "pmol": nu.pmol, "fmol": nu.fmol,
-        "M": nu.M, "mM": nu.mM, "uM": nu.uM, "nM": nu.nM, "pM": nu.pM, "fM": nu.fM,
-        
-        "N": nu.N, "dyn": nu.dyn, "lbf": nu.lbf,
-
-        "Pa": nu.Pa, "hPa": nu.hPa, "kPa": nu.kPa, "MPa": nu.MPa, "GPa": nu.GPa,  
-        "bar": nu.bar, "mbar": nu.mbar, "cbar": nu.cbar, "dbar": nu.dbar, "kbar": nu.kbar, "Mbar": nu.Mbar,
-        "atm": nu.atm, "torr": nu.torr, "mtorr": nu.mtorr, "psi": nu.psi,
-        
-        "W": nu.W, "mW": nu.mW, "uW": nu.uW, "nW": nu.nW, "pW": nu.pW, "kW": nu.kW,
-        "MW": nu.MW, "GW": nu.GW, "TW": nu.TW,
-
-        "K": nu.K, "degFinterval": nu.degFinterval, "degCinterval": nu.degCinterval,
-        
-        "C": nu.C, "mC": nu.mC, "uC": nu.uC, "nC": nu.nC, "Ah": nu.Ah, "mAh": nu.mAh,
-        
-        "A": nu.A, "mA": nu.mA, "uA": nu.uA, "nA": nu.nA, "pA": nu.pA, "fA": nu.fA,
-        
-        "V": nu.V, "mV": nu.mV, "uV": nu.uV, "nV": nu.nV, "kV": nu.kV, "MV": nu.MV, "GV": nu.GV, "TV": nu.TV,
-        
-        "ohm": nu.ohm, "mohm": nu.mohm, "kohm": nu.kohm, "Mohm": nu.Mohm, "Gohm": nu.Gohm,
-        
-        "S": nu.S, "mS": nu.mS, "uS": nu.uS, "nS": nu.nS,
-        
-        "T": nu.T, "mT": nu.mT, "uT": nu.uT, "nT": nu.nT,
-        "G": nu.G, "mG": nu.mG, "uG": nu.uG, "kG": nu.kG,
-        "Oe": nu.Oe, "Wb": nu.Wb,
-        
-        "F": nu.F, "uF": nu.uF, "nF": nu.nF, "pF": nu.pF, "fF": nu.fF, "aF": nu.aF,
-        
-        "H": nu.H, "mH": nu.mH, "uH": nu.uH, "nH": nu.nH,
-
-        "c0": nu.c0, "mu0": nu.mu0, "eps0": nu.eps0, "Z0": nu.Z0, "hPlanck": nu.hPlanck, "hbar": nu.hbar,
-        "kB": nu.kB, "GNewton": nu.GNewton, "sigmaSB": nu.sigmaSB, "alphaFS": nu.alphaFS, "Rgas": nu.Rgas, 
-        "e": nu.e, "uBohr": nu.uBohr, "uNuc": nu.uNuc, "aBohr": nu.aBohr, "me": nu.me, "mp": nu.mp, 
-        "mn": nu.mn, "Rinf": nu.Rinf, "Ry": nu.Ry, "ARichardson": nu.ARichardson, "Phi0": nu.Phi0,
-        "KJos": nu.KJos, "RKlitz": nu.RKlitz, "REarth": nu.REarth, "g0": nu.g0, "Msolar": nu.Msolar,
-        "MEarth": nu.MEarth
-    }
-
-def reset_units(seed=None, length=None, mass=None, time=None, energy=None, charge=None):
-    """Allows the working units to be reset to random values or specified accoring to dimensions."""
+    unit = {}
     
-    if length is None and time is None and mass is None and energy is None and charge is None:
+    # Copy all float attributes of numericalunits to unit
+    for key, value in iteritems(nu.__dict__):
+        try:
+            key = key.decode('UTF-8')
+        except:
+            pass
+        if key[:1] != '_' and isinstance(value, float):
+            unit[key] = value
+
+def reset_units(seed=None, **kwargs):
+    """
+    Extends numericalunits.reset_units() by allowing for working units to be
+    defined.  If no working units are specified, then random working units are
+    used just like the default numericalunits behavior.  Otherwise, use the
+    specified working units and SI.
+    
+    Parameters
+    ----------
+    seed : int, optional
+        random number seed to use in generating random working units.
+        seed='SI' will use SI units.  Cannot be given with the other
+        parameters.
+    length : str, optional
+        Unit of length to use for the working units.
+    mass : str, optional
+        Unit of mass to use for the working units.
+    time : str, optional
+        Unit of time to use for the working units.
+    energy : str, optional
+        Unit of energy to use for the working units.
+    charge : str, optional
+        Unit of charge to use for the working units.
+        
+    Raises
+    ------
+    ValueError
+        If seed is given with any other parameters, or if more than four of
+        the working unit parameters are given.
+    """
+    
+    # Generate random base working units
+    if (len(kwargs) == 0):
+        
         nu.reset_units(seed)
+        build_unit()
     
-    else:
-        try:
-            length = unit[length]
-        except:
-            pass
-        try:
-            mass = unit[mass]
-        except:
-            pass
-        try:
-            time = unit[time]
-        except:
-            pass        
-        try:
-            energy = unit[energy]
-        except:
-            pass    
-        try:
-            charge = unit[charge]
-        except:
-            pass      
-    
-        m = 1.
-        kg = 1.
-        s = 1.
-        C = 1.
-        K = 1.
+    # Generate SI + defined working units
+    elif seed is None:
         
-        if length is not None:
-            m = nu.m / length
-        if mass is not None:
-            kg = nu.kg / mass
-        if time is not None:
-            s = nu.s / time
-        if charge is not None:
-            C = nu.C / charge
-        if energy is not None:
-            J = nu.J / energy
-            if mass is None:
-                kg = J * s**2 / m**2
-            elif time is None:
-                s = (kg * m**2 / J)**0.5
-            elif length is None:
-                m = (J * s**2 / kg)
-            else:
-                raise ValueError('length, mass, time and energy cannot all be defined')
+        # Check that no more than 4 working units are defined
+        if len(kwargs) > 4:
+            raise ValueError('Only four working units can be defined')
         
-        nu.m = m
-        nu.kg = kg
-        nu.s = s
-        nu.C = C
-        nu.K = K
+        # Set base units to 1 (working units to SI)
+        nu.reset_units('SI')
+        build_unit()
         
+        # Scale base units by working units
+        if 'length' in kwargs:
+            nu.m = unit['m'] / unit[kwargs['length']]
+        
+        if 'mass' in kwargs:
+            nu.kg = unit['kg'] / unit[kwargs['mass']]
+        
+        if 'time' in kwargs:
+            nu.s = unit['s'] / unit[kwargs['time']]
+        
+        if 'charge' in kwargs:
+            nu.C = unit['C'] / unit[kwargs['charge']]
+        
+        # Scale derived units by working units
+        if 'energy' in kwargs:
+            J = unit['J'] / unit[kwargs['energy']]
+            
+            # Scale base units by derived units
+            if 'mass' not in kwargs:
+                nu.kg = J * nu.s**2 / nu.m**2
+            elif 'time' not in kwargs:
+                nu.s = (nu.kg * nu.m**2 / J)**0.5
+            elif 'length' not in kwargs:
+                nu.m = (J * nu.s**2 / nu.kg)
+        
+        # Rebuild derived units and unit dictionary
         nu.set_derived_units_and_constants()
-    build_unit()    
+        build_unit()
+        
+    else:
+        raise ValueError('seed cannot be given with any other parameters')
 
 def set_literal(term):
-    """Convert string 'value unit' to numbers in working units"""
+    """
+    Convert string 'value unit' to numbers in working units.
+    
+    Parameters
+    ----------
+    term : str
+        String containing value and associated unit. If unit is not given,
+        then the value is converted to a float and assumed to be in working
+        units.
+        
+    Returns
+    -------
+    numpy.ndarray
+        The numerical value of term in working units.
+        
+    Raises
+    ------
+    ValueError
+        If no valid float value can be parsed.
+    """
+    
+    # Set splitting point j to end of term (i.e. assume no units given)
     j = len(term)
     
-    #Loop until done
+    # Loop until done
     while True:
         
-        #Split into value, unit terms
+        # Split term into value, unit terms
         value = term[:j].strip()
         unit = term[j:].strip()
-        if len(unit) == 0: unit = None
+        if len(unit) == 0:
+            unit = None
 
-        #Return number if value, unit pair is valid 
-        try: return set_in_units(ast.literal_eval(value), unit)
-        except: pass
-    
-        #Find the next splitting point
-        try: j = term[:j].rindex(' ')
-        except: raise ValueError('Failed to parse term')
-    
+        # Return number if value, unit pair is valid
+        try: 
+            return set_in_units(ast.literal_eval(value), unit)
+        except: 
+            # Find the next splitting point
+            try: 
+                j = term[:j].rindex(' ')
+            except: 
+                raise ValueError('Failed to parse term')
+
 def set_in_units(value, units):
-    """Convert value from specified units to working units"""
+    """
+    Convert value from specified units to working units.
+    
+    Parameters
+    ----------
+    value : int, float, numpy.ndarray, etc.
+        A numerical value or list/array of values.
+    units : str
+        The units that value is in.
+        
+    Returns
+    -------
+    numpy.ndarray
+        The given value converted from the specified units to working units.
+    """
     units = parse(units)
     return np.asarray(value) * units
-        
+
 def get_in_units(value, units):
-    """Convert value from working units to specified units"""
+    """
+    Convert value from working units to specified units.
+    
+    Parameters
+    ----------
+    value : int, float, numpy.ndarray, etc.
+        A numerical value or list/array of values.
+    units : str
+        The units to convert value to (from working units).
+        
+    Returns
+    -------
+    numpy.ndarray
+        The given value converted to the specified units from working units.
+    """
     units = parse(units)
     return np.asarray(value) / units
-    
+
 def value_unit(term):
-    """Used for dictionary elements with value, (index,) unit keys"""
+    """
+    Reads numerical value from dictionary containing 'value' and 'unit' keys.
+    
+    Parameters
+    ----------
+    term : dict
+        Dictionary containing 'value' and 'unit' keys.
+        
+    Returns
+    -------
+    numpy.ndarray
+        The result of calling set_in_units() by passing the dictionary keys 
+        'value' and 'unit' as parameters.
+    
+    """
     unit = term.get('unit', None)
     value = set_in_units(term['value'], unit)
     
-    if 'index' in term:
-        indices = []
-        for index in term['index']:
-            indices.append(np.array(index.split(), dtype='int64'))
-        indices = np.array(indices)
-
-        newvalue = np.zeros(tuple(np.max(indices, axis=0)))
-        newvalue[list((indices-1).T)] = value
-        value = newvalue
+    if 'shape' in term:
+        shape = tuple(term['shape'])
+        value = value.reshape(shape)
     
     return value
     
-def model(value, units):
-    """Generates DataModelDict representation of data"""
+def error_unit(term):
+    """
+    Reads numerical error from dictionary containing 'error' and 'unit' keys.
+    
+    Parameters
+    ----------
+    term : dict
+        Dictionary containing 'error' and 'unit' keys.
+        
+    Returns
+    -------
+    numpy.ndarray
+        The result of calling set_in_units() by passing the dictionary keys 
+        'error' and 'unit' as parameters.
+    
+    """
+    unit = term.get('unit', None)
+    error = set_in_units(term['error'], unit)
+    
+    if 'shape' in term:
+        shape = tuple(term['shape'])
+        error = error.reshape(shape)
+    
+    return error
+    
+def model(value, units, error=None):
+    """
+    Generates DataModelDict representation of data.
+    
+    Parameters
+    ----------
+    value : float, numpy.ndarray, etc.
+        A numerical value or list/array of values.
+    units : str
+        The units to convert value to (from working units).
+    error : float, numpy.ndarray, etc., optional
+        A value error to include.  If given, must be the same
+        size/shape as value.
+    
+    Returns
+    -------
+    DataModelDict
+        Model representation of the value(s).
+    """
     
     datamodel = DM()
     
     value = get_in_units(value, units)
+    if error is not None:
+        error = get_in_units(error, units)
     
     # Single value
     if value.ndim == 0:
         datamodel['value'] = value
+        if error is not None:
+            datamodel['error'] = error
     
     # 1D array
     elif value.ndim == 1:
         datamodel['value'] = list(value)
-    
-    # Higher-order tensor
+        if error is not None:
+            datamodel['error'] = list(error)
+            
+    # Higher-order array requires shape
     else:
         shape = value.shape
         datamodel['value'] = list(value.flatten())
-        
-        datamodel['index'] = []
-        for index in np.array(np.unravel_index(range(len(datamodel['value'])), shape)).T:
-            strindex = []
-            for i in index:
-                strindex.append(str(i+1))
-            datamodel['index'].append(' '.join(strindex))
-        
+        if error is not None:
+            datamodel['error'] = list(error.flatten())
+        datamodel['shape'] = list(shape)
+    
     datamodel['unit'] = units
     return datamodel
-    
+
 def parse(units):
-    """Convert units as strings (or None) into numbers."""
+    """
+    Convert units as strings (or None) into scaling numbers.  This function
+    allows for complex unit definitions with operators:
     
-    #Units of None does no scaling
+    - '()' for defining order of operations
+    - '*' for multiplication.
+    - '/' for division.
+    - '^' for powers.
+    
+    Parameters
+    ----------
+    units : str or None
+        String consisting of defined unit names, operators, and numerical 
+        values to interpret.
+        
+    Returns
+    -------
+    float
+        The scaling factor for converting numbers in the given units to
+        working units. If units is None or == 'scaled', then this value is
+        1.0.
+    """
+    
+    # Units of None does no scaling
     if units is None or units == 'scaled':
         return 1
 
-    #Parse string and return number value
-    elif isinstance(units, (str, unicode)):
+    # Parse string and return number value
+    elif isinstance(units, stringtype):
         i = 0
         terms = []
+        
+        # Break into terms
         while i < len(units):
+            
+            # parse terms in parentheses first
             if units[i] == '(':
-                end = units.rindex(')')
-                terms.append(parse(units[i+1:end]))
-                i = end+1
+                j = i+1
+                pcount = 0
+                while True:
+                    if j == len(units):
+                        raise ValueError('Invalid () terms.')
+                    elif units[j] == ')':
+                        if pcount == 0:
+                            break
+                        else:
+                            pcount -= 1
+                    elif units[j] == '(':
+                        pcount += 1
+                    j += 1
+                    
+                terms.append(parse(units[i+1:j]))
+                i = j+1
+            
+            # append string terms
             elif units[i].isalpha():
                 term = ''
                 while i < len(units) and units[i] not in ' */^\n\r\t':
                     term += units[i]
                     i += 1
                 terms.append(unit[term])
+            
+            # append numeric terms
             elif units[i].isdigit() or units[i] == '-' or units[i] == '.':
                 term = ''
                 while i < len(units) and units[i] not in ' */^\n\r\t':
                     term += units[i]
                     i += 1
                 terms.append(float(term))
+            
+            # append operators
             elif units[i] in '*/^':
                 terms.append(units[i])
                 i += 1
+            
+            # ignore excess white characters
             elif units[i] in ' \n\r\t':
                 i += 1
+            
+            # issue error for unmatched ) parentheses
+            elif units[i] == ')':
+                raise ValueError('Invalid () terms.')
+            
             else:
                 raise ValueError('Unknown character: %s' % units[i])
         
+        # Compute powers
         while '^' in terms:
             c = terms.index('^')
             value = [terms[c-1] ** terms[c+1]]
             terms = terms[:c-1] + value + terms[c+2:]
         
+        # Compute multiplication and division
         while len(terms) > 1:
             if terms[1] == '*':
                 value = [terms[0] * terms[2]]
@@ -263,16 +397,13 @@ def parse(units):
                 value = [terms[0] / terms[2]]
                 terms = value + terms[3:]
             else:
-                print terms
                 raise ValueError('Invalid string format')
         
         return terms[0]
 
-    #Else assume units is already a number
+    # Else assume units is already a number
     else:
         return units
-   
-        
-#Initial build and reset.  Only called first time module is loaded
-build_unit()
+
+# Initial reset.  Only called first time module is loaded.
 reset_units()

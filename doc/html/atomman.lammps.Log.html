@@ -1,0 +1,184 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Log &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="defect" href="atomman.defect.html" />
+    <link rel="prev" title="Potential" href="atomman.lammps.Potential.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.html" title="defect"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Potential.html" title="Potential"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.lammps.html" accesskey="U">lammps</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="log">
+<h1>Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.lammps.Log">
+<em class="property">class </em><code class="descclassname">atomman.lammps.</code><code class="descname">Log</code><span class="sig-paren">(</span><em>log_info=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Object for representing a LAMMPS log output</p>
+<dl class="method">
+<dt id="atomman.lammps.Log.flatten">
+<code class="descname">flatten</code><span class="sig-paren">(</span><em>style='last'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Log.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combines all simulations into one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Specifies which values to use for duplicate time steps:
+- ‘first’ uses the values from the earliest simulation.
+- ‘last’ uses the values from the latest simulation (default).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Log.lammps_date">
+<code class="descname">lammps_date</code><a class="headerlink" href="#atomman.lammps.Log.lammps_date" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>datetime.date</em> – The date associated with the LAMMPS version used.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Log.lammps_version">
+<code class="descname">lammps_version</code><a class="headerlink" href="#atomman.lammps.Log.lammps_version" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em> – The LAMMPS version used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Log.model">
+<code class="descname">model</code><span class="sig-paren">(</span><em>flatten=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Log.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an XML/JSON equivalent data mode of the information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flatten</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a><em>, </em><em>optional</em>) – Specifies if the simulations are to be flattened, and which
+flatten style to use:
+- None does not flatten the simulations (default).
+- ‘first’ uses the values from the earliest simulation.
+- ‘last’ uses the values from the latest simulation.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The Log content in data model form.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">DataModelDict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.lammps.Log.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>log_info</em>, <em>append=True</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.lammps.Log.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses a LAMMPS screen output/log file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>log_info</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><em>file-like object</em>) – The LAMMPS log content to read in.</li>
+<li><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a><em>, </em><em>optional</em>) – Flag indicating if the content being read in is appended to the
+current data (True, default), or if it overwrites any existing
+saved content (False).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.lammps.Log.simulations">
+<code class="descname">simulations</code><a class="headerlink" href="#atomman.lammps.Log.simulations" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of dict</em> – parsed data for each separate LAMMPS run/minimize action</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.lammps.Potential.html"
+                        title="previous chapter">Potential</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.defect.html"
+                        title="next chapter">defect</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.html" title="defect"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.lammps.Potential.html" title="Potential"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.lammps.html" >lammps</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

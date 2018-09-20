@@ -1,259 +1,361 @@
-#Standard library imports
-from collections import OrderedDict
+# Standard Python libraries
+from __future__ import (absolute_import, print_function,
+                        division, unicode_literals)
 from copy import deepcopy
+from collections import OrderedDict
 
-#External library imports
+# http://www.numpy.org/
 import numpy as np
 
-from ..tools import is_dtype_int, is_dtype_bool
+# https://pandas.pydata.org/
+import pandas as pd
+
+# atomman imports
+from ..compatibility import iteritems, int, inttype, range
+from ..tools import indexstr
 
 class Atoms(object):
     """
-    Class for handling atomic properties.
-    
-    Attributes:
-    natoms -- number of atoms.
-    natypes -- number of assigned atom types.
-    data -- the underlying numpy array used.
-    view -- dictionary of structured views for each assigned property
-    dtype -- dictionary of data types for each assigned property
-    
-    Methods:
-    prop -- accesses the atom properties for value assignment or retrieval.
+    Class for representing a collection of atoms.
     """
     
-    def __init__(self, natoms=1, prop={}, prop_dtype=None, nvals=30, data=None, view=None):
+    class PropertyDict(OrderedDict):
+        """Extends OrderedDict to work with Atoms"""
+        
+        def __init__(self, host):
+            """PropertyDict needs to know its host Atoms object."""
+            self.__host = host
+            super(Atoms.PropertyDict, self).__init__()
+        
+        def __setitem__(self, key, value):
+            """
+            Modifies OrderedDict__setitem__() such that
+            1. All values are converted to numpy.ndarrays.
+            2. For new keys, checks are done that data is compatible with host.natoms.
+            3. New keys are also added as attributes to host Atoms object, if allowed.
+            4. For existing keys, new values are saved over the old ones as opposed to
+            only changing the name assignment.
+
+            Parameters
+            ----------
+            key : str
+                The property key name to assign values to.
+            value : numpy.ndarray
+                The values to assign.
+            """
+            # Shortcut to host
+            host = self.__host
+            
+            # Python 2: change to unicode if needed.
+            try:
+                key = key.decode('UTF-8')
+            except:
+                pass
+            
+            # Convert to numpy.ndarray if needed
+            value = np.asarray(value)
+
+            # Broadcast if needed and allowed
+            if value.shape == ():
+                value = np.array(np.broadcast_to(value, (host.natoms,) + value.shape))
+            elif value.shape[0] == 1:
+                value = np.array(np.broadcast_to(value, (host.natoms,) + value.shape[1:]))
+            elif value.shape[0] != host.natoms:
+                raise ValueError('First dimension of value must be 1 or natoms')
+
+            # If key is already assigned, save value over existing values
+            if key in self.keys():
+                self[key][:] = value
+            
+            # Otherwise, set new item and try assigning attribute to host
+            else:
+                super(Atoms.PropertyDict, self).__setitem__(key, value)
+                try:
+                    assert key not in dir(host)
+                    super(Atoms, host).__setattr__(key, value)
+                except:
+                    pass
+    
+    def __init__(self, natoms=None, atype=None, pos=None, prop=None, **kwargs):
         """
-        Initilizes an Atoms instance.
+        Class initializer.
         
-        Keyword Arguments:
-        natoms -- Number of atoms.  This is fixed once the system is initilized.  Default value is 1.
-        prop -- Dictionary containing property terms.  Allows property values to be defined during initilization.
-        prop_dtype -- Dictionary that allows for the data type of properties to be explicitly assigned.
-        nvals -- Inititial number of values per atom. Will expand if necessary. Default value is 30.
-        data -- numpy array containing all the property data for all the atoms. This is for more explicit initilization control.
-        view -- Dictionary containing views of data relating to each property. This is for more explicit initilization control. 
-        """    
-        if data is None and view is None:
-            if natoms < 1:
-                natoms = 1
-            if nvals < 4:
-                nvals = 4
-            self.data = np.zeros((natoms, nvals), dtype='float64')
+        Parameters
+        ==========
+        natoms : int
+            The number of atoms.
+        atype : int or list/ndarray of int
+            The integer atomic types to assign to all atoms.
+        pos : list/ndarray of float
+            The atomic positions to assign to all atoms.
+        prop : dict
+            Dictionary containing all per-atom properties.  Can be used
+            instead of atype, pos, and kwargs.  This is for backwards
+            compatibility support with atomman version 1.
+        kwargs : any
+            All additional key/value pairs are assigned as properties.
             
-            self.view  = OrderedDict()
-            self.dtype = OrderedDict()
+        Returns
+        =======
+        Atoms
+            The Atoms object.
+        """
         
-            self.view['atype'] =  self.data[:, 0:1]
-            self.view['atype'][:] = np.zeros((natoms, 1))
-            self.dtype['atype'] = np.dtype('int32')
+        # Check for prop in kwargs (for backwards compatibility)
+        if prop is not None:
+            if atype is not None and pos is not None and len(kwargs) > 0:
+                raise ValueError('prop dict cannot be given with keyword properties')
+            
+            # Divide prop into keyword arguments
+            atype = prop.pop('atype', None)
+            pos = prop.pop('pos', None)
+            kwargs = prop
         
-            self.view['pos'] =  self.data[:, 1:4]
-            self.view['pos'][:] = np.zeros((natoms, 3))
-            self.dtype['pos'] = np.dtype('float64')
+        # Check atype parameter values
+        if atype is not None:
+            atype = np.asarray(atype, dtype='uint64')
+            
+            # Handle single atype
+            if atype.ndim == 0:
+                natoms_atype = 1
+            
+            # Handle list of atype
+            elif atype.ndim == 1:
+                natoms_atype = atype.shape[0]
+            else:
+                raise ValueError('Only one atype per atom allowed')
+        else:
+            atype = np.array([1], dtype='uint64')
+            natoms_atype = 1
         
-            self.__start = 4
-        
-            for key, value in prop.iteritems():
-                if prop_dtype is None:
-                    dtype = None
+        # Check pos parameter values
+        if pos is not None:
+            pos = np.asarray(pos, dtype='float64')
+            
+            # Handle single pos
+            if pos.ndim == 1:
+                if pos.shape[0] == 3:
+                    natoms_pos = 1
                 else:
-                    dtype = prop_dtype[key]
-                    
-                self.prop(key=key, value=value, dtype=dtype)
-                
-        elif data is not None and view is not None and prop_dtype is not None:
-            self.data = np.asarray(data, dtype='float64')
-            assert isinstance(view, OrderedDict),       'view must be an OrderedDict'
-            assert isinstance(prop_dtype, OrderedDict), 'prop_dtype must be an OrderedDict'
-            assert 'atype' in view,                     'view does not have atype'
-            assert 'pos' in view,                       'view does not have pos'
-            for k in view:
-                assert k in prop_dtype,                 'view and prop_dtype keys do not match'
-            for k in prop_dtype:
-                assert k in view,                       'view and prop_dtype keys do not match'
+                    raise ValueError('pos per atom must be 3-dimensional')
             
-            self.view = view
-            self.dtype = prop_dtype  
-            self.__start = 0
-            for k, v in view.iteritems():
-                self.__start += v[0].size
+            # Handle list of pos
+            elif pos.ndim == 2:
+                if pos.shape[1] == 3:
+                    natoms_pos = pos.shape[0]
+                else:
+                    raise ValueError('pos per atom must be 3-dimensional')
+            else:
+                raise ValueError('too many dimensions for pos')
+        else:
+            pos = np.zeros((1, 3), dtype='float64')
+            natoms_pos = 1
         
+        # Check natoms parameter values
+        if natoms is not None:
+            natoms = int(natoms)
+            if ((natoms_atype == 1 or natoms_atype == natoms)
+                and (natoms_pos == 1 or natoms_pos == natoms)):
+                pass
+            else:
+                raise ValueError('natoms and length of atype/pos not compatible')
+        else:
+            if natoms_atype == natoms_pos:
+                natoms = natoms_atype
+            elif natoms_atype == 1:
+                natoms = natoms_pos
+            elif natoms_pos == 1:
+                natoms = natoms_atype
+            else:
+                raise ValueError('lengths of atype and pos not compatible')
+            
+        # Initialize underlying private class attributes
+        super(Atoms, self).__setattr__('_Atoms__natoms', natoms)
+        super(Atoms, self).__setattr__('_Atoms__view', Atoms.PropertyDict(self))
+        super(Atoms, self).__setattr__('_Atoms__dir', deepcopy(dir(self)))
+        
+        # Set mandatory properties
+        self.view['atype'] = atype
+        self.view['pos'] = pos
+        
+        # Set extra properties
+        for key, value in iteritems(kwargs):
+            self.view[key] = value
+    
     def __str__(self):
         """string output of Atoms data"""
-        if self.data.ndim == 1:
-            atype = np.array([self.view['atype']])
-            pos = np.array([self.view['pos']])
-        else:
-            atype = self.view['atype']
-            pos = self.view['pos']
+        atype = self.atype
+        pos = self.pos
         lines = ['     id |   atype |  pos[0] |  pos[1] |  pos[2]']
-        for i in xrange(self.natoms):
+        for i in range(self.natoms):
             lines.append('%7i | %7i | %7.3f | %7.3f | %7.3f' % (i, atype[i], pos[i,0], pos[i,1], pos[i,2]))
         
         return '\n'.join(lines)
     
+    def __setattr__(self, name, value):
+        """Control setting of user-defined attributes"""
+        if not hasattr(self, name) or name in self.view:
+            self.view[name] = value
+        else:
+            super(Atoms, self).__setattr__(name, value)
+    
+    def __intslice(self, intnum):
+        if intnum == -1:
+            return slice(intnum, None)
+        else:
+            return slice(intnum, intnum+1)
+    
+    def __deepcopy__(self, memo):
+        """Properly handle deepcopy"""
+        d = OrderedDict()
+        atype = deepcopy(self.view['atype'])
+        pos = deepcopy(self.view['pos'])
+        for key in self.view:
+            if key not in ['atype', 'pos']:
+                d[key] = deepcopy(self.view[key])
+        return Atoms(atype=atype, pos=pos, **d)
+    
     def __getitem__(self, index):
-        """Index getting of atoms."""
+        """Index getting of Atoms."""
         view = OrderedDict()
-        for k, v in self.view.iteritems():
-            view[k] = v[index]
-        return Atoms(data=self.data[index], view=view, prop_dtype=self.dtype)
+        if isinstance(index, inttype):
+            index = self.__intslice(index)
+        for key in self.view.keys():
+            view[key] = self.view[key][index]
+        return Atoms(**view)
         
     def __setitem__(self, index, value):
-        """Index setting of atoms."""
-        assert isinstance(value, Atoms)
-        assert value.data.shape == self[index].data.shape
-        assert value.prop() == self.prop()
-        assert value.dtype == self.dtype
-        self.data[index] = value.data.copy()       
+        """Index setting of Atoms."""
+        try:
+            assert isinstance(value, Atoms)
+            assert sorted(value.view.keys()) == sorted(self.view.keys())
+        except:
+            raise ValueError('Can only set Atoms with matching properties')
+        
+        if isinstance(index, inttype):
+            index = self.__intslice(index)
+            
+        for key in self.view.keys():
+            self.view[key][index] = value.view[key]
+    
+    def __len__(self):
+        """len of atoms = natoms."""
+        return self.natoms
     
     @property
     def natoms(self):
-        """The number of atoms."""
-        if self.data.ndim == 1:
-            return long(1)
-        else:
-            return long(len(self.data))
+        """int : The number of atoms in the Atoms class."""
+        return self.__natoms
+    
+    @property
+    def atypes(self):
+        """tuple : List of unique int atom types."""
+        return tuple(np.unique(self.atype))
     
     @property
     def natypes(self):
-        """The maximum atype value."""
-        return long(self.view['atype'].max())
-
-    def prop(self, **kwargs):
+        """int : The number of atom types in the Atoms class."""
+        return len(self.atypes)
+        
+    @property
+    def view(self):
+        """PropertyDict : All assigned per-atom properties."""
+        return self.__view
+    
+    def prop(self, key=None, index=None, value=None, a_id=None):
         """
-        Accesses the per-atom properties for getting and setting.
+        Accesses the per-atom properties for controlled getting and setting.
+        For getting values, prop() always returns a copy of the underlying
+        data as opposed to the data itself.
         
-        Keyword Arguments:
-        a_id -- atom index.
-        key -- atom property name.
-        value -- value(s) to assign to properties associated with a_id and/or term.
-        dtype -- data type to explicitly set or retrieve value as. 
-
-        If no arguments given, returns a list of the assigned property keys. Otherwise, a_id and/or key must be specified. The key specifies which property, and the a_id which atom(s) to access. With no value argument, prop() returns which value(s) are associated with the given a_id and/or key. With a value argument, the value is saved according to the given a_id and/or key.
-        """                  
-        key = kwargs.pop('key', None)
-        a_id = kwargs.pop('a_id', None)
-        value = kwargs.pop('value', None)
-        dtype = kwargs.pop('dtype', None)
-        assert len(kwargs) == 0, 'Invalid keyword arguments'
+        Parameters
+        ----------
+        key : str, optional
+            Per-atom property name.
+        index : int, list, slice, optional
+            Index of atoms.
+        value : any, optional
+            Property values to assign.
+        a_id : int, optional
+            Integer atom index.  Left in for backwards compatibility.
         
-        #Return list of assigned properties when no arguments given.
-        if key is None and a_id is None:
-            assert dtype is None, 'dtype cannot be specified without key'
-            assert value is None, 'value cannot be specified without key and/or a_id'
-            return [k for k in self.view]
-       
-        #Get or set an atom
-        if key is None and a_id is not None:
-            assert dtype is None, 'dtype cannot be specified without key'
-            if value is None:
-                return deepcopy(self[a_id])
-            elif isinstance(value, Atoms) and value.natoms == 1:
-                self[a_id] = value
+        Returns
+        -------
+        list
+            If no parameters given, returns a list of all assigned property
+            keys.
+        atomman.Atoms
+            If index or a_id is given without value or key, returns a new
+            Atoms instance for the specified atom indices.
+        numpy.ndarray
+            If key (and index/a_id) is given without value, returns a copy of
+            the data associated with that property key.
+        
+        raises
+        ------
+        ValueError
+            If a_id and index are both given, or only value is given.
+        """
+        
+        # Handle a_id
+        if a_id is not None:
+            if index is not None:
+                raise ValueError('a_id and index cannot both be given')
+            index = a_id
+        
+        # Get values if value is None
+        if value is None:
+            if key is None:
+                # Return list of property names when no parameters are given
+                if index is None:
+                    return list(self.view.keys())
+                # Return copy of slice if only index is given
+                else:
+                    return deepcopy(self[index])
+            # If key is given, return copy of property values
             else:
-                raise TypeError('value for a_id must be an Atoms instance of length 1')
-                
-        #Get or set a property for all atoms
-        elif a_id is None and key is not None:
-            if value is None:
-                try:
-                    if dtype is None:
-                        dtype = self.dtype[key]
-                    value = np.array(self.view[key], dtype=dtype) 
-                except:
-                    return None
-                
-                if value.ndim == 1:
-                    if len(value) == 1:
-                        value = value[0]
-                elif len(value[0]) == 1:
-                    value = value.T[0]
-                return value
-
-            else:
-                value = np.asarray(value)
-
-                if value.ndim == 0:
-                    value = value.reshape(1)
-                if value.ndim == 1:
-                    value = value[:,np.newaxis]
-
-                if key not in self.view:
-                    if dtype is None:
-                        dtype = value.dtype
-                    #assert len(value) == self.natoms, 'Array size does not match number of atoms'                    
-                    self.__add_prop(key, value[0].size, value[0].shape, dtype)
-                if dtype is not None:
-                    assert dtype == self.dtype[key], 'dtype already assigned as %s' % self.dtype[key]
-                
-                #set value if it has the correct dtype 
-                if is_dtype_int(self.dtype[key]): 
-                    assert is_dtype_int(value.dtype) or is_dtype_bool(value.dtype), 'value is incompatible with int data type'
-                elif is_dtype_bool(self.dtype[key]): 
-                    assert is_dtype_bool(value.dtype), 'value is incompatible with bool data type'
-                self.view[key][:] = value
-            
-        #Get or set a specific atom's property   
+                if index is None:
+                    return deepcopy(self.view[key])
+                else:
+                    return deepcopy(self.view[key][index])
+        
+        # Set values if value is given
         else:
-            if value is None:
-                try:
-                    if dtype is None:
-                        dtype = self.dtype[key]
-                    value = np.array(self.view[key], dtype=dtype) 
-                except:
-                    return None
-                value = value[a_id]
-                if len(value) == 1:
-                    value = value[0]
-                return value
+            # If no key, set value to atoms (or a slice)
+            if key is None:
+                if not isinstance(value, Atoms):
+                    raise TypeError('If key is None, value must be instance of atomman.Atoms')
+                if index is None:
+                    self[:] = value
+                else:
+                    self[index] = value
+            
+            # If key is given, set copy of value to property
             else:
-                value = np.asarray(value)
-                if value.ndim == 0:
-                    value = value.reshape(1)
-                
-                if key not in self.view:
-                    if dtype is None:
-                        dtype = value.dtype
-                    self.__add_prop(key, value.size, value.shape, dtype)
-                if dtype is not None:
-                    assert dtype == self.dtype[key], 'dtype already assigned as %s' % self.dtype[key]
-                
-                #set value if it has the correct shape and dtype 
-                if is_dtype_int(self.dtype[key]): 
-                    assert is_dtype_int(value.dtype) or is_dtype_bool(value.dtype), 'value is incompatible with int data type'
-                elif is_dtype_bool(self.dtype[key]): 
-                    assert is_dtype_bool(value.dtype), 'value is incompatible with bool data type'
-
-                self.view[key][a_id] = value
-                
-    def __add_prop(self, key, size, shape, dtype):
-        """Internal function that adds a new property and extends underlying array if needed"""
-        try:
-            end = self.__start + size
-        except:
-            raise TypeError('New properties can only be added to ')
-                
-        #check if self.data is too small
-        if end > len(self.data[0]):
+                if index is None:
+                    self.view[key] = deepcopy(value)
+                else:
+                    self.view[key][index] = value
+        
+    def df(self):
+        """
+        Returns a pandas.DataFrame of all atomic properties.  Multi-dimensional
+        per-atom data will be converted into multiple table columns.
+        """
+        
+        # Initialize new dictionary of values
+        values = OrderedDict()
+        for key in self.view.keys():
             
-            #create larger array
-            data = np.zeros((self.natoms, end +  10))
-            data[:, :self.__start] = self.data[:, :self.__start]
-            self.data = data
-            
-            #reassign views to new array
-            start = 0
-            for k in self.view:
-                vshape = self.view[k].shape
-                self.view[k] = self.data[:, start : start + self.view[k][0].size]
-                self.view[k].shape = vshape
-                start = start + self.view[k][0].size
-            assert start == self.__start, 'Error reassigning properties'
-            
-        #create view and save dtype
-        self.view[key] = self.data[:,  self.__start : end]
-        self.view[key].shape = (self.natoms, ) + shape
-        self.dtype[key] = dtype
-        self.__start = end
+            # Flatten multidimensional arrays
+            for index, istr in indexstr(self.view[key].shape[1:]):
+                newkey = key + istr
+                
+                # Copy values over
+                if index == ():
+                    values[newkey] = self.view[key]
+                else:
+                    values[newkey] = self.view[key][(Ellipsis, ) + index]
+        
+        # Return DataFrame
+        return pd.DataFrame(values)

@@ -1,5 +1,8 @@
 #compiled python modules
 *.pyc
+*.c
+*.cp*
+*.pyd
 
 #Python egg metadata for atomman
 *.egg-info/
@@ -27,3 +30,4 @@ testing/
 
 # Upload bash script
 upload_package.bash
+update_cython.bash

@@ -1,0 +1,2084 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to atomman: Potential class &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to atomman: Running LAMMPS and the Log class" href="02.2_Running_LAMMPS_and_the_Log_class.html" />
+    <link rel="prev" title="Introduction to atomman: LAMMPS functionality" href="02._LAMMPS_Functionality.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="02.2_Running_LAMMPS_and_the_Log_class.html" title="Introduction to atomman: Running LAMMPS and the Log class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="02._LAMMPS_Functionality.html" title="Introduction to atomman: LAMMPS functionality"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tutorials</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-atomman:-Potential-class">
+<h1>Introduction to atomman: Potential class<a class="headerlink" href="#Introduction-to-atomman:-Potential-class" title="Permalink to this headline">¶</a></h1>
+<p><strong>Lucas M. Hale</strong>,
+<a class="reference external" href="mailto:lucas&#46;hale&#37;&#52;&#48;nist&#46;gov?Subject=ipr-demo">lucas<span>&#46;</span>hale<span>&#64;</span>nist<span>&#46;</span>gov</a>,
+<em>Materials Science and Engineering Division, NIST</em>.</p>
+<p>Notebook last updated: 2018-04-05</p>
+<p><a class="reference external" href="http://www.nist.gov/public_affairs/disclaimer.cfm">Disclaimers</a></p>
+<div class="section" id="1.-Introduction">
+<h2>1. Introduction<a class="headerlink" href="#1.-Introduction" title="Permalink to this headline">¶</a></h2>
+<p>The Potential class is a Python interpretation of the potential_LAMMPS
+data model record format. The potential_LAMMPS data models contain
+metadata associated with the LAMMPS input command lines associated with
+properly running a simulation with the indicated potential. Together,
+the potential_LAMMPS data model and the Potential class make it easy to
+design simulations that can be easily executed across multiple
+potentials of any LAMMPS pair style.</p>
+<p>Complete potential_LAMMPS data models in JSON and the associated
+potential parameter files for many potentials can be <a class="reference external" href="https://github.com/usnistgov/iprPy/tree/master/library/potential_LAMMPS">downloaded from
+the iprPy
+github</a>.</p>
+<p><strong>Library Imports</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Standard libraries</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c1"># http://www.numpy.org/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># https://github.com/usnistgov/atomman</span>
+<span class="kn">import</span> <span class="nn">atomman</span> <span class="k">as</span> <span class="nn">am</span>
+<span class="kn">import</span> <span class="nn">atomman.lammps</span> <span class="k">as</span> <span class="nn">lmp</span>
+<span class="kn">import</span> <span class="nn">atomman.unitconvert</span> <span class="k">as</span> <span class="nn">uc</span>
+
+<span class="c1"># Show atomman version</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atomman version =&#39;</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+atomman version = 1.2.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.-Class-Basics">
+<h2>2. Class Basics<a class="headerlink" href="#2.-Class-Basics" title="Permalink to this headline">¶</a></h2>
+<p>The atomman.Potential class is a Python interpretation of the
+potential_LAMMPS data model record format. A Potential object is
+initialized by reading in a data model as either a
+<a class="reference external" href="https://github.com/usnistgov/DataModelDict">DataModelDict</a>, or JSON
+or XML content.</p>
+<div class="section" id="2.1.Demonstration-data-model">
+<h3>2.1.Demonstration data model<a class="headerlink" href="#2.1.Demonstration-data-model" title="Permalink to this headline">¶</a></h3>
+<p>This is a demonstration data model record for an eam/alloy style
+potential. See <a class="reference external" href="#section5">Section 5</a>. for more details on the data
+model record format and examples for other pair styles.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Define data model record in JSON format</span>
+<span class="n">eam_alloy_json</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;a45a7731-d115-4079-b6f5-aa700c5b5c56&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;EAM-demo--LAMMPS--v1&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;820738a9-f556-468b-9041-9d98351ff751&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;EAM-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;metal&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atomic&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Ni&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 58.6934</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Al&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 26.981539</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Co&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 58.9332</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;eam/alloy&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: {</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;file&quot;: &quot;file.eam.alloy&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;symbols&quot;: &quot;True&quot;</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.2.-Load-a-data-model-with-Potential">
+<h3>2.2. Load a data model with Potential<a class="headerlink" href="#2.2.-Load-a-data-model-with-Potential" title="Permalink to this headline">¶</a></h3>
+<p>A Potential object is initialized by loading a data model.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>model</strong> (<em>DataModelDict, str, or file-like object</em>) The
+potential_LAMMPS data model content to load.</li>
+<li><strong>pot_dir</strong> (<em>str, optional</em>) directory location for any artifacts
+(eg. .eam.alloy files) associated with the potential. A value of None
+(default) indicates to use the working directory where the simulation
+will be ran.</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">potential</span> <span class="o">=</span> <span class="n">lmp</span><span class="o">.</span><span class="n">Potential</span><span class="p">(</span><span class="n">eam_alloy_json</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Alternatively, a data model can be loaded by an existing Potential
+object with the load() method. It has the same parameters as the class
+initializer.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">potential</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">eam_alloy_json</span><span class="p">,</span> <span class="n">pot_dir</span><span class="o">=</span><span class="s1">&#39;potential_folder&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.3.-Potential-identifiers">
+<h3>2.3. Potential identifiers<a class="headerlink" href="#2.3.-Potential-identifiers" title="Permalink to this headline">¶</a></h3>
+<p>Each potential_LAMMPS record has multiple terms to uniquely identify
+the potential model and implementation.</p>
+<ul class="simple">
+<li><strong>potkey</strong> (<em>str</em>) uuid4 hash-key for the potential model, i.e. the
+published mathematical form. This is permanent once assigned.</li>
+<li><strong>potid</strong> (<em>str</em>) human-readable unique identifier for the potential
+model derived from year, author, element model information. This
+ideally is permanent, but may change based on updated publication
+information.</li>
+<li><strong>key</strong> (<em>str</em>) uuid hash-key for the LAMMPS potential
+implementation, i.e. the specific potential parameter file(s) and/or
+LAMMPS pair_style/pair_coeff command lines used. This is permament
+once assigned.</li>
+<li><strong>id</strong> (<em>str</em>) human-readable identifier for the LAMMPS potential
+implementation derived from the potid, source and version. This may
+change if potid changes.</li>
+</ul>
+<p>Another way to think about it is that potkey and potid name the
+potential, while key and id name the version.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.potkey -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">potkey</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.potid -&gt; &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">potid</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.key -&gt;   &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.id -&gt;    &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.potkey -&gt; 820738a9-f556-468b-9041-9d98351ff751
+potential.potid -&gt;  EAM-demo
+potential.key -&gt;    a45a7731-d115-4079-b6f5-aa700c5b5c56
+potential.id -&gt;     EAM-demo--LAMMPS--v1
+</pre></div></div>
+</div>
+<p>The string representation of the Potential returns its id.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">potential</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+EAM-demo--LAMMPS--v1
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.4.-Other-attributes">
+<h3>2.4. Other attributes<a class="headerlink" href="#2.4.-Other-attributes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><strong>atom_style</strong> (<em>str</em>) LAMMPS atom_style option for the potential.</li>
+<li><strong>pair_style</strong> (<em>str</em>) LAMMPS pair_style option for the potential.</li>
+<li><strong>pot_dir</strong> (<em>str</em>) the directory containing files associated with
+the potential.</li>
+<li><strong>symbols</strong> (<em>list</em>) list of all atom-model symbols for the
+potential.</li>
+<li><strong>units</strong> (<em>str</em>) LAMMPS units option for the potential.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.atom_style -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">atom_style</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.pair_style -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">pair_style</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.units -&gt;     &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">units</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.symbols -&gt;   &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">symbols</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.pot_dir -&gt;   &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">pot_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.atom_style -&gt; atomic
+potential.pair_style -&gt; eam/alloy
+potential.units -&gt;      metal
+potential.symbols -&gt;    [&#39;Ni&#39;, &#39;Al&#39;, &#39;Co&#39;]
+potential.pot_dir -&gt;    potential_folder
+</pre></div></div>
+</div>
+<p>The pot_dir can also be changed at any time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">potential</span><span class="o">.</span><span class="n">pot_dir</span> <span class="o">=</span> <span class="s1">&#39;new_potential_folder&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.pot_dir -&gt; &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">pot_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.pot_dir -&gt;  new_potential_folder
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.-Elements-and-Masses">
+<h2>3. Elements and Masses<a class="headerlink" href="#3.-Elements-and-Masses" title="Permalink to this headline">¶</a></h2>
+<p>Information about the elements and masses associated with each
+atom-model symbol can also be retrieved using the elements() and
+masses() methods. Both methods have the same parameters.</p>
+<p><strong>NOTE:</strong> The Potential class makes a distinction between symbols and
+elements. The symbols are the tags used by LAMMPS to identify which
+atom-model listed in a parameter file to use. These typically coincide
+with the elements the models represent, but this is not always the case
+as some potential styles allow multiple interaction models to be defined
+for the same elements. Differentiating between symbols and elements
+allows for the Potential class to handle these types of potentials as
+well.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>symbols</strong> (<em>str or list, optional</em>) a list of the potential’s
+symbol models to retrieve values for. If value is None (default) then
+Potential.symbols is used.</li>
+</ul>
+<p>Calling the methods without parameters uses all symbols.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Calling methods without parameters uses all symbols</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.symbols -&gt;   &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">symbols</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.elements() -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">elements</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.masses() -&gt;  &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">masses</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.symbols -&gt;    [&#39;Ni&#39;, &#39;Al&#39;, &#39;Co&#39;]
+potential.elements() -&gt; [&#39;Ni&#39;, &#39;Al&#39;, &#39;Co&#39;]
+potential.masses() -&gt;   [58.6934, 26.981539, 58.9332]
+</pre></div></div>
+</div>
+<p>Calling the methods with symbols gives values for that particular set.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Calling methods with symbols uses that particular set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.elements(&#39;Ni&#39;) -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">elements</span><span class="p">(</span><span class="s1">&#39;Ni&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.masses(&#39;Ni&#39;) -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">masses</span><span class="p">(</span><span class="s1">&#39;Ni&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.elements([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt;&quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">elements</span><span class="p">([</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Co&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.masses([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt;  &quot;</span><span class="p">,</span> <span class="n">potential</span><span class="o">.</span><span class="n">masses</span><span class="p">([</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Co&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.elements(&#39;Ni&#39;) -&gt; [&#39;Ni&#39;]
+potential.masses(&#39;Ni&#39;) -&gt; [58.6934]
+
+potential.elements([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt; [&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]
+potential.masses([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt;   [26.981539, 26.981539, 58.9332, 26.981539]
+
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="4.-Generate-LAMMPS-commands">
+<h2>4. Generate LAMMPS commands<a class="headerlink" href="#4.-Generate-LAMMPS-commands" title="Permalink to this headline">¶</a></h2>
+<p>The LAMMPS input command lines for using the potential can also be
+autogenerated using the pair_info() method.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>symbols</strong> (<em>str or list, optional</em>) a list of the potential’s
+symbol models to associate with integer atom types of a system. If
+value is None (default) then Potential.symbols is used.</li>
+</ul>
+<p><strong>NOTE:</strong> For pair_styles hybrid and hybrid/overlay, the list of
+symbols given as parameters must include all defined atom model
+interactions.</p>
+<p>Without symbols gives LAMMPS commands for all symbols in the same order
+as the data model.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;potential.pair_info() -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">potential</span><span class="o">.</span><span class="n">pair_info</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.pair_info() -&gt;
+mass 1 58.693400
+mass 2 26.981539
+mass 3 58.933200
+
+pair_style eam/alloy
+pair_coeff * * new_potential_folder\file.eam.alloy Ni Al Co
+
+</pre></div></div>
+</div>
+<p>Give a list of symbols to dynamically generate commands based on the
+elements in the associated atomic system.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.pair_info(&#39;Ni&#39;) -&gt;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">potential</span><span class="o">.</span><span class="n">pair_info</span><span class="p">(</span><span class="s1">&#39;Ni&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.pair_info(&#39;Ni&#39;) -&gt;
+mass 1 58.693400
+
+pair_style eam/alloy
+pair_coeff * * new_potential_folder\file.eam.alloy Ni
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;potential.pair_info([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">potential</span><span class="o">.</span><span class="n">pair_info</span><span class="p">([</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Co&#39;</span><span class="p">,</span> <span class="s1">&#39;Al&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+potential.pair_info([&#39;Al&#39;, &#39;Al&#39;, &#39;Co&#39;, &#39;Al&#39;]) -&gt;
+mass 1 26.981539
+mass 2 26.981539
+mass 3 58.933200
+mass 4 26.981539
+
+pair_style eam/alloy
+pair_coeff * * new_potential_folder\file.eam.alloy Al Al Co Al
+
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.-potential_LAMMPS-Data-Model">
+<h2>5. potential_LAMMPS Data Model<a class="headerlink" href="#5.-potential_LAMMPS-Data-Model" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the structure of the potential_LAMMPS data model
+and provides some examples for different LAMMPS pair styles.</p>
+<div class="section" id="5.1.-potential_LAMMPS-data-model-schema">
+<h3>5.1. potential_LAMMPS data model schema<a class="headerlink" href="#5.1.-potential_LAMMPS-data-model-schema" title="Permalink to this headline">¶</a></h3>
+<p>The potential_LAMMPS data model is consistent with a json/xml
+structure. The root element of the model is <strong>“potential-LAMMPS”</strong>.</p>
+<p>Elements:</p>
+<ul class="simple">
+<li><strong>“key”</strong> : a uuid hash-key that uniquely identifies the potential
+implementation. Corresponds to the Potential.key attribute.</li>
+<li><strong>“id”</strong> : a human-readable identifier that uniquely identifies the
+potential implementation. Corresponds to the Potential.id attribute.</li>
+<li><strong>“potential”</strong> : contains metadata associated with the potential
+model.</li>
+<li><strong>“units”</strong> : the LAMMPS units option to use with the potential.
+Corresponds to the Potential.units attribute.</li>
+<li><strong>“atom_style”</strong> : the LAMMPS atom_style option to use with the
+potential. Corresponds to the Potential.atom_style attribute.</li>
+<li><strong>“atom”</strong> : provides information relating to the atom-models defined
+in the potential.</li>
+<li><strong>“pair_style”</strong> : classifies the terms that appear in the LAMMPS
+pair_style command associated with the potential.</li>
+<li><strong>“pair_coeff”</strong> : classifies the terms that appear in the LAMMPS
+pair_coeff command associated with the potential.</li>
+<li><strong>“command”</strong> : classifies the terms that appear in any other LAMMPS
+command associated with the potential.</li>
+</ul>
+<div class="section" id="5.1.1.-The-&quot;potential&quot;-branch">
+<h4>5.1.1. The “potential” branch<a class="headerlink" href="#5.1.1.-The-"potential"-branch" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>“potential”</strong> branch gives metadata associated with the potential
+model that the LAMMPS implementation is based on. The potential model is
+the concept (mathematical expression) of a potential, and multiple
+implementations of the same potential model may exist.</p>
+<p>Subelements:</p>
+<ul class="simple">
+<li><strong>“key”</strong> : a uuid hash-key that uniquely identifies the potential
+model. Corresponds to the Potential.potkey attribute.</li>
+<li><strong>“id”</strong> : a human-readable identifier that uniquely identifies the
+potential model. Corresponds to the Potential.potid attribute.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &lt;uuid&gt;,</span>
+<span class="s2">        &quot;id&quot;: &lt;name&gt;</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential&#34;: {
+        &#34;key&#34;: &lt;uuid&gt;,
+        &#34;id&#34;: &lt;name&gt;
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.1.2.-The-&quot;atom&quot;-branch">
+<h4>5.1.2. The “atom” branch<a class="headerlink" href="#5.1.2.-The-"atom"-branch" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>“atom”</strong> branch of the data model provides a list of the
+atom-models described by the potential.</p>
+<p>Subelements:</p>
+<ul class="simple">
+<li><strong>“element”</strong>: chemical element tag associated with the atom-model.
+If not given, it is set equal to the <strong>“symbol”</strong> value.</li>
+<li><strong>“symbol”</strong>: unique symbol associated with the atom-model. If not
+given, it is set equal to the <strong>“element”</strong> value.</li>
+<li><strong>“mass”</strong>: element mass associated with the element/atom-model. If
+not given, it is set equal to the standard atomic mass value
+associated with the element given by <strong>“element”</strong>.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Single-element potentials</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;atom&quot;: {</span>
+<span class="s2">        &quot;element&quot;: &lt;element-tag&gt;,</span>
+<span class="s2">        &quot;symbol&quot;: &lt;atom-model-name&gt;,</span>
+<span class="s2">        &quot;mass&quot;: &lt;element-mass&gt;</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;atom&#34;: {
+        &#34;element&#34;: &lt;element-tag&gt;,
+        &#34;symbol&#34;: &lt;atom-model-name&gt;,
+        &#34;mass&#34;: &lt;element-mass&gt;
+    }
+}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Multi-element potentials</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;atom&quot;: [</span>
+<span class="s2">        {</span>
+<span class="s2">            &quot;element&quot;: &lt;element-tag&gt;,</span>
+<span class="s2">            &quot;symbol&quot;: &lt;atom-model-name&gt;,</span>
+<span class="s2">            &quot;mass&quot;: &lt;element-mass&gt;</span>
+<span class="s2">        },</span>
+<span class="s2">        {</span>
+<span class="s2">            &quot;element&quot;: &lt;element-tag&gt;,</span>
+<span class="s2">            &quot;symbol&quot;: &lt;atom-model-name&gt;,</span>
+<span class="s2">            &quot;mass&quot;: &lt;element-mass&gt;</span>
+<span class="s2">        }</span>
+<span class="s2">    ]</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;atom&#34;: [
+        {
+            &#34;element&#34;: &lt;element-tag&gt;,
+            &#34;symbol&#34;: &lt;atom-model-name&gt;,
+            &#34;mass&#34;: &lt;element-mass&gt;
+        },
+        {
+            &#34;element&#34;: &lt;element-tag&gt;,
+            &#34;symbol&#34;: &lt;atom-model-name&gt;,
+            &#34;mass&#34;: &lt;element-mass&gt;
+        }
+    ]
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.1.3.-The-&quot;pair_style&quot;-branch">
+<h4>5.1.3. The “pair_style” branch<a class="headerlink" href="#5.1.3.-The-"pair_style"-branch" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>“pair_style”</strong> branch of the data model characterizes the terms
+that appear in the LAMMPS pair_style command for the potential.</p>
+<p>Subelements:</p>
+<ul class="simple">
+<li><strong>“type”</strong> : the specific LAMMPS pair_style option for the
+potential. Corresponds to the Potential.pair_style attribute.</li>
+<li><strong>“term”</strong> : a list characterizing any additional terms that appear
+in the pair_style command line. The available subelements are the
+same as the ones available in the <strong>“term”</strong> branch of
+<strong>“pair_coeff”</strong>.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;pair_style&quot;: {</span>
+<span class="s2">        &quot;type&quot;: &lt;pair_style-type&gt;,</span>
+<span class="s2">        &quot;term&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;pair_style&#34;: {
+        &#34;type&#34;: &lt;pair_style-type&gt;,
+        &#34;term&#34;: [
+            {
+                &#34;parameter&#34;: &lt;number&gt;
+            },
+            {
+                &#34;option&#34;: &lt;string&gt;
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.1.4.-The-&quot;pair_coeff&quot;-branch">
+<h4>5.1.4. The “pair_coeff” branch<a class="headerlink" href="#5.1.4.-The-"pair_coeff"-branch" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>“pair_coeff”</strong> branch of the data model characterizes the terms
+that appear in the LAMMPS pair_coeff command lines for the potential.
+Multiple <strong>“pair_coeff”</strong> values can be given.</p>
+<p>Subelements:</p>
+<ul class="simple">
+<li><strong>“interaction”</strong> : an <strong>“interaction”</strong> branch that outlines the
+atom-model interactions associated with a pair_coeff command line.<ul>
+<li><strong>“symbol”</strong> : a list of the atom-model symbols that the
+interaction is associated with.</li>
+</ul>
+</li>
+<li><strong>“term”</strong> : a <strong>“term”</strong> branch that characterizes all the terms
+that appear in a pair_coeff command line.<ul>
+<li><strong>“option”</strong> : a string option value.</li>
+<li><strong>“parameter”</strong> : a numerical parameter value.</li>
+<li><strong>“file”</strong> : a file name. Used by potential styles that read
+parameters from external files, like eam/alloy.</li>
+<li><strong>“symbols”</strong> : Boolean indicating to show a list of the
+atom-model symbols to use. Used by potential styles that read
+parameters from external potential files, like eam/alloy.</li>
+<li><strong>“symbolsList”</strong> : Boolean indicating to show a list of the
+unique atom-model symbols to use. Don’t use!</li>
+</ul>
+</li>
+</ul>
+<p>Different types of pair_styles have slightly different rules with
+interpreting the <strong>“pair_coeff”</strong> branch.</p>
+<ul class="simple">
+<li>For two-body style potentials, every unique atom-model pair has its
+own <strong>“pair_coeff”</strong> element. <strong>“interaction”</strong>-<strong>“symbol”</strong> must
+have two values indicating the atom-model pair, eg. [“Ag”, “Ag”] for
+the Ag-Ag interaction and [“Ag”, “Cu”] for Ag-Cu and Cu-Ag
+interactions. <strong>“interaction”</strong> is optional if there is only one pair
+interaction, i.e. an elemental pair potential.</li>
+<li>For many-body style potentials, <strong>“interaction”</strong> is optional as all
+atom-model interactions are accessed using the same pair_coeff
+command line.</li>
+<li>For hybrid style potentials, <strong>“interaction”</strong>-<strong>“symbol”</strong> lists all
+atom-model symbols associated with the particular sub-style. It will
+have two values for pair sub-styles, but can be of any length for
+many-body sub-styles.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># pair_coeff example for two-body style potentials</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;pair_coeff&quot;: [</span>
+<span class="s2">        {</span>
+<span class="s2">            &quot;interaction&quot;: {</span>
+<span class="s2">                &quot;symbol&quot;: [</span>
+<span class="s2">                    &lt;atom-model-name&gt;,</span>
+<span class="s2">                    &lt;atom-model-name&gt;</span>
+<span class="s2">                ]</span>
+<span class="s2">            }</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        },</span>
+<span class="s2">        {</span>
+<span class="s2">            &quot;interaction&quot;: {</span>
+<span class="s2">                &quot;symbol&quot;: [</span>
+<span class="s2">                    &lt;atom-model-name&gt;,</span>
+<span class="s2">                    &lt;atom-model-name&gt;</span>
+<span class="s2">                ]</span>
+<span class="s2">            }</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;pair_coeff&#34;: [
+        {
+            &#34;interaction&#34;: {
+                &#34;symbol&#34;: [
+                    &lt;atom-model-name&gt;,
+                    &lt;atom-model-name&gt;
+                ]
+            }
+            &#34;term&#34;: [
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;option&#34;: &lt;string&gt;
+                }
+            ]
+        },
+        {
+            &#34;interaction&#34;: {
+                &#34;symbol&#34;: [
+                    &lt;atom-model-name&gt;,
+                    &lt;atom-model-name&gt;
+                ]
+            }
+            &#34;term&#34;: [
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;parameter&#34;: &lt;number&gt;
+                },
+                {
+                    &#34;option&#34;: &lt;string&gt;
+                }
+            ]
+        }
+    }
+}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># pair_coeff example for many-body potentials with library and parameter files</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;pair_coeff&quot;: {</span>
+<span class="s2">        &quot;term&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;file&quot;: &lt;file-path&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;file&quot;: &lt;file-path&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;symbols&quot;: true</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;pair_coeff&#34;: {
+        &#34;term&#34;: [
+            {
+                &#34;file&#34;: &lt;file-path&gt;
+            },
+            {
+                &#34;option&#34;: &lt;string&gt;
+            },
+            {
+                &#34;file&#34;: &lt;file-path&gt;
+            },
+            {
+                &#34;symbols&#34;: true
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.1.5.-The-&quot;command&quot;-branch">
+<h4>5.1.5. The “command” branch<a class="headerlink" href="#5.1.5.-The-"command"-branch" title="Permalink to this headline">¶</a></h4>
+<p>The <strong>“command”</strong> branch of the data model characterizes the terms that
+appear in any other LAMMPS command lines that are required for properly
+running the potential. This is needed for specifying such things as a
+fix qeq/comb for COMB potentials.</p>
+<p>Subelements:</p>
+<ul class="simple">
+<li><strong>“term”</strong> : a <strong>“term”</strong> branch that characterizes all the terms
+that appear in the command line.<ul>
+<li><strong>“option”</strong> : a string option value.</li>
+<li><strong>“parameter”</strong> : a numerical parameter value.</li>
+<li><strong>“file”</strong> : a file name.</li>
+<li><strong>“symbols”</strong> : Boolean indicating to show a list of the
+atom-model symbols to use.</li>
+<li><strong>“symbolsList”</strong> : Boolean indicating to show a list of the
+unique atom-model symbols to use.</li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;command&quot;: {</span>
+<span class="s2">        &quot;term&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;option&quot;: &lt;string&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;parameter&quot;: &lt;number&gt;</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;command&#34;: {
+        &#34;term&#34;: [
+            {
+                &#34;option&#34;: &lt;string&gt;
+            },
+            {
+                &#34;option&#34;: &lt;string&gt;
+            },
+            {
+                &#34;parameter&#34;: &lt;number&gt;
+            },
+            {
+                &#34;parameter&#34;: &lt;number&gt;
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="5.2.-Example-data-models">
+<h3>5.2. Example data models<a class="headerlink" href="#5.2.-Example-data-models" title="Permalink to this headline">¶</a></h3>
+<p><strong>WARNING!</strong> These are not real potentials! They are only meant to
+provide a demonstration for different potential styles.</p>
+<div class="section" id="5.2.1.-Lennard-Jones-and-other-two-body-style-potentials">
+<h4>5.2.1. Lennard-Jones and other two-body style potentials<a class="headerlink" href="#5.2.1.-Lennard-Jones-and-other-two-body-style-potentials" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;7102f7ec-3612-4665-ad7e-60de508b5f37&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;lj_cut-demo--LAMMPS--v1&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;ebf17ffa-a5e7-41c5-8e6d-8e00eb7f5068&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;lj_cut-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;lj&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atomic&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;He&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Ar&quot;</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;lj/cut&quot;,</span>
+<span class="s2">            &quot;term&quot;: {</span>
+<span class="s2">                &quot;parameter&quot;: 10.0</span>
+<span class="s2">            }</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;He&quot;,</span>
+<span class="s2">                        &quot;He&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 1.0</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 1.0</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;Ar&quot;,</span>
+<span class="s2">                        &quot;Ar&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 2.0</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 2.0</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;He&quot;,</span>
+<span class="s2">                        &quot;Ar&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 1.0</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 2.0</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;7102f7ec-3612-4665-ad7e-60de508b5f37&#34;,
+        &#34;id&#34;: &#34;lj_cut-demo--LAMMPS--v1&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;ebf17ffa-a5e7-41c5-8e6d-8e00eb7f5068&#34;,
+            &#34;id&#34;: &#34;lj_cut-demo&#34;
+        },
+        &#34;units&#34;: &#34;lj&#34;,
+        &#34;atom_style&#34;: &#34;atomic&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;He&#34;
+            },
+            {
+                &#34;element&#34;: &#34;Ar&#34;
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;lj/cut&#34;,
+            &#34;term&#34;: {
+                &#34;parameter&#34;: 10.0
+            }
+        },
+        &#34;pair_coeff&#34;: [
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;He&#34;,
+                        &#34;He&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;parameter&#34;: 1.0
+                    },
+                    {
+                        &#34;parameter&#34;: 1.0
+                    }
+                ]
+            },
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;Ar&#34;,
+                        &#34;Ar&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;parameter&#34;: 2.0
+                    },
+                    {
+                        &#34;parameter&#34;: 2.0
+                    }
+                ]
+            },
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;He&#34;,
+                        &#34;Ar&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;parameter&#34;: 1.0
+                    },
+                    {
+                        &#34;parameter&#34;: 2.0
+                    }
+                ]
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.2.-eam/alloy-and-other-many-body-potentials-from-single-parameter-files">
+<h4>5.2.2. eam/alloy and other many-body potentials from single parameter files<a class="headerlink" href="#5.2.2.-eam/alloy-and-other-many-body-potentials-from-single-parameter-files" title="Permalink to this headline">¶</a></h4>
+<p><strong>NOTE:</strong> Data models for the original eam pair_style are different
+(see <a class="reference external" href="#section5.2.6">Section 5.2.6.</a>)!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;a45a7731-d115-4079-b6f5-aa700c5b5c56&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;EAM-demo--LAMMPS--v1&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;820738a9-f556-468b-9041-9d98351ff751&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;EAM-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;metal&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atomic&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Ni&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 58.6934</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Al&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 26.981539</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Co&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 58.9332</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;eam/alloy&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: {</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;file&quot;: &quot;file.eam.alloy&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;symbols&quot;: &quot;True&quot;</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;a45a7731-d115-4079-b6f5-aa700c5b5c56&#34;,
+        &#34;id&#34;: &#34;EAM-demo--LAMMPS--v1&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;820738a9-f556-468b-9041-9d98351ff751&#34;,
+            &#34;id&#34;: &#34;EAM-demo&#34;
+        },
+        &#34;units&#34;: &#34;metal&#34;,
+        &#34;atom_style&#34;: &#34;atomic&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;Ni&#34;,
+                &#34;mass&#34;: 58.6934
+            },
+            {
+                &#34;element&#34;: &#34;Al&#34;,
+                &#34;mass&#34;: 26.981539
+            },
+            {
+                &#34;element&#34;: &#34;Co&#34;,
+                &#34;mass&#34;: 58.9332
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;eam/alloy&#34;
+        },
+        &#34;pair_coeff&#34;: {
+            &#34;term&#34;: [
+                {
+                    &#34;file&#34;: &#34;file.eam.alloy&#34;
+                },
+                {
+                    &#34;symbols&#34;: &#34;True&#34;
+                }
+            ]
+        }
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.3.-COMB-and-other-potentials-requiring-additional-commands">
+<h4>5.2.3. COMB and other potentials requiring additional commands<a class="headerlink" href="#5.2.3.-COMB-and-other-potentials-requiring-additional-commands" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;c6623d40-a3f2-4b2f-948a-3b277f174116&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;COMB-demo--LAMMPS--v2&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;5ec2aac4-3dd4-4f5c-afb4-21749577c038&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;COMB-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;nano&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;charge&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;O&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Cu&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Ni&quot;</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;comb&quot;,</span>
+<span class="s2">            &quot;term&quot;: {</span>
+<span class="s2">                &quot;option&quot;: &quot;polar_off&quot;</span>
+<span class="s2">            }</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: {</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;file&quot;: &quot;file.comb&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;symbols&quot;: true</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;command&quot;: {</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &quot;fix&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &quot;qeq/comb&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: 10</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: 0.0001</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;c6623d40-a3f2-4b2f-948a-3b277f174116&#34;,
+        &#34;id&#34;: &#34;COMB-demo--LAMMPS--v2&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;5ec2aac4-3dd4-4f5c-afb4-21749577c038&#34;,
+            &#34;id&#34;: &#34;COMB-demo&#34;
+        },
+        &#34;units&#34;: &#34;nano&#34;,
+        &#34;atom_style&#34;: &#34;charge&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;O&#34;
+            },
+            {
+                &#34;element&#34;: &#34;Cu&#34;
+            },
+            {
+                &#34;element&#34;: &#34;Ni&#34;
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;comb&#34;,
+            &#34;term&#34;: {
+                &#34;option&#34;: &#34;polar_off&#34;
+            }
+        },
+        &#34;pair_coeff&#34;: {
+            &#34;term&#34;: [
+                {
+                    &#34;file&#34;: &#34;file.comb&#34;
+                },
+                {
+                    &#34;symbols&#34;: true
+                }
+            ]
+        },
+        &#34;command&#34;: {
+            &#34;term&#34;: [
+                {
+                    &#34;option&#34;: &#34;fix&#34;
+                },
+                {
+                    &#34;option&#34;: &#34;qeq/comb&#34;
+                },
+                {
+                    &#34;parameter&#34;: 10
+                },
+                {
+                    &#34;parameter&#34;: 0.0001
+                }
+            ]
+        }
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.4.-MEAM-and-other-many-body-potentials-with-library-and-parameter-files">
+<h4>5.2.4. MEAM and other many-body potentials with library and parameter files<a class="headerlink" href="#5.2.4.-MEAM-and-other-many-body-potentials-with-library-and-parameter-files" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;ac63aa71-808c-47e7-b80b-991a50870f35&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;MEAM-demo--LAMMPS--v1&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;9546264a-06b8-451a-9920-f8a17cc6917b&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;MEAM-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;metal&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atom&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Cu&quot;,</span>
+<span class="s2">                &quot;symbol&quot;: &quot;CuD&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Al&quot;,</span>
+<span class="s2">                &quot;symbol&quot;: &quot;AlD&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Fe&quot;,</span>
+<span class="s2">                &quot;symbol&quot;: &quot;FeD&quot;</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;meam&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: {</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;file&quot;: &quot;library.meam&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &quot;CuD AlD FeD&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;file&quot;: &quot;potential.meam&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;symbols&quot;: true</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        }</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;ac63aa71-808c-47e7-b80b-991a50870f35&#34;,
+        &#34;id&#34;: &#34;MEAM-demo--LAMMPS--v1&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;9546264a-06b8-451a-9920-f8a17cc6917b&#34;,
+            &#34;id&#34;: &#34;MEAM-demo&#34;
+        },
+        &#34;units&#34;: &#34;metal&#34;,
+        &#34;atom_style&#34;: &#34;atom&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;Cu&#34;,
+                &#34;symbol&#34;: &#34;CuD&#34;
+            },
+            {
+                &#34;element&#34;: &#34;Al&#34;,
+                &#34;symbol&#34;: &#34;AlD&#34;
+            },
+            {
+                &#34;element&#34;: &#34;Fe&#34;,
+                &#34;symbol&#34;: &#34;FeD&#34;
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;meam&#34;
+        },
+        &#34;pair_coeff&#34;: {
+            &#34;term&#34;: [
+                {
+                    &#34;file&#34;: &#34;library.meam&#34;
+                },
+                {
+                    &#34;option&#34;: &#34;CuD AlD FeD&#34;
+                },
+                {
+                    &#34;file&#34;: &#34;potential.meam&#34;
+                },
+                {
+                    &#34;symbols&#34;: true
+                }
+            ]
+        }
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.5.-hybrid-style-potentials">
+<h4>5.2.5. hybrid-style potentials<a class="headerlink" href="#5.2.5.-hybrid-style-potentials" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;7687807f-6355-4bef-bdc3-dc0dc944e106&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;hybrid-demo--LAMMPS--v3&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;14226c15-561c-44d4-96ad-ad51304a3606&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;hybrid-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;metal&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atom&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Cu&quot;</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;H&quot;</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;hybrid&quot;,</span>
+<span class="s2">            &quot;term&quot;: [</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &quot;eam/alloy&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;option&quot;: &quot;lj/cut&quot;</span>
+<span class="s2">                },</span>
+<span class="s2">                {</span>
+<span class="s2">                    &quot;parameter&quot;: 5.0</span>
+<span class="s2">                }</span>
+<span class="s2">            ]</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;Cu&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;option&quot;: &quot;eam/alloy&quot;</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;file&quot;: &quot;cu.eam.alloy&quot;</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;symbols&quot;: true</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;Cu&quot;,</span>
+<span class="s2">                        &quot;H&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;option&quot;: &quot;lj/cut&quot;</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 3.5</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 3.0</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;H&quot;,</span>
+<span class="s2">                        &quot;H&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: [</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;option&quot;: &quot;lj/cut&quot;</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 1.2</span>
+<span class="s2">                    },</span>
+<span class="s2">                    {</span>
+<span class="s2">                        &quot;parameter&quot;: 2.4</span>
+<span class="s2">                    }</span>
+<span class="s2">                ]</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;7687807f-6355-4bef-bdc3-dc0dc944e106&#34;,
+        &#34;id&#34;: &#34;hybrid-demo--LAMMPS--v3&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;14226c15-561c-44d4-96ad-ad51304a3606&#34;,
+            &#34;id&#34;: &#34;hybrid-demo&#34;
+        },
+        &#34;units&#34;: &#34;metal&#34;,
+        &#34;atom_style&#34;: &#34;atom&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;Cu&#34;
+            },
+            {
+                &#34;element&#34;: &#34;H&#34;
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;hybrid&#34;,
+            &#34;term&#34;: [
+                {
+                    &#34;option&#34;: &#34;eam/alloy&#34;
+                },
+                {
+                    &#34;option&#34;: &#34;lj/cut&#34;
+                },
+                {
+                    &#34;parameter&#34;: 5.0
+                }
+            ]
+        },
+        &#34;pair_coeff&#34;: [
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;Cu&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;option&#34;: &#34;eam/alloy&#34;
+                    },
+                    {
+                        &#34;file&#34;: &#34;cu.eam.alloy&#34;
+                    },
+                    {
+                        &#34;symbols&#34;: true
+                    }
+                ]
+            },
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;Cu&#34;,
+                        &#34;H&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;option&#34;: &#34;lj/cut&#34;
+                    },
+                    {
+                        &#34;parameter&#34;: 3.5
+                    },
+                    {
+                        &#34;parameter&#34;: 3.0
+                    }
+                ]
+            },
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;H&#34;,
+                        &#34;H&#34;
+                    ]
+                },
+                &#34;term&#34;: [
+                    {
+                        &#34;option&#34;: &#34;lj/cut&#34;
+                    },
+                    {
+                        &#34;parameter&#34;: 1.2
+                    },
+                    {
+                        &#34;parameter&#34;: 2.4
+                    }
+                ]
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.6.-Original-eam-pair_style">
+<h4>5.2.6. Original eam pair_style<a class="headerlink" href="#5.2.6.-Original-eam-pair_style" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;{</span>
+<span class="s2">    &quot;potential-LAMMPS&quot;: {</span>
+<span class="s2">        &quot;key&quot;: &quot;3c437986-882f-4e23-bc39-6e12dcdba364&quot;,</span>
+<span class="s2">        &quot;id&quot;: &quot;eam-demo--LAMMPS--v2&quot;,</span>
+<span class="s2">        &quot;potential&quot;: {</span>
+<span class="s2">            &quot;key&quot;: &quot;5e92413c-8542-49c4-9608-b91ea5c12701&quot;,</span>
+<span class="s2">            &quot;id&quot;: &quot;eam-demo&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;units&quot;: &quot;metal&quot;,</span>
+<span class="s2">        &quot;atom_style&quot;: &quot;atomic&quot;,</span>
+<span class="s2">        &quot;atom&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Cu&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 63.55</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;element&quot;: &quot;Ni&quot;,</span>
+<span class="s2">                &quot;mass&quot;: 58.71</span>
+<span class="s2">            }</span>
+<span class="s2">        ],</span>
+<span class="s2">        &quot;pair_style&quot;: {</span>
+<span class="s2">            &quot;type&quot;: &quot;eam&quot;</span>
+<span class="s2">        },</span>
+<span class="s2">        &quot;pair_coeff&quot;: [</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;Cu&quot;,</span>
+<span class="s2">                        &quot;Cu&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: {</span>
+<span class="s2">                    &quot;file&quot;: &quot;Cu.eam&quot;</span>
+<span class="s2">                }</span>
+<span class="s2">            },</span>
+<span class="s2">            {</span>
+<span class="s2">                &quot;interaction&quot;: {</span>
+<span class="s2">                    &quot;symbol&quot;: [</span>
+<span class="s2">                        &quot;Ni&quot;,</span>
+<span class="s2">                        &quot;Ni&quot;</span>
+<span class="s2">                    ]</span>
+<span class="s2">                },</span>
+<span class="s2">                &quot;term&quot;: {</span>
+<span class="s2">                    &quot;file&quot;: &quot;Ni.eam&quot;</span>
+<span class="s2">                }</span>
+<span class="s2">            }</span>
+<span class="s2">        ]</span>
+<span class="s2">    }</span>
+<span class="s2">}&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;potential-LAMMPS&#34;: {
+        &#34;key&#34;: &#34;3c437986-882f-4e23-bc39-6e12dcdba364&#34;,
+        &#34;id&#34;: &#34;eam-demo--LAMMPS--v2&#34;,
+        &#34;potential&#34;: {
+            &#34;key&#34;: &#34;5e92413c-8542-49c4-9608-b91ea5c12701&#34;,
+            &#34;id&#34;: &#34;eam-demo&#34;
+        },
+        &#34;units&#34;: &#34;metal&#34;,
+        &#34;atom_style&#34;: &#34;atomic&#34;,
+        &#34;atom&#34;: [
+            {
+                &#34;element&#34;: &#34;Cu&#34;,
+                &#34;mass&#34;: 63.55
+            },
+            {
+                &#34;element&#34;: &#34;Ni&#34;,
+                &#34;mass&#34;: 58.71
+            }
+        ],
+        &#34;pair_style&#34;: {
+            &#34;type&#34;: &#34;eam&#34;
+        },
+        &#34;pair_coeff&#34;: [
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;Cu&#34;,
+                        &#34;Cu&#34;
+                    ]
+                },
+                &#34;term&#34;: {
+                    &#34;file&#34;: &#34;Cu.eam&#34;
+                }
+            },
+            {
+                &#34;interaction&#34;: {
+                    &#34;symbol&#34;: [
+                        &#34;Ni&#34;,
+                        &#34;Ni&#34;
+                    ]
+                },
+                &#34;term&#34;: {
+                    &#34;file&#34;: &#34;Ni.eam&#34;
+                }
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to atomman: Potential class</a><ul>
+<li><a class="reference internal" href="#1.-Introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#2.-Class-Basics">2. Class Basics</a><ul>
+<li><a class="reference internal" href="#2.1.Demonstration-data-model">2.1.Demonstration data model</a></li>
+<li><a class="reference internal" href="#2.2.-Load-a-data-model-with-Potential">2.2. Load a data model with Potential</a></li>
+<li><a class="reference internal" href="#2.3.-Potential-identifiers">2.3. Potential identifiers</a></li>
+<li><a class="reference internal" href="#2.4.-Other-attributes">2.4. Other attributes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Elements-and-Masses">3. Elements and Masses</a></li>
+<li><a class="reference internal" href="#4.-Generate-LAMMPS-commands">4. Generate LAMMPS commands</a></li>
+<li><a class="reference internal" href="#5.-potential_LAMMPS-Data-Model">5. potential_LAMMPS Data Model</a><ul>
+<li><a class="reference internal" href="#5.1.-potential_LAMMPS-data-model-schema">5.1. potential_LAMMPS data model schema</a><ul>
+<li><a class="reference internal" href="#5.1.1.-The-&quot;potential&quot;-branch">5.1.1. The “potential” branch</a></li>
+<li><a class="reference internal" href="#5.1.2.-The-&quot;atom&quot;-branch">5.1.2. The “atom” branch</a></li>
+<li><a class="reference internal" href="#5.1.3.-The-&quot;pair_style&quot;-branch">5.1.3. The “pair_style” branch</a></li>
+<li><a class="reference internal" href="#5.1.4.-The-&quot;pair_coeff&quot;-branch">5.1.4. The “pair_coeff” branch</a></li>
+<li><a class="reference internal" href="#5.1.5.-The-&quot;command&quot;-branch">5.1.5. The “command” branch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#5.2.-Example-data-models">5.2. Example data models</a><ul>
+<li><a class="reference internal" href="#5.2.1.-Lennard-Jones-and-other-two-body-style-potentials">5.2.1. Lennard-Jones and other two-body style potentials</a></li>
+<li><a class="reference internal" href="#5.2.2.-eam/alloy-and-other-many-body-potentials-from-single-parameter-files">5.2.2. eam/alloy and other many-body potentials from single parameter files</a></li>
+<li><a class="reference internal" href="#5.2.3.-COMB-and-other-potentials-requiring-additional-commands">5.2.3. COMB and other potentials requiring additional commands</a></li>
+<li><a class="reference internal" href="#5.2.4.-MEAM-and-other-many-body-potentials-with-library-and-parameter-files">5.2.4. MEAM and other many-body potentials with library and parameter files</a></li>
+<li><a class="reference internal" href="#5.2.5.-hybrid-style-potentials">5.2.5. hybrid-style potentials</a></li>
+<li><a class="reference internal" href="#5.2.6.-Original-eam-pair_style">5.2.6. Original eam pair_style</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="02._LAMMPS_Functionality.html"
+                        title="previous chapter">Introduction to atomman: LAMMPS functionality</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="02.2_Running_LAMMPS_and_the_Log_class.html"
+                        title="next chapter">Introduction to atomman: Running LAMMPS and the Log class</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="02.2_Running_LAMMPS_and_the_Log_class.html" title="Introduction to atomman: Running LAMMPS and the Log class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="02._LAMMPS_Functionality.html" title="Introduction to atomman: LAMMPS functionality"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tutorials</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

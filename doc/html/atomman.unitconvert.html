@@ -1,0 +1,310 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>unitconvert &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tools" href="atomman.tools.html" />
+    <link rel="prev" title="atomman package" href="atomman.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.tools.html" title="tools"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.html" title="atomman package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="unitconvert">
+<h1>unitconvert<a class="headerlink" href="#unitconvert" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-atomman.unitconvert">
+<span id="functions-and-attributes"></span><h2>Functions and attributes<a class="headerlink" href="#module-atomman.unitconvert" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="atomman.unitconvert.build_unit">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">build_unit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.build_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves numericalunits attributes to global dictionary unit so the values
+can be retrieved by their string names.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.error_unit">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">error_unit</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.error_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads numerical error from dictionary containing ‘error’ and ‘unit’ keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – Dictionary containing ‘error’ and ‘unit’ keys.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The result of calling set_in_units() by passing the dictionary keys
+‘error’ and ‘unit’ as parameters.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.get_in_units">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">get_in_units</code><span class="sig-paren">(</span><em>value</em>, <em>units</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.get_in_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert value from working units to specified units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>numpy.ndarray</em><em>, </em><em>etc.</em>) – A numerical value or list/array of values.</li>
+<li><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The units to convert value to (from working units).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The given value converted to the specified units from working units.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.model">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">model</code><span class="sig-paren">(</span><em>value</em>, <em>units</em>, <em>error=None</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates DataModelDict representation of data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>numpy.ndarray</em><em>, </em><em>etc.</em>) – A numerical value or list/array of values.</li>
+<li><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The units to convert value to (from working units).</li>
+<li><strong>error</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>numpy.ndarray</em><em>, </em><em>etc.</em><em>, </em><em>optional</em>) – A value error to include.  If given, must be the same
+size/shape as value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Model representation of the value(s).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataModelDict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.parse">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">parse</code><span class="sig-paren">(</span><em>units</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert units as strings (or None) into scaling numbers.  This function
+allows for complex unit definitions with operators:</p>
+<ul class="simple">
+<li>‘()’ for defining order of operations</li>
+<li>‘*’ for multiplication.</li>
+<li>‘/’ for division.</li>
+<li>‘^’ for powers.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.6)"><em>None</em></a>) – String consisting of defined unit names, operators, and numerical
+values to interpret.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The scaling factor for converting numbers in the given units to
+working units. If units is None or == ‘scaled’, then this value is
+1.0.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)">float</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.reset_units">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">reset_units</code><span class="sig-paren">(</span><em>seed=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.reset_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends numericalunits.reset_units() by allowing for working units to be
+defined.  If no working units are specified, then random working units are
+used just like the default numericalunits behavior.  Otherwise, use the
+specified working units and SI.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><em>optional</em>) – random number seed to use in generating random working units.
+seed=’SI’ will use SI units.  Cannot be given with the other
+parameters.</li>
+<li><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Unit of length to use for the working units.</li>
+<li><strong>mass</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Unit of mass to use for the working units.</li>
+<li><strong>time</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Unit of time to use for the working units.</li>
+<li><strong>energy</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Unit of energy to use for the working units.</li>
+<li><strong>charge</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Unit of charge to use for the working units.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> – If seed is given with any other parameters, or if more than four of
+the working unit parameters are given.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.set_in_units">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">set_in_units</code><span class="sig-paren">(</span><em>value</em>, <em>units</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.set_in_units" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert value from specified units to working units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>numpy.ndarray</em><em>, </em><em>etc.</em>) – A numerical value or list/array of values.</li>
+<li><strong>units</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – The units that value is in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The given value converted from the specified units to working units.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy.ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.set_literal">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">set_literal</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.set_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert string ‘value unit’ to numbers in working units.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – String containing value and associated unit. If unit is not given,
+then the value is converted to a float and assumed to be in working
+units.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The numerical value of term in working units.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code></a> – If no valid float value can be parsed.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="atomman.unitconvert.value_unit">
+<code class="descclassname">atomman.unitconvert.</code><code class="descname">value_unit</code><span class="sig-paren">(</span><em>term</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.unitconvert.value_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads numerical value from dictionary containing ‘value’ and ‘unit’ keys.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>term</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – Dictionary containing ‘value’ and ‘unit’ keys.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The result of calling set_in_units() by passing the dictionary keys
+‘value’ and ‘unit’ as parameters.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">unitconvert</a><ul>
+<li><a class="reference internal" href="#module-atomman.unitconvert">Functions and attributes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.html"
+                        title="previous chapter">atomman package</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.tools.html"
+                        title="next chapter">tools</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.tools.html" title="tools"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.html" title="atomman package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

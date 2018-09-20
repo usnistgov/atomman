@@ -1,1 +1,1 @@
-from interpolate_contour import interpolate_contour
+from .interpolate_contour import interpolate_contour

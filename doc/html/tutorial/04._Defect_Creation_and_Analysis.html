@@ -1,0 +1,562 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to atomman: Defect Creation and Analysis &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to atomman: Point defect generation" href="04.1._Point_defects.html" />
+    <link rel="prev" title="Introduction to atomman: NeighborList class" href="03.2._NeighborList_class.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="04.1._Point_defects.html" title="Introduction to atomman: Point defect generation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="03.2._NeighborList_class.html" title="Introduction to atomman: NeighborList class"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tutorials</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-atomman:-Defect-Creation-and-Analysis">
+<h1>Introduction to atomman: Defect Creation and Analysis<a class="headerlink" href="#Introduction-to-atomman:-Defect-Creation-and-Analysis" title="Permalink to this headline">¶</a></h1>
+<p><strong>Lucas M. Hale</strong>,
+<a class="reference external" href="mailto:lucas&#46;hale&#37;&#52;&#48;nist&#46;gov?Subject=ipr-demo">lucas<span>&#46;</span>hale<span>&#64;</span>nist<span>&#46;</span>gov</a>,
+<em>Materials Science and Engineering Division, NIST</em>.</p>
+<p>Notebook last updated: 2018-04-05</p>
+<p><a class="reference external" href="http://www.nist.gov/public_affairs/disclaimer.cfm">Disclaimers</a></p>
+<div class="section" id="1.-Introduction">
+<h2>1. Introduction<a class="headerlink" href="#1.-Introduction" title="Permalink to this headline">¶</a></h2>
+<p>One of the focuses of the atomman package is to provide tools for
+generating and analyzing atomic systems containing defects. Many of
+these tools are more complex than the basic tools outlined in the
+previous section. This Notebook provides an overview of the various
+defect capabilities in atomman.</p>
+<p><strong>Library Imports</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Standard Python libraries</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="c1"># http://www.numpy.org/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># https://github.com/usnistgov/atomman</span>
+<span class="kn">import</span> <span class="nn">atomman</span> <span class="k">as</span> <span class="nn">am</span>
+<span class="kn">import</span> <span class="nn">atomman.unitconvert</span> <span class="k">as</span> <span class="nn">uc</span>
+
+<span class="c1"># https://matplotlib.org/</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="c1"># Show atomman version</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atomman version =&#39;</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+atomman version = 1.2.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.-Point-defects">
+<h2>2. Point defects<a class="headerlink" href="#2.-Point-defects" title="Permalink to this headline">¶</a></h2>
+<p>The atomman.defect.point() function inserts a point defect into a System
+and helps with tracking the defect by (1) moving any new/modified atoms
+to the end of the Atoms list and (2) adding per-atom property old_id
+that retains each atom’s original index.</p>
+<p>See <a class="reference external" href="04.1.%20Point%20defects.ipynb">04.1. Point defects Jupyter
+Notebook</a> for more examples.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><strong>system</strong> (<em>atomman.System</em>) the system to add the defect to.</li>
+<li><strong>ptd_type</strong> (<em>str</em>) indicates which type of point defect to add.<ul>
+<li>=’v’ – vacancy</li>
+<li>=’s‘ – substitutional</li>
+<li>=’i’ – positional interstitial</li>
+<li>=’db’ – dumbbell interstitial</li>
+</ul>
+</li>
+<li><strong>atype</strong> (<em>int, optional</em>) atom type for defect atom (‘i’, ‘s’, ‘db’
+styles).</li>
+<li><strong>pos</strong> (<em>array-like object, optional</em>) position for adding the
+defect atom (all styles).</li>
+<li><strong>ptd_id</strong> (<em>int, optional</em>) atom id where defect is added.
+Alternative to using pos (‘v’, ‘s’, ‘db’ styles).</li>
+<li><strong>db_vect</strong> (<em>array-like object, optional</em>) vector associated with
+the dumbbell interstitial (‘db’ style).</li>
+<li><strong>scale</strong> (<em>bool, optional</em>) indicates if pos and db_vect are
+absolute (False) or box-relative (True). Default is False.</li>
+<li><strong>atol</strong> (<em>float, optional</em>) absolute tolerance for position-based
+searching. Default is 1e-3 angstroms.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Define 2x2x2 bcc demonstration supercell</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">2.8665</span><span class="p">,</span> <span class="s1">&#39;angstrom&#39;</span><span class="p">)</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">a</span><span class="p">)</span>
+<span class="n">atoms</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">Atoms</span><span class="p">(</span><span class="n">atype</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">ucell</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">System</span><span class="p">(</span><span class="n">atoms</span><span class="o">=</span><span class="n">atoms</span><span class="p">,</span> <span class="n">box</span><span class="o">=</span><span class="n">box</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">ucell</span><span class="o">.</span><span class="n">supersize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    atype   pos[0]   pos[1]   pos[2]
+0       1  0.00000  0.00000  0.00000
+1       1  1.43325  1.43325  1.43325
+2       1  2.86650  0.00000  0.00000
+3       1  4.29975  1.43325  1.43325
+4       1  0.00000  2.86650  0.00000
+5       1  1.43325  4.29975  1.43325
+6       1  2.86650  2.86650  0.00000
+7       1  4.29975  4.29975  1.43325
+8       1  0.00000  0.00000  2.86650
+9       1  1.43325  1.43325  4.29975
+10      1  2.86650  0.00000  2.86650
+11      1  4.29975  1.43325  4.29975
+12      1  0.00000  2.86650  2.86650
+13      1  1.43325  4.29975  4.29975
+14      1  2.86650  2.86650  2.86650
+15      1  4.29975  4.29975  4.29975
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Change atom 5 into &lt;111&gt; dumbbell interstitial pair</span>
+<span class="n">defect_system</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">point</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">ptd_id</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">db_vect</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">defect_system</span><span class="o">.</span><span class="n">atoms_df</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+    atype   pos[0]   pos[1]   pos[2]  old_id
+0       1  0.00000  0.00000  0.00000       0
+1       1  1.43325  1.43325  1.43325       1
+2       1  2.86650  0.00000  0.00000       2
+3       1  4.29975  1.43325  1.43325       3
+4       1  0.00000  2.86650  0.00000       4
+5       1  2.86650  2.86650  0.00000       6
+6       1  4.29975  4.29975  1.43325       7
+7       1  0.00000  0.00000  2.86650       8
+8       1  1.43325  1.43325  4.29975       9
+9       1  2.86650  0.00000  2.86650      10
+10      1  4.29975  1.43325  4.29975      11
+11      1  0.00000  2.86650  2.86650      12
+12      1  1.43325  4.29975  4.29975      13
+13      1  2.86650  2.86650  2.86650      14
+14      1  4.29975  4.29975  4.29975      15
+15      1  1.13325  3.99975  1.13325       5
+16      1  1.73325  4.59975  1.73325      16
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.-Stroh-method-for-dislocations">
+<h2>3. Stroh method for dislocations<a class="headerlink" href="#3.-Stroh-method-for-dislocations" title="Permalink to this headline">¶</a></h2>
+<p>The atomman.Stroh class obtains a solution for the Eshelby anisotropic
+elasticity model of a perfectly straight dislocation using the Stroh
+method.</p>
+<p>See the <a class="reference external" href="04.2.%20Stroh%20class.ipynb">04.2. Stroh class Jupyter
+Notebook</a> for more details on the
+methods and theory.</p>
+<p>Parameters to initialize Stroh object</p>
+<ul class="simple">
+<li><strong>C</strong> (<em>atomman.ElasticConstants</em>) The medium’s elastic constants.</li>
+<li><strong>burgers</strong> (<em>array-like object</em>) The dislocation’s Cartesian Burgers
+vector.</li>
+<li><strong>axes</strong> (<em>array-like object, optional</em>) 3x3 set of rotational axes
+for the system. If given, C and burgers will be transformed using
+axes.</li>
+<li><strong>m</strong> (<em>array-like object, optional</em>) The m unit vector for the
+solution. m, n, and u (dislocation line) should be right-hand
+orthogonal. Default value is [1,0,0] (x-axis).</li>
+<li><strong>n</strong> (<em>array-like object, optional</em>) The n unit vector for the
+solution. m, n, and u (dislocation line) should be right-hand
+orthogonal. Default value is [0,1,0] (y-axis).</li>
+<li><strong>tol</strong> (<em>float</em>) Tolerance parameter used to round off near-zero
+values. Default value is 1e-8.</li>
+</ul>
+<div class="section" id="3.1.-Solve-Stroh-method-for-bcc-iron-a/2&lt;111&gt;{-101}-edge-dislocation.">
+<h3>3.1. Solve Stroh method for bcc iron a/2&lt;111&gt;{-101} edge dislocation.<a class="headerlink" href="#3.1.-Solve-Stroh-method-for-bcc-iron-a/2<111>{-101}-edge-dislocation." title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Burgers vector</span>
+<span class="n">burgers</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])</span>
+
+<span class="c1"># Elastic constants</span>
+<span class="n">C11</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">C12</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">145</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">C44</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mi">115</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">(</span><span class="n">C11</span><span class="o">=</span><span class="n">C11</span><span class="p">,</span> <span class="n">C12</span><span class="o">=</span><span class="n">C12</span><span class="p">,</span> <span class="n">C44</span><span class="o">=</span><span class="n">C44</span><span class="p">)</span>
+
+<span class="c1"># System orientation (using default m and n vectors)</span>
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># parallel to burgers (edge dislocation)</span>
+<span class="n">y_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># perpendicular to slip plane</span>
+<span class="n">z_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="c1"># parallel to line direction</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">y_axis</span><span class="p">,</span> <span class="n">z_axis</span><span class="p">])</span>
+
+<span class="c1"># Get Stroh solution</span>
+<span class="n">stroh</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">defect</span><span class="o">.</span><span class="n">Stroh</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="n">C</span><span class="p">,</span> <span class="n">burgers</span><span class="o">=</span><span class="n">burgers</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="n">axes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.2.-Use-Stroh-solution-to-insert-dislocation-into-atomic-system.">
+<h3>3.2. Use Stroh solution to insert dislocation into atomic system.<a class="headerlink" href="#3.2.-Use-Stroh-solution-to-insert-dislocation-into-atomic-system." title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Create bulk bcc system in proper orientation</span>
+<span class="n">disl_system</span> <span class="o">=</span> <span class="n">ucell</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+<span class="n">disl_system</span> <span class="o">=</span> <span class="n">disl_system</span><span class="o">.</span><span class="n">supersize</span><span class="p">((</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">disl_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">])</span> <span class="c1"># shift pos so no y=0 coordinates</span>
+
+<span class="c1"># Displace atomic positions by Stroh.displacement()</span>
+<span class="n">displacement</span> <span class="o">=</span> <span class="n">stroh</span><span class="o">.</span><span class="n">displacement</span><span class="p">(</span><span class="n">disl_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+<span class="n">disl_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span> <span class="o">+=</span> <span class="n">displacement</span>
+
+<span class="c1"># Plot x and y atomic coordinates to show dislocation</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">disl_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">disl_system</span><span class="o">.</span><span class="n">atoms</span><span class="o">.</span><span class="n">pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorial_04._Defect_Creation_and_Analysis_11_0.png" src="../_images/tutorial_04._Defect_Creation_and_Analysis_11_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="4.-Dislocation-anaylsis-tools">
+<h2>4. Dislocation anaylsis tools<a class="headerlink" href="#4.-Dislocation-anaylsis-tools" title="Permalink to this headline">¶</a></h2>
+<p>There are also a number of analysis tools for characterizing
+dislocations and other crystalline defects.</p>
+<ul class="simple">
+<li><strong>atomman.defect.slip_vector()</strong> calculates the slip vector for all
+atoms in a system. This is a good tool for characterizing plastic
+deformation within a system that occurs between two points in time.</li>
+<li><strong>atomman.defect.disregistry()</strong> characterizes a dislocation’s planar
+spreading by calculating the relative displacement of atoms between
+the atomic planes above and below the dislocation’s slip plane.</li>
+<li><strong>atomman.defect.nye_tensor()</strong> allows for dislocation cores to be
+characterized using the gradient of the deformation tensor. Also
+calculates the strain state for all atoms in the system relative to a
+perfect crystal configuration.</li>
+<li><strong>atomman.defect.differential_displacement()</strong> allows for
+dislocation cores to be characterized using the difference in the
+displacements between all pairs of neighbor atoms relative to a
+perfect crystal configuration.</li>
+</ul>
+<p>See the <a class="reference external" href="04.3.%20Dislocation%20analysis%20tools.ipynb">04.3. Dislocation analysis tools Jupyter
+Notebook</a> for the
+underlying theory and examples of the tools being used.</p>
+</div>
+<div class="section" id="5.-Semidiscrete-variational-Peierls-Nabarro-dislocations">
+<h2>5. Semidiscrete variational Peierls-Nabarro dislocations<a class="headerlink" href="#5.-Semidiscrete-variational-Peierls-Nabarro-dislocations" title="Permalink to this headline">¶</a></h2>
+<p>Classes and functions are included that allow for semidiscrete
+variational Peierls-Nabarro models of dislocations to be solved.</p>
+<p>See the <a class="reference external" href="04.04%20Semidiscrete%20Variational%20Peierls-Nabarro.ipynb">04.4. Semidiscrete Variational Peierls-Nabarro Jupyter
+Notebook</a>
+for a description of the method and examples.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to atomman: Defect Creation and Analysis</a><ul>
+<li><a class="reference internal" href="#1.-Introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#2.-Point-defects">2. Point defects</a></li>
+<li><a class="reference internal" href="#3.-Stroh-method-for-dislocations">3. Stroh method for dislocations</a><ul>
+<li><a class="reference internal" href="#3.1.-Solve-Stroh-method-for-bcc-iron-a/2&lt;111&gt;{-101}-edge-dislocation.">3.1. Solve Stroh method for bcc iron a/2&lt;111&gt;{-101} edge dislocation.</a></li>
+<li><a class="reference internal" href="#3.2.-Use-Stroh-solution-to-insert-dislocation-into-atomic-system.">3.2. Use Stroh solution to insert dislocation into atomic system.</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#4.-Dislocation-anaylsis-tools">4. Dislocation anaylsis tools</a></li>
+<li><a class="reference internal" href="#5.-Semidiscrete-variational-Peierls-Nabarro-dislocations">5. Semidiscrete variational Peierls-Nabarro dislocations</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="03.2._NeighborList_class.html"
+                        title="previous chapter">Introduction to atomman: NeighborList class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="04.1._Point_defects.html"
+                        title="next chapter">Introduction to atomman: Point defect generation</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="04.1._Point_defects.html" title="Introduction to atomman: Point defect generation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="03.2._NeighborList_class.html" title="Introduction to atomman: NeighborList class"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tutorials</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

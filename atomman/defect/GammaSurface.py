@@ -1,5 +1,6 @@
 # Standard Python imports
-from __future__ import print_function, division
+from __future__ import (absolute_import, print_function,
+                        division, unicode_literals)
 from collections import OrderedDict
 import os
 
@@ -18,16 +19,18 @@ import matplotlib.pyplot as plt
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-# https://github.com/usnistgov/atomman
+# atomman imports
 from .. import Box
 from .. import unitconvert as uc
+from ..compatibility import stringtype
 
 class GammaSurface(object):
     """
     Class for representing gamma surfaces, i.e., generalized stacking faults.
     """
     
-    def __init__(self, **kwargs):
+    def __init__(self, model=None, box=None, a1vect=None, a2vect=None,
+                 a1=None, a2=None, E_gsf=None, delta=None):
         """
         Class initializer.
         
@@ -39,12 +42,25 @@ class GammaSurface(object):
             Defines box dimensions allowing conversion between crystal and
             Cartesian vectors.
         """
-        if 'model' in kwargs:
-            self.model(model=kwargs.pop('model'))
-        if 'box' in kwargs:
-            self.box = kwargs.pop('box')
+        if model is not None:
+            try:
+                assert box is None
+                assert a1vect is None
+                assert a2vect is None
+                assert a1 is None
+                assert a2 is None
+                assert E_gsf is None
+                assert delta is None
+            except:
+                raise TypeError('model cannot be given with any other parameter')
+            else:
+                self.model(model=model)
+        
         else:
-            self.box = Box()
+            self.a1vect = a1vect
+            self.a2vect = a2vect
+            self.box = box
+            self.setdata(a1, a2, E_gsf, delta=delta)
     
     @property
     def data(self):
@@ -53,12 +69,12 @@ class GammaSurface(object):
     
     @property
     def a1vect(self):
-        """numpy.array : Crystal vector for the a1 direction."""
+        """numpy.ndarray : Crystal vector for the a1 direction."""
         return self.__a1vect
     
     @a1vect.setter
     def a1vect(self, value):
-        if isinstance(value, (str, unicode)):
+        if isinstance(value, stringtype):
             value = value.split()
         value = np.asarray(value, dtype=float)
         if value.shape != (3,):
@@ -67,12 +83,12 @@ class GammaSurface(object):
     
     @property
     def a2vect(self):
-        """numpy.array : Crystal vector for the a1 direction."""
+        """numpy.ndarray : Crystal vector for the a1 direction."""
         return self.__a2vect
     
     @a2vect.setter
     def a2vect(self, value):
-        if isinstance(value, (str, unicode)):
+        if isinstance(value, stringtype):
             value = value.split()
         value = np.asarray(value, dtype=float)
         if value.shape != (3,):
@@ -93,14 +109,49 @@ class GammaSurface(object):
             raise TypeError('box must be an atomman.Box')
         self.__box = value
     
+    def setdata(self, a1, a2, E_gsf, delta=None):
+        """
+        Sets stacking fault data.
+        
+        Parameters
+        ----------
+        a1vect : array-like object
+            Crystal vector for the a1 direction.
+        a2vect : array-like object
+            Crystal vector for the a1 direction.
+        a1 : array-like object
+            List of fractional coordinates along a1vect corresponding to the
+            E_gsf (and delta) values.
+        a2 : array-like object
+            List of fractional coordinates along a2vect corresponding to the
+            E_gsf (and delta) values.
+        E_gsf : array-like object
+            List of generalized stacking fault energies for the positions
+            associated with the corresponding (a1, a2) fractional coordinates.
+        delta : array-like object, optional
+            List of change in displacements normal to the fault plane for the
+            positions associated with the corresponding (a1, a2) fractional
+            coordinates.
+        """
+        data = OrderedDict()
+        data['a1'] = a1
+        data['a2'] = a2
+        data['E_gsf'] = E_gsf
+        if delta is not None:
+            data['delta'] = delta
+        self.__data = pd.DataFrame(data)
+        self.fit()
+    
     def fit(self):
         """
         Defines the interpolation functions from the raw data.
         """
         self.__E_gsf_fit = Rbf(self.data.a1, self.data.a2, self.data.E_gsf)
-        self.__delta_fit = Rbf(self.data.a1, self.data.a2, self.data.delta)
+        if 'delta' in self.data:
+            self.__delta_fit = Rbf(self.data.a1, self.data.a2, self.data.delta)
     
-    def model(self, **kwargs):
+    def model(self, model=None, length_unit='angstrom',
+              energyperarea_unit='eV/angstrom^2'):
         """
         Return or set DataModelDict representation of the gamma surface.
         
@@ -110,24 +161,29 @@ class GammaSurface(object):
             XML/JSON content to extract gamma surface energy from. If not
             given, model content will be generated.
         length_unit : str, optional
-            Units to give length values in. Default is Angstrom.
-        energy_unit : str, optional
-            units to give energy values in. Default is eV.
+            Units to report delta displacement values in when a new model is
+            generated. Default value is 'angstrom'.
+        energyperarea_unit : str, optional
+            Units to report fault energy values in when a new model is
+            generated.  Default value is 'mJ/m^2'.
         
         Returns
         -------
         DataModelDict
             A dictionary containing the stacking fault data of the
-            GammaSurface object.
+            GammaSurface object.  Returned if model is not given.
         """
         # Set values if model given
-        if 'model' in kwargs:
-            assert len(kwargs) == 1, 'no keyword arguments supported with model reading' 
-            model = DM(kwargs['model'])
+        if model is not None:
+            model = DM(model).find('stacking-fault-map')
             
-            # Read in shiftvectors, i.e., a1 and a2
-            self.a1vect = np.array(model.find('shiftvector1').split(), dtype=float)
-            self.a2vect = np.array(model.find('shiftvector2').split(), dtype=float)
+            # Read in box, a1vect and a2vect
+            self.box = Box(avect = model['box']['avect'],
+                           bvect = model['box']['bvect'],
+                           cvect = model['box']['cvect'])
+            
+            self.a1vect = model['shift-vector-1']
+            self.a2vect = model['shift-vector-2']
             
             # Read in stacking fault data
             gsf = model.find('stacking-fault-relation')
@@ -135,9 +191,31 @@ class GammaSurface(object):
             data['a1'] = gsf['shift-vector-1-fraction']
             data['a2'] = gsf['shift-vector-2-fraction']
             data['E_gsf'] = uc.value_unit(gsf['energy'])
-            data['delta'] = uc.value_unit(gsf['plane-separation'])
+            try:
+                data['delta'] = uc.value_unit(gsf['plane-separation'])
+            except:
+                pass
             self.__data = pd.DataFrame(data)
             self.fit()
+        
+        # Generate model
+        else:
+            model = DM()
+            model['stacking-fault-map'] = sfm = DM()
+            sfm['box'] = DM()
+            sfm['box']['avect'] = list(self.box.avect)
+            sfm['box']['bvect'] = list(self.box.bvect)
+            sfm['box']['cvect'] = list(self.box.cvect)
+            sfm['shift-vector-1'] = list(self.a1vect)
+            sfm['shift-vector-2'] = list(self.a2vect)
+            sfm['stacking-fault-relation'] = sfr = DM()
+            sfr['shift-vector-1-fraction'] = list(self.__data['a1'])
+            sfr['shift-vector-2-fraction'] = list(self.__data['a2'])
+            sfr['energy'] = uc.model(self.__data['E_gsf'], energyperarea_unit)
+            if 'delta' in self.data:
+                sfr['plane-separation'] = uc.model(self.__data['delta'], length_unit)
+            
+            return model
     
     def a12_to_pos(self, a1, a2):
         """
@@ -410,6 +488,9 @@ class GammaSurface(object):
             Cartesian vector corresponding to the plotting x-axis. If None
             (default), this is taken as a1vect.
         """
+        if 'delta' not in self.data:
+            raise ValueError('delta data not provided')
+        
         # Convert x, y to a1, a2
         if 'x' in kwargs:
             x = kwargs.pop('x')
@@ -443,7 +524,7 @@ class GammaSurface(object):
         return self.__delta_fit(a1, a2)
     
     def E_gsf_surface_plot(self, normalize=False, smooth=True, xvect=None,
-                         length_unit='Angstrom', energyperarea_unit='eV/Angstrom^2',
+                         length_unit='angstrom', energyperarea_unit='eV/angstrom^2',
                          numx=100, numy=100, xsize=None, ysize=None,
                          cmap=None):
         """
@@ -463,10 +544,10 @@ class GammaSurface(object):
             a1vect.
         length_unit : str, optional
             The unit of length to display non-normalized axes values in.
-            Default value is 'Angstrom'.
+            Default value is 'angstrom'.
         energyperarea_unit : str, optional
             The unit of energy per area to display the stacking fault energies
-            in. Default value is 'eV/Angstrom^2'.
+            in. Default value is 'eV/angstrom^2'.
         numx : int, optional
             The number of plotting points to use along the x-axis.  Default
             value is 100.
@@ -554,7 +635,7 @@ class GammaSurface(object):
         return fig
     
     def E_gsf_line_plot(self, vect=None, num=100, xsize=10, ysize=6,
-                      length_unit='Angstrom', energyperarea_unit='eV/Angstrom^2'):
+                      length_unit='angstrom', energyperarea_unit='eV/angstrom^2'):
         """
         Generates a line plot for the interpolated generalized stacking fault
         energy along a specified crystallographic vector in the (a1, a2) plane.
@@ -572,14 +653,14 @@ class GammaSurface(object):
             The size in inches to make the figure's x dimensions.  Default
             value is 10.
         ysize : float
-            The size in inches to make the figure's x dimensions.  Default
+            The size in inches to make the figure's y dimensions.  Default
             value is 6.
         length_unit : str, optional
             The unit of length to display the x-axis coordinates in.
-            Default value is 'Angstrom'.
+            Default value is 'angstrom'.
         energyperarea_unit : str, optional
             The unit of energy per area to display the stacking fault energies
-            in. Default value is 'eV/Angstrom^2'.
+            in. Default value is 'eV/angstrom^2'.
         
         Returns
         -------
@@ -624,9 +705,9 @@ class GammaSurface(object):
         plt.ylim(E.min(), None)
         
         return fig
-        
+    
     def delta_surface_plot(self, normalize=False, smooth=True, xvect=None,
-                         length_unit='Angstrom',
+                         length_unit='angstrom',
                          numx=100, numy=100, xsize=None, ysize=None,
                          cmap=None):
         """
@@ -646,7 +727,7 @@ class GammaSurface(object):
             a1vect.
         length_unit : str, optional
             The unit of length to display non-normalized axes values and delta
-            displacements in.  Default value is 'Angstrom'.
+            displacements in.  Default value is 'angstrom'.
         numx : int, optional
             The number of plotting points to use along the x-axis.  Default
             value is 100.
@@ -670,6 +751,9 @@ class GammaSurface(object):
         -------
         matplotlib.figure
         """
+        if 'delta' not in self.data:
+            raise ValueError('delta data not provided')
+        
         # Generate grids of a1, a2 values from numx, numy
         x_grid, y_grid = np.meshgrid(np.linspace(0, 1, numx),
                                      np.linspace(0, 1, numy))
@@ -734,7 +818,7 @@ class GammaSurface(object):
         return fig
     
     def delta_line_plot(self, vect=None, num=100, xsize=10, ysize=6,
-                      length_unit='Angstrom'):
+                      length_unit='angstrom'):
         """
         Generates a line plot for the interpolated delta planar shift values
         along a specified crystallographic vector in the (a1, a2) plane.
@@ -756,12 +840,15 @@ class GammaSurface(object):
             value is 6.
         length_unit : str, optional
             The unit of length to display non-normalized axes values and delta
-            displacements in.  Default value is 'Angstrom'.
+            displacements in.  Default value is 'angstrom'.
         
         Returns
         -------
         matplotlib.figure
         """
+        if 'delta' not in self.data:
+            raise ValueError('delta data not provided')
+        
         # Extract data
         a1vect = self.a1vect
         a2vect = self.a2vect

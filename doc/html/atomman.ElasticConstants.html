@@ -1,0 +1,429 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ElasticConstants &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="NeighborList" href="atomman.NeighborList.html" />
+    <link rel="prev" title="System" href="atomman.System.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.NeighborList.html" title="NeighborList"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.System.html" title="System"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" accesskey="U">atomman package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="elasticconstants">
+<h1>ElasticConstants<a class="headerlink" href="#elasticconstants" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.ElasticConstants">
+<em class="property">class </em><code class="descclassname">atomman.</code><code class="descname">ElasticConstants</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for storing and converting elastic constant values</p>
+<dl class="attribute">
+<dt id="atomman.ElasticConstants.Cij">
+<code class="descname">Cij</code><a class="headerlink" href="#atomman.ElasticConstants.Cij" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stiffness constants in Voigt 6x6 format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.ElasticConstants.Cij9">
+<code class="descname">Cij9</code><a class="headerlink" href="#atomman.ElasticConstants.Cij9" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stiffness constants in 9x9 format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.ElasticConstants.Cijkl">
+<code class="descname">Cijkl</code><a class="headerlink" href="#atomman.ElasticConstants.Cijkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stiffness constants in 3x3x3x3 format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.ElasticConstants.Sij">
+<code class="descname">Sij</code><a class="headerlink" href="#atomman.ElasticConstants.Sij" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compliance constants in Voigt 6x6 format</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.ElasticConstants.Sijkl">
+<code class="descname">Sijkl</code><a class="headerlink" href="#atomman.ElasticConstants.Sijkl" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compliance constants in 3x3x3x3 format</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.bulk">
+<code class="descname">bulk</code><span class="sig-paren">(</span><em>style='Hill'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.bulk" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a bulk modulus estimate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Indicates which style of estimate to use.  Default value is ‘Hill’.
+- ‘Hill’ – Hill estimate (average of Voigt and Reuss).
+- ‘Voigt’ – Voigt estimate. Uses Cij.
+- ‘Reuss’ – Reuss estimate. Uses Sij.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.cubic">
+<code class="descname">cubic</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.cubic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with three independent cubic moduli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C12 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.hexagonal">
+<code class="descname">hexagonal</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.hexagonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with five independent hexagonal moduli.
+(2 * C66 = C11 - C12)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.isotropic">
+<code class="descname">isotropic</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.isotropic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with two independent isotropic moduli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C12 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C44 component of Cij.</li>
+<li><strong>M</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – P-wave modulus(Equivalent to C11).</li>
+<li><strong>lambda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Lame’s first parameter (Equivalent to C12).</li>
+<li><strong>mu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Shear modulus (Equivalent to C44).</li>
+<li><strong>E</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Young’s modulus</li>
+<li><strong>nu</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Poisson’s ratio</li>
+<li><strong>K</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Bulk modulus</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.model">
+<code class="descname">model</code><span class="sig-paren">(</span><em>model=None</em>, <em>unit=None</em>, <em>crystal_system='triclinic'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return or set DataModelDict representation of the elastic constants.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<em>DataModelDict</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/string.html#module-string" title="(in Python v3.6)"><em>string</em></a><em>, or </em><em>file-like object</em><em>, </em><em>optional</em>) – Data model containing exactly one ‘elastic-constants’ branch to
+read.</li>
+<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Units or pressure to save values in when building a data model.
+Default value is None (no conversion).</li>
+<li><strong>crystal_system</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a><em>, </em><em>optional</em>) – Indicates the crystal system representation to use when building a
+data model. Default value is ‘triclinic’ (save all values in Cij).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">If model is not given as a parameter.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">DataModelDict</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.monoclinic">
+<code class="descname">monoclinic</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.monoclinic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with thirteen independent monoclinic moduli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C15</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C15 component of Cij.</li>
+<li><strong>C22</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C22 component of Cij.</li>
+<li><strong>C23</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C23 component of Cij.</li>
+<li><strong>C25</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C25 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C35</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C35 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+<li><strong>C46</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C46 component of Cij.</li>
+<li><strong>C55</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C55 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.orthorhombic">
+<code class="descname">orthorhombic</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.orthorhombic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with nine independent orthorhombic moduli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C22</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C22 component of Cij.</li>
+<li><strong>C23</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C23 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+<li><strong>C55</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C55 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.rhombohedral">
+<code class="descname">rhombohedral</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.rhombohedral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with six or seven independent rhombohedral moduli.
+(2 * C66 = C11 - C12)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C14</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C15</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C44 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.shear">
+<code class="descname">shear</code><span class="sig-paren">(</span><em>style='Hill'</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.shear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a shear modulus estimate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>style</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Indicates which style of estimate to use.  Default value is ‘Hill’.
+- ‘Hill’ – Hill estimate (average of Voigt and Reuss).
+- ‘Voigt’ – Voigt estimate. Uses Cij.
+- ‘Reuss’ – Reuss estimate. Uses Sij.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.tetragonal">
+<code class="descname">tetragonal</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.tetragonal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with six or seven independent tetragonal moduli.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C16</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – C16 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>axes</em>, <em>tol=1e-08</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms the elastic constant matrix based on the supplied axes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>axes</strong> (<em>numpy.ndarray</em>) – (3, 3) array giving three right-handed orthogonal vectors to use
+for transforming.</li>
+<li><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a><em>, </em><em>optional</em>) – Relative tolerance to use in identifying near-zero terms.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new ElasticConstants object that has been transformed.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#atomman.ElasticConstants" title="atomman.ElasticConstants">ElasticConstants</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.ElasticConstants.triclinic">
+<code class="descname">triclinic</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.ElasticConstants.triclinic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set values with twenty one independent triclinic moduli</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C11</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C11 component of Cij.</li>
+<li><strong>C12</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C12 component of Cij.</li>
+<li><strong>C13</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C13 component of Cij.</li>
+<li><strong>C14</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C14 component of Cij.</li>
+<li><strong>C15</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C15 component of Cij.</li>
+<li><strong>C16</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C16 component of Cij.</li>
+<li><strong>C22</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C22 component of Cij.</li>
+<li><strong>C23</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C23 component of Cij.</li>
+<li><strong>C24</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C24 component of Cij.</li>
+<li><strong>C25</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C25 component of Cij.</li>
+<li><strong>C26</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C26 component of Cij.</li>
+<li><strong>C33</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C33 component of Cij.</li>
+<li><strong>C34</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C34 component of Cij.</li>
+<li><strong>C35</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C35 component of Cij.</li>
+<li><strong>C36</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C36 component of Cij.</li>
+<li><strong>C44</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C44 component of Cij.</li>
+<li><strong>C45</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C45 component of Cij.</li>
+<li><strong>C46</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C46 component of Cij.</li>
+<li><strong>C55</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C55 component of Cij.</li>
+<li><strong>C56</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C56 component of Cij.</li>
+<li><strong>C66</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – C66 component of Cij.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.System.html"
+                        title="previous chapter">System</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.NeighborList.html"
+                        title="next chapter">NeighborList</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.NeighborList.html" title="NeighborList"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.System.html" title="System"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

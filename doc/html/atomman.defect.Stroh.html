@@ -1,0 +1,250 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Stroh &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Atoms" href="atomman.Atoms.html" />
+    <link rel="prev" title="SDVPN" href="atomman.defect.SDVPN.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.Atoms.html" title="Atoms"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.SDVPN.html" title="SDVPN"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.defect.html" accesskey="U">defect</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="stroh">
+<h1>Stroh<a class="headerlink" href="#stroh" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="atomman.defect.Stroh">
+<em class="property">class </em><code class="descclassname">atomman.defect.</code><code class="descname">Stroh</code><span class="sig-paren">(</span><em>C, burgers, axes=None, m=[1, 0, 0], n=[0, 1, 0], tol=1e-08</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.Stroh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for solving the Eshelby anisotropic solution for a straight
+dislocation or crack using the Stroh method.</p>
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.A">
+<code class="descname">A</code><a class="headerlink" href="#atomman.defect.Stroh.A" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – A eigenvectors</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.K_coeff">
+<code class="descname">K_coeff</code><a class="headerlink" href="#atomman.defect.Stroh.K_coeff" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The energy coefficient</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.K_tensor">
+<code class="descname">K_tensor</code><a class="headerlink" href="#atomman.defect.Stroh.K_tensor" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – The anisotropic energy coefficient tensor</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.L">
+<code class="descname">L</code><a class="headerlink" href="#atomman.defect.Stroh.L" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – L eigenvectors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.defect.Stroh.displacement">
+<code class="descname">displacement</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.Stroh.displacement" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the position-dependent anisotropic displacement.</p>
+<blockquote>
+<div>u_i = 1 / (2 π i) (Σ_a +- k_a A_ai (L_aj*burgers_j) ln(η_a))</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> (<em>array-like object</em>) – 3D vector position(s).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The computed 3D vector displacements at all given points.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.defect.Stroh.eta">
+<code class="descname">eta</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.Stroh.eta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the eta coordinates based on positions, p, m and n.  Used by
+displacement() and stress().</p>
+<blockquote>
+<div>η_a = x_i m_i + p_a x_j n_j</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> (<em>array-like object</em>) – 3D vector position(s).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The computed eta factor at all given points.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.k">
+<code class="descname">k</code><a class="headerlink" href="#atomman.defect.Stroh.k" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – k normalization factors</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.m">
+<code class="descname">m</code><a class="headerlink" href="#atomman.defect.Stroh.m" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.n">
+<code class="descname">n</code><a class="headerlink" href="#atomman.defect.Stroh.n" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.p">
+<code class="descname">p</code><a class="headerlink" href="#atomman.defect.Stroh.p" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – p eigenvalues</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="atomman.defect.Stroh.preln">
+<code class="descname">preln</code><a class="headerlink" href="#atomman.defect.Stroh.preln" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>float</em> – The pre-ln strain energy factor</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.defect.Stroh.solve">
+<code class="descname">solve</code><span class="sig-paren">(</span><em>C, burgers, axes=None, m=[1, 0, 0], n=[0, 1, 0], tol=1e-08</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.Stroh.solve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the Stroh solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>C</strong> (<a class="reference internal" href="atomman.ElasticConstants.html#atomman.ElasticConstants" title="atomman.ElasticConstants"><em>atomman.ElasticConstants</em></a>) – The medium’s elastic constants.</li>
+<li><strong>burgers</strong> (<em>array-like object</em>) – The dislocation’s Cartesian Burgers vector.</li>
+<li><strong>axes</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – 3x3 set of rotational axes for the system. If given, C and burgers
+will be transformed using axes.</li>
+<li><strong>m</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – The m unit vector for the solution.  m, n, and u (dislocation line)
+should be right-hand orthogonal.  Default value is [1, 0, 0]
+(x-axis).</li>
+<li><strong>n</strong> (<em>array-like object</em><em>, </em><em>optional</em>) – The n unit vector for the solution.  m, n, and u (dislocation line)
+should be right-hand orthogonal.  Default value is [0, 1, 0]
+(y-axis).</li>
+<li><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Tolerance parameter used to round off near-zero values.  Default
+value is 1e-8.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="atomman.defect.Stroh.stress">
+<code class="descname">stress</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="headerlink" href="#atomman.defect.Stroh.stress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the position-dependent anisotropic stresses.</p>
+<blockquote>
+<div>σ_ij = 1 / (2 π i) (Σ_a +- k_a C_ijkl mpn_al A_ak (L_am*burgers_m) / η_a)</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pos</strong> (<em>array-like object</em>) – 3D vector position(s).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The computed 3x3 stress states at all given points.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">numpy.ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="atomman.defect.SDVPN.html"
+                        title="previous chapter">SDVPN</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="atomman.Atoms.html"
+                        title="next chapter">Atoms</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="atomman.Atoms.html" title="Atoms"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="atomman.defect.SDVPN.html" title="SDVPN"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="atomman.html" >atomman package</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="atomman.defect.html" >defect</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>

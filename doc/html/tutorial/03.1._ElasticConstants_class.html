@@ -1,0 +1,1108 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction to atomman: ElasticConstants class &#8212; atomman 1.2.1 documentation</title>
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.2.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to atomman: NeighborList class" href="03.2._NeighborList_class.html" />
+    <link rel="prev" title="Introduction to atomman: Basic Support and Analysis Tools" href="03._Basic_Support_and_Analysis_Tools.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="03.2._NeighborList_class.html" title="Introduction to atomman: NeighborList class"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="03._Basic_Support_and_Analysis_Tools.html" title="Introduction to atomman: Basic Support and Analysis Tools"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Tutorials</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 9ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+</style>
+<div class="section" id="Introduction-to-atomman:-ElasticConstants-class">
+<h1>Introduction to atomman: ElasticConstants class<a class="headerlink" href="#Introduction-to-atomman:-ElasticConstants-class" title="Permalink to this headline">¶</a></h1>
+<p><strong>Lucas M. Hale</strong>,
+<a class="reference external" href="mailto:lucas&#46;hale&#37;&#52;&#48;nist&#46;gov?Subject=ipr-demo">lucas<span>&#46;</span>hale<span>&#64;</span>nist<span>&#46;</span>gov</a>,
+<em>Materials Science and Engineering Division, NIST</em>.</p>
+<p>Notebook last updated: 2018-04-05</p>
+<p><a class="reference external" href="http://www.nist.gov/public_affairs/disclaimer.cfm">Disclaimers</a></p>
+<div class="section" id="1.-Introduction">
+<h2>1. Introduction<a class="headerlink" href="#1.-Introduction" title="Permalink to this headline">¶</a></h2>
+<p>The ElasticConstants class represents the elastic constants of a
+crystal. The class methods focus on:</p>
+<ul class="simple">
+<li>Allowing values to be set/retrieved in a number of different formats.</li>
+<li>Correctly handling transformations to other Cartesian orientations.</li>
+</ul>
+<p><strong>Library Imports</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Standard Python libraries</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">division</span><span class="p">,</span> <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="c1"># http://www.numpy.org/</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># https://github.com/usnistgov/atomman</span>
+<span class="kn">import</span> <span class="nn">atomman</span> <span class="k">as</span> <span class="nn">am</span>
+<span class="kn">import</span> <span class="nn">atomman.unitconvert</span> <span class="k">as</span> <span class="nn">uc</span>
+
+<span class="c1"># Show atomman version</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;atomman version =&#39;</span><span class="p">,</span> <span class="n">am</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+atomman version = 1.2.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="2.-Elastic-constants-representations">
+<h2>2. Elastic constants representations<a class="headerlink" href="#2.-Elastic-constants-representations" title="Permalink to this headline">¶</a></h2>
+<p>The ElasticConstants object allows for various representations of the
+elastic constants to be retrieved:</p>
+<ul class="simple">
+<li><strong>Cij</strong> (6, 6) array of Voigt representation of elastic stiffness.</li>
+<li><strong>Sij</strong> (6, 6) array of Voigt representation of elastic compliance.</li>
+<li><strong>Cij9</strong> (9, 9) array representation of elastic stiffness.</li>
+<li><strong>Cijkl</strong> (3, 3, 3, 3) array representation of elastic stiffness.</li>
+<li><strong>Sijkl</strong> (3, 3, 3, 3) array representation of elastic compliance.</li>
+</ul>
+<div class="section" id="2.1-Build-demonstration-(see-Section-#3-for-more-setting-options)">
+<h3>2.1 Build demonstration (see Section #3 for more setting options)<a class="headerlink" href="#2.1-Build-demonstration-(see-Section-#3-for-more-setting-options)" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># 0 K values for Al</span>
+<span class="n">C11</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">1.143e12</span><span class="p">,</span> <span class="s1">&#39;dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">C12</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">0.619e12</span><span class="p">,</span> <span class="s1">&#39;dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">C44</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">0.316e12</span><span class="p">,</span> <span class="s1">&#39;dyn/cm^2&#39;</span><span class="p">)</span>
+
+<span class="n">C</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">(</span><span class="n">C11</span><span class="o">=</span><span class="n">C11</span><span class="p">,</span> <span class="n">C12</span><span class="o">=</span><span class="n">C12</span><span class="p">,</span> <span class="n">C44</span><span class="o">=</span><span class="n">C44</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.2-Show-different-representations">
+<h3>2.2 Show different representations<a class="headerlink" href="#2.2-Show-different-representations" title="Permalink to this headline">¶</a></h3>
+<p><strong>Cij</strong> is the 6x6 Voigt representation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cij (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cij (GPa) -&gt;
+[[ 114.3   61.9   61.9    0.     0.     0. ]
+ [  61.9  114.3   61.9    0.     0.     0. ]
+ [  61.9   61.9  114.3    0.     0.     0. ]
+ [   0.     0.     0.    31.6    0.     0. ]
+ [   0.     0.     0.     0.    31.6    0. ]
+ [   0.     0.     0.     0.     0.    31.6]]
+</pre></div></div>
+</div>
+<p><strong>Cij9</strong> is the full 9x9 representation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cij9 (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij9</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cij9 (GPa) -&gt;
+[[ 114.3   61.9   61.9    0.     0.     0.     0.     0.     0. ]
+ [  61.9  114.3   61.9    0.     0.     0.     0.     0.     0. ]
+ [  61.9   61.9  114.3    0.     0.     0.     0.     0.     0. ]
+ [   0.     0.     0.    31.6    0.     0.    31.6    0.     0. ]
+ [   0.     0.     0.     0.    31.6    0.     0.    31.6    0. ]
+ [   0.     0.     0.     0.     0.    31.6    0.     0.    31.6]
+ [   0.     0.     0.    31.6    0.     0.    31.6    0.     0. ]
+ [   0.     0.     0.     0.    31.6    0.     0.    31.6    0. ]
+ [   0.     0.     0.     0.     0.    31.6    0.     0.    31.6]]
+</pre></div></div>
+</div>
+<p><strong>Cijkl</strong> is the full 3x3x3x3 representation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cijkl (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cijkl</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cijkl (GPa) -&gt;
+[[[[ 114.3    0.     0. ]
+   [   0.    61.9    0. ]
+   [   0.     0.    61.9]]
+
+  [[   0.    31.6    0. ]
+   [  31.6    0.     0. ]
+   [   0.     0.     0. ]]
+
+  [[   0.     0.    31.6]
+   [   0.     0.     0. ]
+   [  31.6    0.     0. ]]]
+
+
+ [[[   0.    31.6    0. ]
+   [  31.6    0.     0. ]
+   [   0.     0.     0. ]]
+
+  [[  61.9    0.     0. ]
+   [   0.   114.3    0. ]
+   [   0.     0.    61.9]]
+
+  [[   0.     0.     0. ]
+   [   0.     0.    31.6]
+   [   0.    31.6    0. ]]]
+
+
+ [[[   0.     0.    31.6]
+   [   0.     0.     0. ]
+   [  31.6    0.     0. ]]
+
+  [[   0.     0.     0. ]
+   [   0.     0.    31.6]
+   [   0.    31.6    0. ]]
+
+  [[  61.9    0.     0. ]
+   [   0.    61.9    0. ]
+   [   0.     0.   114.3]]]]
+</pre></div></div>
+</div>
+<p><strong>Sij</strong> is the Voigt 6x6 elastic compliances.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sij (1/GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Sij</span><span class="p">,</span> <span class="s1">&#39;1/GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Sij (1/GPa) -&gt;
+[[ 0.01412262 -0.00496135 -0.00496135  0.          0.          0.        ]
+ [-0.00496135  0.01412262 -0.00496135  0.          0.          0.        ]
+ [-0.00496135 -0.00496135  0.01412262  0.          0.          0.        ]
+ [ 0.          0.          0.          0.03164557  0.          0.        ]
+ [ 0.          0.          0.          0.          0.03164557  0.        ]
+ [ 0.          0.          0.          0.          0.          0.03164557]]
+</pre></div></div>
+</div>
+<p><strong>Sijkl</strong> is the full 3x3x3x3 elastic compliances.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Sijkl (1/GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Sijkl</span><span class="p">,</span> <span class="s1">&#39;1/GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Sijkl (1/GPa) -&gt;
+[[[[ 0.01412262  0.          0.        ]
+   [ 0.         -0.00496135  0.        ]
+   [ 0.          0.         -0.00496135]]
+
+  [[ 0.          0.00791139  0.        ]
+   [ 0.00791139  0.          0.        ]
+   [ 0.          0.          0.        ]]
+
+  [[ 0.          0.          0.00791139]
+   [ 0.          0.          0.        ]
+   [ 0.00791139  0.          0.        ]]]
+
+
+ [[[ 0.          0.00791139  0.        ]
+   [ 0.00791139  0.          0.        ]
+   [ 0.          0.          0.        ]]
+
+  [[-0.00496135  0.          0.        ]
+   [ 0.          0.01412262  0.        ]
+   [ 0.          0.         -0.00496135]]
+
+  [[ 0.          0.          0.        ]
+   [ 0.          0.          0.00791139]
+   [ 0.          0.00791139  0.        ]]]
+
+
+ [[[ 0.          0.          0.00791139]
+   [ 0.          0.          0.        ]
+   [ 0.00791139  0.          0.        ]]
+
+  [[ 0.          0.          0.        ]
+   [ 0.          0.          0.00791139]
+   [ 0.          0.00791139  0.        ]]
+
+  [[-0.00496135  0.          0.        ]
+   [ 0.         -0.00496135  0.        ]
+   [ 0.          0.          0.01412262]]]]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.-Setting-values">
+<h2>3. Setting values<a class="headerlink" href="#3.-Setting-values" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="3.1.-Setting-using-attributes">
+<h3>3.1. Setting using attributes<a class="headerlink" href="#3.1.-Setting-using-attributes" title="Permalink to this headline">¶</a></h3>
+<p>The values of the elastic constants can be initialized or set using any
+of the above representations.</p>
+<ul class="simple">
+<li>During initialization, pass one of the following as the only
+parameter: Cij, Sij, Cij9, Cijkl, or Sijkl.</li>
+<li>For an already initialized object, set any of the representations
+directly.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">Sijkl</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">Sijkl</span>
+
+<span class="c1"># Initialize a new C with Sijkl values</span>
+<span class="n">newC</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">(</span><span class="n">Sijkl</span> <span class="o">=</span> <span class="n">Sijkl</span><span class="p">)</span>
+
+<span class="c1"># Show values to be the same</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">newC</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Initialize all zeros elastic constants array</span>
+<span class="n">newC</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">newC</span><span class="p">)</span>
+
+<span class="c1"># Set values using Cij9</span>
+<span class="n">newC</span><span class="o">.</span><span class="n">Cij9</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij9</span>
+
+<span class="c1"># Show values to be the same</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">newC</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.]
+ [ 0.  0.  0.  0.  0.  0.]]
+True
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="3.2.-Setting-using-crystal-specific-constants">
+<h3>3.2. Setting using crystal-specific constants<a class="headerlink" href="#3.2.-Setting-using-crystal-specific-constants" title="Permalink to this headline">¶</a></h3>
+<p>Alternatively, the elastic constants can be defined by supplying a full
+set of unique constants for a given crystal structure in the standard
+reference frame. During initialization, the specific form is inferred
+from the given parameters. After initialization, the functions
+corresponding to a specific crystal family can be called.</p>
+<ul class="simple">
+<li><strong>isotropic</strong> (two of the following)<ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C44</strong> (2*C44 = C11-C12)</li>
+<li><strong>M</strong> P-wave modulus (M = C11)</li>
+<li><strong>lambda</strong> Lame’s first parameter (lambda = C12)</li>
+<li><strong>mu</strong> Shear modulus (mu = C44)</li>
+<li><strong>E</strong> Young’s modulus</li>
+<li><strong>nu</strong> Poisson’s ratio</li>
+<li><strong>K</strong> Bulk modulus</li>
+</ul>
+</li>
+<li><strong>cubic</strong><ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C44</strong></li>
+</ul>
+</li>
+<li><strong>hexagonal</strong> (five of the following)<ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C13</strong></li>
+<li><strong>C33</strong></li>
+<li><strong>C44</strong></li>
+<li><strong>C66</strong> (2*C66 = C11-C12)</li>
+</ul>
+</li>
+<li><strong>tetragonal</strong><ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C13</strong></li>
+<li><strong>C16</strong> optional (C16=0 for some space groups)</li>
+<li><strong>C33</strong></li>
+<li><strong>C44</strong></li>
+<li><strong>C66</strong></li>
+</ul>
+</li>
+<li><strong>rhombohedral</strong> (six or seven of the following)<ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C13</strong></li>
+<li><strong>C14</strong></li>
+<li><strong>C15</strong> optional (C15=0 for some space groups)</li>
+<li><strong>C33</strong></li>
+<li><strong>C44</strong></li>
+<li><strong>C66</strong> (2*C66 = C11-C12)</li>
+</ul>
+</li>
+<li><strong>orthorhombic</strong><ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C13</strong></li>
+<li><strong>C22</strong></li>
+<li><strong>C23</strong></li>
+<li><strong>C33</strong></li>
+<li><strong>C44</strong></li>
+<li><strong>C55</strong></li>
+<li><strong>C66</strong></li>
+</ul>
+</li>
+<li><strong>monoclinic</strong><ul>
+<li><strong>C11</strong></li>
+<li><strong>C12</strong></li>
+<li><strong>C13</strong></li>
+<li><strong>C15</strong></li>
+<li><strong>C22</strong></li>
+<li><strong>C23</strong></li>
+<li><strong>C25</strong></li>
+<li><strong>C33</strong></li>
+<li><strong>C35</strong></li>
+<li><strong>C44</strong></li>
+<li><strong>C46</strong></li>
+<li><strong>C55</strong></li>
+<li><strong>C66</strong></li>
+</ul>
+</li>
+<li><strong>triclinic</strong><ul>
+<li><strong>all 21 Cij where i &lt;= j</strong></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Define dict with Zr HCP constants</span>
+<span class="n">Cdict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C11&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">144.0</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C12&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">74.0</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C13&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">67.0</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C33&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">166.0</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C44&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">33.0</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+
+<span class="c1"># Initialize by passing dict key-values as parameters</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">(</span><span class="o">**</span><span class="n">Cdict</span><span class="p">)</span>
+
+<span class="c1"># Show that Cij array is properly constructed</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cij (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Show that 2 * C66 = C11 - C12</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Does 2*C66 = C11-C12?&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C11 - C12 (GPa) =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 * C66 (GPa) =  &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cij (GPa) -&gt;
+[[ 144.   74.   67.    0.    0.    0.]
+ [  74.  144.   67.    0.    0.    0.]
+ [  67.   67.  166.    0.    0.    0.]
+ [   0.    0.    0.   33.    0.    0.]
+ [   0.    0.    0.    0.   33.    0.]
+ [   0.    0.    0.    0.    0.   35.]]
+
+Does 2*C66 = C11-C12?
+C11 - C12 (GPa) = 70.0
+2 * C66 (GPa) =   70.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Define dict with Bi2Te3 rhombohedral constants</span>
+<span class="n">Cdict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C11&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">7.436</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C12&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">2.619</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C33&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">5.160</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C44&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">3.135</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C13&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">2.917</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C14&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">1.541</span><span class="p">,</span> <span class="s1">&#39;10^11 * dyn/cm^2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set values to existing C using the rhombohedral function</span>
+<span class="n">C</span><span class="o">.</span><span class="n">rhombohedral</span><span class="p">(</span><span class="o">**</span><span class="n">Cdict</span><span class="p">)</span>
+
+<span class="c1"># Show that Cij array is properly constructed</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cij (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Show that 2 * C66 = C11 - C12</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Does 2*C66 = C11-C12?&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;C11 - C12 (GPa) =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;2 * C66 (GPa) =  &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cij (GPa) -&gt;
+[[ 74.36   26.19   29.17   15.41    0.      0.   ]
+ [ 26.19   74.36   29.17  -15.41    0.      0.   ]
+ [ 29.17   29.17   51.6     0.      0.      0.   ]
+ [ 15.41  -15.41    0.     31.35    0.      0.   ]
+ [  0.      0.      0.      0.     31.35   15.41 ]
+ [  0.      0.      0.      0.     15.41   24.085]]
+
+Does 2*C66 = C11-C12?
+C11 - C12 (GPa) = 48.17
+2 * C66 (GPa) =   48.17
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="4.-ElasticConstants.tranform()">
+<h2>4. ElasticConstants.tranform()<a class="headerlink" href="#4.-ElasticConstants.tranform()" title="Permalink to this headline">¶</a></h2>
+<p>The transform() method is included for convenience allowing for the
+elastic constants to be transformed to a different set of axes.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>axes</strong> (3, 3) array giving three right-handed orthogonal vectors to
+use for transforming.</li>
+<li><strong>tol</strong> optional relative tolerance to use in identifying near-zero
+terms.</li>
+</ul>
+<p>Returns a new ElasticConstants object with constants transformed to the
+new axes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Set C back to a cubic system (Cu this time)</span>
+<span class="n">Cdict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C11&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">1.762</span><span class="p">,</span> <span class="s1">&#39;10^12 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C12&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">1.249</span><span class="p">,</span> <span class="s1">&#39;10^12 * dyn/cm^2&#39;</span><span class="p">)</span>
+<span class="n">Cdict</span><span class="p">[</span><span class="s1">&#39;C44&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">uc</span><span class="o">.</span><span class="n">set_in_units</span><span class="p">(</span><span class="mf">0.818</span><span class="p">,</span> <span class="s1">&#39;10^12 * dyn/cm^2&#39;</span><span class="p">)</span>
+
+<span class="n">C</span><span class="o">.</span><span class="n">cubic</span><span class="p">(</span><span class="o">**</span><span class="n">Cdict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cij (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+
+<span class="c1"># Transform by a 45 degree rotation around z-axis</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="p">[[</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="n">newC</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;After transforming, Cij (GPa) -&gt;&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">newC</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Cij (GPa) -&gt;
+[[ 176.2  124.9  124.9    0.     0.     0. ]
+ [ 124.9  176.2  124.9    0.     0.     0. ]
+ [ 124.9  124.9  176.2    0.     0.     0. ]
+ [   0.     0.     0.    81.8    0.     0. ]
+ [   0.     0.     0.     0.    81.8    0. ]
+ [   0.     0.     0.     0.     0.    81.8]]
+
+After transforming, Cij (GPa) -&gt;
+[[ 232.35   68.75  124.9     0.      0.      0.  ]
+ [  68.75  232.35  124.9     0.      0.      0.  ]
+ [ 124.9   124.9   176.2     0.      0.      0.  ]
+ [   0.      0.      0.     81.8     0.      0.  ]
+ [   0.      0.      0.      0.     81.8     0.  ]
+ [   0.      0.      0.      0.      0.     25.65]]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.-Shear-and-bulk-modulus-estimates">
+<h2>5. Shear and bulk modulus estimates<a class="headerlink" href="#5.-Shear-and-bulk-modulus-estimates" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="5.1.-ElasticConstants.bulk()">
+<h3>5.1. ElasticConstants.bulk()<a class="headerlink" href="#5.1.-ElasticConstants.bulk()" title="Permalink to this headline">¶</a></h3>
+<p>Three style options of estimates are available:</p>
+<ul class="simple">
+<li><strong>‘Voigt’</strong> Voigt estimate.</li>
+</ul>
+<div class="math">
+\[K_{Voigt} = \frac{ \left(C_{11} + C_{22} + C_{33} \right) + 2 \left(C_{12} + C_{13} + C_{23} \right) }{9}\]</div>
+<ul class="simple">
+<li><strong>‘Reuss’</strong> Reuss estimate.</li>
+</ul>
+<div class="math">
+\[K_{Reuss} = \frac{1}{ \left( S_{11} + S_{22} + S_{33} \right) + 2 \left(S_{12} + S_{13} + S_{23} \right) }\]</div>
+<ul class="simple">
+<li><strong>‘Hill’</strong> Hill estimate (default).</li>
+</ul>
+<div class="math">
+\[K_{Hill} = \frac{K_{Reuss} + K_{Voigt}}{2}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Voigt bulk modulus estimate =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="s1">&#39;Voigt&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reuss bulk modulus estimate =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">bulk</span><span class="p">(</span><span class="s1">&#39;Reuss&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hill bulk modulus estimate = &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">bulk</span><span class="p">(),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Voigt bulk modulus estimate = 142.0 GPa
+Reuss bulk modulus estimate = 142.0 GPa
+Hill bulk modulus estimate =  142.0 GPa
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="5.2.-ElasticConstants.shear()">
+<h3>5.2. ElasticConstants.shear()<a class="headerlink" href="#5.2.-ElasticConstants.shear()" title="Permalink to this headline">¶</a></h3>
+<p>Three style options of estimates are available:</p>
+<ul class="simple">
+<li><strong>‘Voigt’</strong> Voigt estimate.</li>
+</ul>
+<div class="math">
+\[\mu_{Voigt} = \frac{ \left( C_{11} + C_{22} + C_{33} \right) - \left( C_{12} + C_{23} + C_{13} \right) +
+  3 \left( C_{44} + C_{55} + C_{66} \right) }{15}\]</div>
+<ul class="simple">
+<li><strong>‘Reuss’</strong> Reuss estimate.</li>
+</ul>
+<div class="math">
+\[\mu_{Reuss} = \frac{15}{4 \left( S_{11} + S_{22} + S_{33} \right) - 4 \left( S_{12} + S_{23} + S_{13} \right) +
+ 3 \left( S_{44} + S_{55} + S_{66} \right)}\]</div>
+<ul class="simple">
+<li><strong>‘Hill’</strong> Hill estimate (default).</li>
+</ul>
+<div class="math">
+\[\mu_{Hill} = \frac{\mu_{Reuss} + \mu_{Voigt}}{2}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Voigt shear modulus estimate =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">shear</span><span class="p">(</span><span class="s1">&#39;Voigt&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reuss shear modulus estimate =&#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">shear</span><span class="p">(</span><span class="s1">&#39;Reuss&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hill shear modulus estimate = &#39;</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">shear</span><span class="p">(),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">),</span> <span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Voigt shear modulus estimate = 59.34 GPa
+Reuss shear modulus estimate = 43.6119309915 GPa
+Hill shear modulus estimate =  51.4759654957 GPa
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="6.-ElasticConstants.model()">
+<h2>6. ElasticConstants.model()<a class="headerlink" href="#6.-ElasticConstants.model()" title="Permalink to this headline">¶</a></h2>
+<p>The elastic constants can also be saved/retrieved as a JSON/XML data
+model. This is useful as it captures not only the elastic constant
+values but also the associated units.</p>
+<p>Parameters</p>
+<ul class="simple">
+<li><strong>model</strong> (<em>DataModelDict, string, or file-like object, optional</em>)
+Data model containing exactly one ‘elastic-constants’ branch to read.</li>
+<li><strong>unit</strong> (<em>str, optional</em>) Units or pressure to save values in when
+building a data model. Default value is None (no conversion).</li>
+<li><strong>crystal_system</strong> (<em>str, optional</em>) Indicates the crystal system
+representation to use when building a data model. Default value is
+‘triclinic’ (save all values in Cij).</li>
+</ul>
+<p>Returns</p>
+<ul class="simple">
+<li>(<em>DataModelDict</em>) If model is not given as a parameter.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># Generate data model based on C</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;GPa&#39;</span><span class="p">,</span> <span class="n">crystal_system</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">)</span>
+
+<span class="c1"># Show json version of model</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{
+    &#34;elastic-constants&#34;: {
+        &#34;C&#34;: [
+            {
+                &#34;stiffness&#34;: {
+                    &#34;value&#34;: 176.20000000000005,
+                    &#34;unit&#34;: &#34;GPa&#34;
+                },
+                &#34;ij&#34;: &#34;1 1&#34;
+            },
+            {
+                &#34;stiffness&#34;: {
+                    &#34;value&#34;: 124.90000000000003,
+                    &#34;unit&#34;: &#34;GPa&#34;
+                },
+                &#34;ij&#34;: &#34;1 2&#34;
+            },
+            {
+                &#34;stiffness&#34;: {
+                    &#34;value&#34;: 81.80000000000001,
+                    &#34;unit&#34;: &#34;GPa&#34;
+                },
+                &#34;ij&#34;: &#34;4 4&#34;
+            }
+        ]
+    }
+}
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># If crystal_system is not given, model will contain all 21 triclinic constants</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;GPa&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#34;elastic-constants&#34;: {&#34;C&#34;: [{&#34;stiffness&#34;: {&#34;value&#34;: 176.20000000000005, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 1&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 124.90000000000002, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 2&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 124.90000000000002, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 3&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 4&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 5&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;1 6&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 176.20000000000005, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;2 2&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 124.90000000000002, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;2 3&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;2 4&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;2 5&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;2 6&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 176.20000000000005, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;3 3&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;3 4&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;3 5&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;3 6&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 81.80000000000001, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;4 4&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;4 5&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;4 6&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 81.80000000000001, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;5 5&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 0.0, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;5 6&#34;}, {&#34;stiffness&#34;: {&#34;value&#34;: 81.80000000000001, &#34;unit&#34;: &#34;GPa&#34;}, &#34;ij&#34;: &#34;6 6&#34;}]}}
+</pre></div></div>
+</div>
+<p>The model can also be read in to an ElasticConstants object either
+during initialization or using the model() method.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">C</span> <span class="o">=</span> <span class="n">am</span><span class="o">.</span><span class="n">ElasticConstants</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 176.2  124.9  124.9    0.     0.     0. ]
+ [ 124.9  176.2  124.9    0.     0.     0. ]
+ [ 124.9  124.9  176.2    0.     0.     0. ]
+ [   0.     0.     0.    81.8    0.     0. ]
+ [   0.     0.     0.     0.    81.8    0. ]
+ [   0.     0.     0.     0.     0.    81.8]]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">newC</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">get_in_units</span><span class="p">(</span><span class="n">newC</span><span class="o">.</span><span class="n">Cij</span><span class="p">,</span> <span class="s1">&#39;GPa&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 176.2  124.9  124.9    0.     0.     0. ]
+ [ 124.9  176.2  124.9    0.     0.     0. ]
+ [ 124.9  124.9  176.2    0.     0.     0. ]
+ [   0.     0.     0.    81.8    0.     0. ]
+ [   0.     0.     0.     0.    81.8    0. ]
+ [   0.     0.     0.     0.     0.    81.8]]
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to atomman: ElasticConstants class</a><ul>
+<li><a class="reference internal" href="#1.-Introduction">1. Introduction</a></li>
+<li><a class="reference internal" href="#2.-Elastic-constants-representations">2. Elastic constants representations</a><ul>
+<li><a class="reference internal" href="#2.1-Build-demonstration-(see-Section-#3-for-more-setting-options)">2.1 Build demonstration (see Section #3 for more setting options)</a></li>
+<li><a class="reference internal" href="#2.2-Show-different-representations">2.2 Show different representations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#3.-Setting-values">3. Setting values</a><ul>
+<li><a class="reference internal" href="#3.1.-Setting-using-attributes">3.1. Setting using attributes</a></li>
+<li><a class="reference internal" href="#3.2.-Setting-using-crystal-specific-constants">3.2. Setting using crystal-specific constants</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#4.-ElasticConstants.tranform()">4. ElasticConstants.tranform()</a></li>
+<li><a class="reference internal" href="#5.-Shear-and-bulk-modulus-estimates">5. Shear and bulk modulus estimates</a><ul>
+<li><a class="reference internal" href="#5.1.-ElasticConstants.bulk()">5.1. ElasticConstants.bulk()</a></li>
+<li><a class="reference internal" href="#5.2.-ElasticConstants.shear()">5.2. ElasticConstants.shear()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#6.-ElasticConstants.model()">6. ElasticConstants.model()</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="03._Basic_Support_and_Analysis_Tools.html"
+                        title="previous chapter">Introduction to atomman: Basic Support and Analysis Tools</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="03.2._NeighborList_class.html"
+                        title="next chapter">Introduction to atomman: NeighborList class</a></p>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="03.2._NeighborList_class.html" title="Introduction to atomman: NeighborList class"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="03._Basic_Support_and_Analysis_Tools.html" title="Introduction to atomman: Basic Support and Analysis Tools"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">atomman 1.2.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Tutorials</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.6.
+    </div>
+  </body>
+</html>
