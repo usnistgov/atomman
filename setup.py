@@ -1,4 +1,5 @@
 import os
+import sys
 from setuptools import setup, find_packages
 from setuptools.extension import Extension
 
@@ -15,7 +16,7 @@ extensions = [Extension("*", ["atomman/core/*" + EXT]),
               Extension("*", ["atomman/defect/*" + EXT])]
 
 if USE_CYTHON:
-    extensions = cythonize(extensions)
+    extensions = cythonize(extensions, language_level=sys.version_info[0], force=True)
 
 def getversion():
     """Fetches version information from VERSION file"""
